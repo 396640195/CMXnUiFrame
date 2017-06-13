@@ -1,9 +1,15 @@
 package com.xn.uiframe.layout;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.R;
+import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
+import com.xn.uiframe.interfaces.IContainerManager;
+import com.xn.uiframe.interfaces.IHeaderViewBehavior;
 
 /**
  * <p>
@@ -13,18 +19,17 @@ import com.xn.uiframe.PowerfulContainerLayout;
  * </p>
  */
 
-public class HeaderLayoutManager extends AbstractLayoutManager {
+public class HeaderLayoutManager extends AbstractLayoutManager implements IHeaderViewBehavior {
 
-    public HeaderLayoutManager(){
+    public HeaderLayoutManager() {
         this.mLayer = Layer.LAYER_BASIC_HEADER_PART;
     }
 
     @Override
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
-        /**
-         * 提供默认的全屏布局实现,且只有在该View可见的时候，才绘制该视图;
-         * **/
-        if (mView == null || mView.getVisibility() != View.VISIBLE) {
+
+        /**如果不可见，则对该布局不进行处理;**/
+        if (getVisibility() != View.VISIBLE) {
             return;
         }
 
@@ -33,7 +38,59 @@ public class HeaderLayoutManager extends AbstractLayoutManager {
         int leftMargin = marginLayoutParams.leftMargin;
         int rightMargin = marginLayoutParams.rightMargin;
         int topMargin = marginLayoutParams.topMargin;
-        mView.layout(left+leftMargin, top+topMargin, right - rightMargin, top + topMargin + mView.getMeasuredHeight());
+        mView.layout(left + leftMargin, top + topMargin, right - rightMargin, top + topMargin + mView.getMeasuredHeight());
     }
 
+    /**
+     * 根据给定的布局文件，在容器中添加一个视图，并返回当前这个视图对象;
+     * 如果容器中已经存在该类型的视图，则不充许再次添加.
+     *
+     * @param containerLayout 当前界面的顶层容器
+     * @param layout          需要添加的布局文件
+     * @return 布局文件加载后的视图布局Manager对象
+     */
+    public static HeaderLayoutManager TopLayoutManager(IContainerManager containerLayout, int layout) {
+        HeaderLayoutManager header = new HeaderLayoutManager();
+        if (containerLayout.contains(header)) {
+            throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
+        } else {
+            header.addLayout((PowerfulContainerLayout) containerLayout, layout);
+            containerLayout.addLayoutManager(header);
+        }
+        return header;
+    }
+
+    @Override
+    public void setHeaderLeftText(int resource) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_left);
+        textView.setText(resource);
+    }
+
+    @Override
+    public void setHeaderLeftImage(int resource) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_left);
+        Drawable drawable =  textView.getContext().getResources().getDrawable(resource);
+        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+        textView.setCompoundDrawables(drawable,null,null,null);
+    }
+
+    @Override
+    public void setHeaderCenterText(int resource) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_center);
+        textView.setText(resource);
+    }
+
+    @Override
+    public void setHeaderRightText(int resource) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
+        textView.setText(resource);
+    }
+
+    @Override
+    public void setHeaderRightImage(int resource) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
+        Drawable drawable =  textView.getContext().getResources().getDrawable(resource);
+        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
+        textView.setCompoundDrawables(drawable,null,null,null);
+    }
 }

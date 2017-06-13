@@ -1,5 +1,6 @@
-package com.xn.uiframe.layout;
+package com.xn.uiframe.interfaces;
 
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
@@ -61,4 +62,22 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
      * @return
      */
     ViewGroup.MarginLayoutParams getMarginLayoutParams();
+
+    /**
+     * 返回当前布局所在的层级
+     * @return
+     */
+    int getLayer();
+
+    /**
+     * 设置当前布局是否可见.
+     * @see {@link android.view.View#VISIBLE },{@link android.view.View#GONE },{@link android.view.View#INVISIBLE }
+     * @param visible
+     */
+    void setVisible(int visible);
+
+    int getVisibility();
+
+    /**获取该布局的View对象**/
+    View getContentView();
 }

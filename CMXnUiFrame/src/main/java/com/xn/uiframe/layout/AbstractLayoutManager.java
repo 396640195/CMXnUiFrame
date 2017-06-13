@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.interfaces.ILayoutManager;
 
 /**
  * <p>
@@ -16,6 +17,12 @@ import com.xn.uiframe.PowerfulContainerLayout;
  */
 
 public abstract class AbstractLayoutManager implements ILayoutManager<View, ILayoutManager> {
+
+    public AbstractLayoutManager() {}
+
+    public AbstractLayoutManager(int mLayer) {
+        this.mLayer = mLayer;
+    }
 
     /**
      * 默认层级为对话框全屏模式
@@ -52,7 +59,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
          * Center 布局的绘制依懒于Header,Top,Bottom的宽高占比数据，
          * 所以Center的层级定义要比 Header,Top,Bottom高;
          */
-        public static final int LYAER_BASIC_CENTER_PART = 0x10003;
+        public static final int LAYER_BASIC_CENTER_PART = 0x10003;
         /**
          * 处于该层级的主要是用于实现进度加载，这种异步等待的全屏界面. 它处于
          *  basic part 层级之上.
@@ -66,44 +73,17 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         public static final int LAYER_ERROR_SCREEN = 0x10005;
 
         /**
-         * 该层级主要用来实现对话框的功能,完全替代话框，它的层级处于
-         * {@link AbstractLayoutManager.Layer#LAYER_ERROR_SCREEN}层级之上.
-         * 处于 {@link AbstractLayoutManager.Layer#LAYER_SCREEN_TOAST} 之下.
+         * 该层级用来备用特殊情况，如果前两层不足以满足需求，可以根据需求使用这一层级;
+         * 它处于{@link AbstractLayoutManager.Layer#LAYER_ERROR_SCREEN}层级之上.
          **/
-        public static final int LAYER_DIALOG_SCREEN = 0x10006;
+        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10006;
 
         /**
-         * 该层级处于UI的最顶层.
+         * 处于UI的最顶层.该层级主要用来实现对话框的功能,完全替代话框，它的层级处于
+         * 它处于{@link AbstractLayoutManager.Layer#LAYER_FULL_SCREEN_EXTRA}层级之上.
          **/
-        public static final int LAYER_SCREEN_TOAST = 0x10007;
-    }
+        public static final int LAYER_DIALOG_SCREEN = 0x10007;
 
-    @Override
-    public int compareTo(@NonNull ILayoutManager o) {
-        if (o instanceof AbstractLayoutManager) {
-            AbstractLayoutManager alm = (AbstractLayoutManager) o;
-            return alm.mLayer - this.mLayer;
-        }
-        return 0;
-    }
-
-    @Override
-    public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
-        /**
-         * 提供默认的全屏布局实现,且只有在该View可见的时候，才绘制该视图;
-         * **/
-        if (mView == null || mView.getVisibility() != View.VISIBLE) {
-            return;
-        }
-
-        //获得当前布局的Margin参数
-        ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
-        int leftMargin = marginLayoutParams.leftMargin;
-        int rightMargin = marginLayoutParams.rightMargin;
-        int topMargin = marginLayoutParams.topMargin;
-        int bottomMarin = marginLayoutParams.bottomMargin;
-
-        mView.layout(left+leftMargin, top+topMargin, right - rightMargin, bottom - bottomMarin);
     }
 
     @Override
@@ -139,6 +119,24 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
+    public int compareTo(@NonNull ILayoutManager o) {
+        if (o instanceof AbstractLayoutManager) {
+            AbstractLayoutManager alm = (AbstractLayoutManager) o;
+            return alm.mLayer - this.mLayer;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AbstractLayoutManager) {
+            AbstractLayoutManager alm = (AbstractLayoutManager) obj;
+            return alm.getLayer() == this.getLayer();
+        }
+        return false;
+    }
+
+    @Override
     public View addLayout(PowerfulContainerLayout container, int layout) {
         View view = LayoutInflater.from(container.getContext()).inflate(layout, container, false);
         return view;
@@ -152,5 +150,27 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     @Override
     public ViewGroup.MarginLayoutParams getMarginLayoutParams() {
         return mView == null ? null : (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
+    }
+
+    @Override
+    public int getLayer() {
+        return mLayer;
+    }
+
+    @Override
+    public void setVisible(int visible) {
+        if(mView != null) {
+            mView.setVisibility(visible);
+        }
+    }
+
+    @Override
+    public int getVisibility() {
+        return mView == null ? View.GONE : mView.getVisibility();
+    }
+
+    @Override
+    public View getContentView() {
+        return  mView;
     }
 }
