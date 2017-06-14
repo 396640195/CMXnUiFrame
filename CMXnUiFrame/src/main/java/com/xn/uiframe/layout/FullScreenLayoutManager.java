@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.R;
 import com.xn.uiframe.exception.UIFrameIllegalArgumentException;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
@@ -21,23 +22,24 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
     public FullScreenLayoutManager(int mLayer) {
         super(mLayer);
     }
+
     @Override
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
         /**
          * 提供默认的全屏布局实现,且只有在该View可见的时候，才绘制该视图;
          * **/
-        if (getVisibility() != View.VISIBLE) {
+        if (mView == null || getVisibility() != View.VISIBLE) {
             return;
         }
 
-        //获得当前布局的Margin参数
+        /**获得当前布局的Margin参数**/
         ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
         int leftMargin = marginLayoutParams.leftMargin;
         int rightMargin = marginLayoutParams.rightMargin;
+        int bottomMargin = marginLayoutParams.bottomMargin;
         int topMargin = marginLayoutParams.topMargin;
-        int bottomMarin = marginLayoutParams.bottomMargin;
 
-        mView.layout(left + leftMargin, top + topMargin, right - rightMargin, bottom - bottomMarin);
+        mView.layout(left + leftMargin, top + topMargin, right - rightMargin, bottom - bottomMargin);
     }
 
     /**
@@ -48,14 +50,14 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @param layer           该视图在界面中的层次,
      *                        请参照{@link com.xn.uiframe.layout.AbstractLayoutManager.Layer#LAYER_DIALOG_SCREEN}
-     *                        {@link com.xn.uiframe.layout.AbstractLayoutManager.Layer#LAYER_WAIT_SCREEN}
+     *                        {@link com.xn.uiframe.layout.AbstractLayoutManager.Layer#LAYER_LOAD_SCREEN}
      *                        {@link com.xn.uiframe.layout.AbstractLayoutManager.Layer#LAYER_ERROR_SCREEN}
      *                        {@link com.xn.uiframe.layout.AbstractLayoutManager.Layer#LAYER_FULL_SCREEN_EXTRA}
      * @return 布局文件加载后的视图对象
      */
-    public static FullScreenLayoutManager buildView(IContainerManager containerLayout, int layout, int layer) {
+    public static FullScreenLayoutManager buildLayout(IContainerManager containerLayout, int layout, int layer) {
 
-        if(layer < Layer.LAYER_WAIT_SCREEN){
+        if (layer < Layer.LAYER_LOAD_SCREEN) {
             throw new UIFrameIllegalArgumentException("layer参数类型错误，该方法只能添加全屏类型的视图.请查看该接口的参数说明.");
         }
         FullScreenLayoutManager fullScreenLayoutManager = new FullScreenLayoutManager(layer);
@@ -64,6 +66,10 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
         } else {
             fullScreenLayoutManager.addLayout((PowerfulContainerLayout) containerLayout, layout);
             containerLayout.addLayoutManager(fullScreenLayoutManager);
+        }
+        if(layer == Layer.LAYER_DIALOG_SCREEN){
+            View view =  fullScreenLayoutManager.getContentView();
+            fullScreenLayoutManager.getContentView().setBackgroundDrawable(view.getResources().getDrawable(R.drawable.ui_frame_dialog_translucency));
         }
         return fullScreenLayoutManager;
     }

@@ -29,11 +29,12 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
 
         /**如果不可见，则对该布局不进行处理;**/
-        if (getVisibility() != View.VISIBLE) {
+        if (mView == null || getVisibility() != View.VISIBLE) {
             return;
         }
 
         //获得当前布局的Margin参数
+        /**获得当前布局的Margin参数**/
         ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
         int leftMargin = marginLayoutParams.leftMargin;
         int rightMargin = marginLayoutParams.rightMargin;
@@ -49,7 +50,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static HeaderLayoutManager TopLayoutManager(IContainerManager containerLayout, int layout) {
+    public static HeaderLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
         HeaderLayoutManager header = new HeaderLayoutManager();
         if (containerLayout.contains(header)) {
             throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
@@ -61,36 +62,41 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     }
 
     @Override
-    public void setHeaderLeftText(int resource) {
+    public TextView setHeaderLeftText(int resource) {
         TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_left);
         textView.setText(resource);
+        return textView;
     }
 
     @Override
-    public void setHeaderLeftImage(int resource) {
+    public TextView setHeaderLeftImage(int resource) {
         TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_left);
-        Drawable drawable =  textView.getContext().getResources().getDrawable(resource);
-        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-        textView.setCompoundDrawables(drawable,null,null,null);
+        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        textView.setCompoundDrawables(drawable, null, null, null);
+        return textView;
     }
 
     @Override
-    public void setHeaderCenterText(int resource) {
+    public TextView setHeaderCenterText(int resource) {
         TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_center);
         textView.setText(resource);
+        return textView;
     }
 
     @Override
-    public void setHeaderRightText(int resource) {
+    public TextView setHeaderRightText(int resource) {
         TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
         textView.setText(resource);
+        return textView;
     }
 
     @Override
-    public void setHeaderRightImage(int resource) {
+    public TextView setHeaderRightImage(int resource) {
         TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
-        Drawable drawable =  textView.getContext().getResources().getDrawable(resource);
-        drawable.setBounds(0,0,drawable.getMinimumWidth(),drawable.getMinimumHeight());
-        textView.setCompoundDrawables(drawable,null,null,null);
+        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        textView.setCompoundDrawables(drawable, null, null, null);
+        return textView;
     }
 }

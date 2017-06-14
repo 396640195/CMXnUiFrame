@@ -48,6 +48,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
             headerHeight = hLayoutParams.topMargin + hLayoutParams.bottomMargin + headerLayoutManager.getMeasuredHeight();
         }
         /**获得当前布局的Margin参数**/
+        /**获得当前布局的Margin参数**/
         ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
         int leftMargin = marginLayoutParams.leftMargin;
         int rightMargin = marginLayoutParams.rightMargin;
@@ -71,7 +72,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
         if (containerLayout.contains(tm)) {
             throw new UIFrameLayoutAlreadyExistException("Top视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            tm.addLayout((PowerfulContainerLayout)containerLayout, layout);
+            tm.addLayout((PowerfulContainerLayout) containerLayout, layout);
             containerLayout.addLayoutManager(tm);
         }
         return tm;

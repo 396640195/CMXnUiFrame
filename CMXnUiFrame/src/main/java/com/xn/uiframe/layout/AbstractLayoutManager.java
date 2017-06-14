@@ -46,43 +46,42 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         public static final int LAYER_BASIC_HEADER_PART = 0x10001;
 
         /**
-         *定义Bottom布局层级，绘制顺序和Header相同
-         **/
-        public static final int LAYER_BASIC_BOTTOM_PART = LAYER_BASIC_HEADER_PART;
-
-        /**
-         *定义Top布局层级，绘制顺序在Header和Bottom之后;
+         *定义Top布局层级，绘制顺序在Header之后;
          **/
         public static final int LAYER_BASIC_TOP_PART = 0x10002;
+        /**
+         *定义Bottom布局层级，绘制顺序在Center之后
+         **/
+        public static final int LAYER_BASIC_BOTTOM_PART = 0x10003;
 
         /**
          * Center 布局的绘制依懒于Header,Top,Bottom的宽高占比数据，
          * 所以Center的层级定义要比 Header,Top,Bottom高;
          */
-        public static final int LAYER_BASIC_CENTER_PART = 0x10003;
+        public static final int LAYER_BASIC_CENTER_PART = 0x10004;
         /**
          * 处于该层级的主要是用于实现进度加载，这种异步等待的全屏界面. 它处于
          *  basic part 层级之上.
          **/
-        public static final int LAYER_WAIT_SCREEN = 0x10004;
+        public static final int LAYER_LOAD_SCREEN = 0x10005;
 
         /**
          * 该层级主要用于来展示异常信息，它处于
-         * {@link AbstractLayoutManager.Layer#LAYER_WAIT_SCREEN}层级之上.
+         * {@link AbstractLayoutManager.Layer#LAYER_LOAD_SCREEN}层级之上.
          ***/
-        public static final int LAYER_ERROR_SCREEN = 0x10005;
+        public static final int LAYER_ERROR_SCREEN = 0x10006;
 
         /**
          * 该层级用来备用特殊情况，如果前两层不足以满足需求，可以根据需求使用这一层级;
          * 它处于{@link AbstractLayoutManager.Layer#LAYER_ERROR_SCREEN}层级之上.
          **/
-        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10006;
+        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10007;
 
         /**
          * 处于UI的最顶层.该层级主要用来实现对话框的功能,完全替代话框，它的层级处于
          * 它处于{@link AbstractLayoutManager.Layer#LAYER_FULL_SCREEN_EXTRA}层级之上.
          **/
-        public static final int LAYER_DIALOG_SCREEN = 0x10007;
+        public static final int LAYER_DIALOG_SCREEN = 0x10008;
 
     }
 
@@ -122,7 +121,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     public int compareTo(@NonNull ILayoutManager o) {
         if (o instanceof AbstractLayoutManager) {
             AbstractLayoutManager alm = (AbstractLayoutManager) o;
-            return alm.mLayer - this.mLayer;
+            return -alm.mLayer + this.mLayer;
         }
         return 0;
     }
@@ -138,8 +137,8 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public View addLayout(PowerfulContainerLayout container, int layout) {
-        View view = LayoutInflater.from(container.getContext()).inflate(layout, container, false);
-        return view;
+        mView = LayoutInflater.from(container.getContext()).inflate(layout, container, false);
+        return mView;
     }
 
     @Override

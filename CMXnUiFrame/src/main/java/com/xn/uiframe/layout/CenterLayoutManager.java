@@ -28,14 +28,14 @@ public class CenterLayoutManager extends AbstractLayoutManager {
     @Override
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
         /**如果不可见，则对该布局不进行处理;**/
-        if (getVisibility() != View.GONE) {
+        if (mView == null || getVisibility() != View.VISIBLE) {
             return;
         }
         /**计算Center上下被占用的空间高度**/
         int upTopMargin = 0;
         List<ILayoutManager<View, ILayoutManager>> managers = container.layoutManagers();
         for (ILayoutManager layoutManager : managers) {
-            if (layoutManager.getLayer() <= Layer.LAYER_BASIC_BOTTOM_PART && layoutManager.getVisibility() != View.GONE) {
+            if (layoutManager.getLayer() <= Layer.LAYER_BASIC_TOP_PART && layoutManager.getVisibility() != View.GONE) {
                 ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
                 upTopMargin += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin + layoutManager.getMeasuredHeight());
             }
@@ -46,7 +46,6 @@ public class CenterLayoutManager extends AbstractLayoutManager {
         int leftMargin = marginLayoutParams.leftMargin;
         int rightMargin = marginLayoutParams.rightMargin;
         int topMargin = marginLayoutParams.topMargin;
-
         int topPosition = top + topMargin + upTopMargin;
         mView.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + mView.getMeasuredHeight());
 
@@ -99,12 +98,12 @@ public class CenterLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager TopLayoutManager(IContainerManager containerLayout, int layout) {
+    public static CenterLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
         CenterLayoutManager center = new CenterLayoutManager();
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            center.addLayout((PowerfulContainerLayout)containerLayout, layout);
+            center.addLayout((PowerfulContainerLayout) containerLayout, layout);
             containerLayout.addLayoutManager(center);
         }
         return center;

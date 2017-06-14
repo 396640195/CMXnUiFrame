@@ -74,5 +74,20 @@ public class EventBusProxy {
         }
 
     }
+
+    /**
+     * 注册订阅EventBus消息
+     * @param subscriber
+     */
+    public static void register(Object subscriber){
+        EventBus.getDefault().register(subscriber);
+    }
+    /**
+     * 反注册订阅EventBus消息
+     * @param subscriber
+     */
+    public static void unregister(Object subscriber){
+        EventBus.getDefault().unregister(subscriber);
+    }
 }
 

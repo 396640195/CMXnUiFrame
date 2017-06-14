@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#DA30cd"
+    android:gravity="center">
+
+    <com.xn.uiframe.widget.RippleView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="控制头部" />
+    </com.xn.uiframe.widget.RippleView>
+
+    <Button
+        android:id="@+id/dialog"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="弹对话框" />
+
+    <Button
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="个人" />
+
+    <com.xn.uiframe.widget.RippleView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="设置" />
+    </com.xn.uiframe.widget.RippleView>
+</LinearLayout>

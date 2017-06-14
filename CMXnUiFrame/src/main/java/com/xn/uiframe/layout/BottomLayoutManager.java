@@ -23,7 +23,7 @@ public class BottomLayoutManager extends AbstractLayoutManager {
     @Override
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
         /**如果不可见，则对该布局不进行处理;**/
-        if (getVisibility() != View.VISIBLE) {
+        if (mView == null || getVisibility() != View.VISIBLE) {
             return;
         }
 
@@ -31,9 +31,10 @@ public class BottomLayoutManager extends AbstractLayoutManager {
         ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
         int leftMargin = marginLayoutParams.leftMargin;
         int rightMargin = marginLayoutParams.rightMargin;
-        int bottomMargin = marginLayoutParams.bottomMargin;
+        int topMargin = marginLayoutParams.topMargin;
 
-        mView.layout(left + leftMargin, bottom - bottomMargin - mView.getMeasuredHeight(), right - rightMargin, bottom - bottomMargin);
+        int topPosition = bottom - topMargin - mView.getMeasuredHeight();
+        mView.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + mView.getMeasuredHeight());
     }
 
     /**
@@ -44,7 +45,7 @@ public class BottomLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static BottomLayoutManager TopLayoutManager(IContainerManager containerLayout, int layout) {
+    public static BottomLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
         BottomLayoutManager bottom = new BottomLayoutManager();
         if (containerLayout.contains(bottom)) {
             throw new UIFrameLayoutAlreadyExistException("Bottom视图已经添加到容器当中了，该视图不能重复添加.");

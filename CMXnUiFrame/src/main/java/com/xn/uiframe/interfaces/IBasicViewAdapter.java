@@ -7,7 +7,9 @@ import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
 
 /**
- * Created by xn068074 on 2017/6/13.
+ * 界面视图适配器，定义了界面具有哪些元素，在具体界面中实现这些接口即可;
+ * Created by 陈真 on 2017/6/13.
+ * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  */
 
 public interface IBasicViewAdapter {
@@ -26,4 +28,8 @@ public interface IBasicViewAdapter {
     FullScreenLayoutManager addLoadingView(IContainerManager container);
 
     FullScreenLayoutManager addExtraTopView(IContainerManager container);
+
+    boolean isNeedEventBus();
+
+    boolean isNeedPullRefresh();
 }

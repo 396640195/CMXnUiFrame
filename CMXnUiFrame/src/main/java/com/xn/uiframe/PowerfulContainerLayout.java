@@ -1,6 +1,12 @@
 package com.xn.uiframe;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,6 +38,8 @@ import java.util.List;
 public class PowerfulContainerLayout extends ViewGroup implements IContainerManager<ILayoutManager<View, ILayoutManager>> {
 
     private List<ILayoutManager<View, ILayoutManager>> mLayoutManagers;
+    private int mBackgroundColor = 0;
+    private int mBackgroundResource = 0;
 
     public PowerfulContainerLayout(Context context) {
         super(context);
@@ -53,6 +61,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
      */
     private void initLayoutManagers() {
         mLayoutManagers = new ArrayList<>();
+        setWillNotDraw(false);
     }
 
     @Override
@@ -91,6 +100,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
 
     public void addLayoutManager(ILayoutManager<View, ILayoutManager> layoutManager) {
         this.layoutManagers().add(layoutManager);
+        this.addView(layoutManager.getContentView());
     }
 
     @Override
@@ -118,27 +128,55 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         return null;
     }
 
-    private void dealWithTouchEvents(){
+    private void dealWithTouchEvents() {
 
         if (mLayoutManagers.size() == 0) {
             return;
         }
 
         ILayoutManager topVisibleLayout = getTopVisibleLayout();
+        if (topVisibleLayout == null) return;
+
         if (topVisibleLayout.getLayer() <= AbstractLayoutManager.Layer.LAYER_BASIC_CENTER_PART) {
             for (int i = mLayoutManagers.size() - 1; i > 0; i--) {
                 ILayoutManager layoutManager = mLayoutManagers.get(i);
                 layoutManager.getContentView().setClickable(true);
             }
-        }else {
+        } else {
             topVisibleLayout.getContentView().setClickable(true);
             for (int i = mLayoutManagers.size() - 1; i > 0; i--) {
                 ILayoutManager layoutManager = mLayoutManagers.get(i);
-                if(layoutManager.getLayer() < topVisibleLayout.getLayer()) {
+                if (layoutManager.getLayer() < topVisibleLayout.getLayer()) {
                     layoutManager.getContentView().setClickable(false);
                 }
             }
         }
 
+    }
+
+    @Override
+    public void setBackgroundColor(@ColorInt int color) {
+        this.mBackgroundColor = color;
+        this.invalidate();
+    }
+
+    @Override
+    public void setBackgroundResource(@DrawableRes int resid) {
+        this.mBackgroundResource = resid;
+        this.invalidate();
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (mBackgroundColor != 0) {
+            Paint p = new Paint();
+            p.setColor(Color.BLUE);
+            canvas.drawRect(0f, 0f, this.getMeasuredWidth() * 1f, this.getMeasuredHeight() * 1f, p);
+        } else if (mBackgroundResource != 0) {
+            Drawable drawable = getResources().getDrawable(mBackgroundResource);
+            drawable.setBounds(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight());
+            drawable.draw(canvas);
+        }
+        super.onDraw(canvas);
     }
 }
