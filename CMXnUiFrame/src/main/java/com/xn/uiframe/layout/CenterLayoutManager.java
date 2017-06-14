@@ -12,9 +12,20 @@ import java.util.List;
 
 /**
  * <p>
+ * 定义一个基本视图布局管理器 CenterLayoutManager.
  * 该布局主要是定义一个层级，负责展示一个界面的主要内容.
  * 这个布局可能有上下拉刷新，列表ListView,GridView等占用屏幕大部分空间，主要用来展示界面的主要业务内容;
  * 所以该部局依赖于Header,Top,Bottom的布局在屏幕中占用的空间，来计算自已占有的空间.
+ *
+ * <br>
+ * 基本视图是指组成界面的各个基本元素的布局,在这个框架中主要定义了几个如下几个基本视图:
+ * 1.HeaderLayoutManager
+ * 2.TopLayoutManager
+ * 3.CenterLayoutManager
+ * 4.BottomLayoutManager
+ * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
+ * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ *
  * Created by 陈真 on 2017/6/13.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
@@ -28,7 +39,7 @@ public class CenterLayoutManager extends AbstractLayoutManager {
     @Override
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
         /**如果不可见，则对该布局不进行处理;**/
-        if (mView == null || getVisibility() != View.VISIBLE) {
+        if (getVisibility() != View.VISIBLE) {
             return;
         }
         /**计算Center上下被占用的空间高度**/
@@ -54,11 +65,12 @@ public class CenterLayoutManager extends AbstractLayoutManager {
     @Override
     public void onMeasure(PowerfulContainerLayout container, int widthMeasureSpec, int heightMeasureSpec) {
         /**
-         * 当View处于{@link View.VISIBLE} or {@link View.INVISIBLE}两种情况下，都要测量它的宽高;
+         * 当View处于{@link View.VISIBLE} 才测量它的宽高;
          */
-        if (getVisibility() == View.GONE) {
+        if (getVisibility() != View.VISIBLE) {
             return;
         }
+        //获得基本视图所占高度
         int basicLayoutHeights = 0;
         List<ILayoutManager<View, ILayoutManager>> layoutManagers = container.layoutManagers();
         for (ILayoutManager<View, ILayoutManager> layoutManager : layoutManagers) {
@@ -103,7 +115,7 @@ public class CenterLayoutManager extends AbstractLayoutManager {
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            center.addLayout((PowerfulContainerLayout) containerLayout, layout);
+            center.addLayout(containerLayout, layout);
             containerLayout.addLayoutManager(center);
         }
         return center;

@@ -70,7 +70,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         for (ILayoutManager<View, ILayoutManager> manager : mLayoutManagers) {
             manager.onLayout(this, l, t, r, b);
         }
-
+        /**处理不同层级的触摸事件**/
         this.dealWithTouchEvents();
 
     }

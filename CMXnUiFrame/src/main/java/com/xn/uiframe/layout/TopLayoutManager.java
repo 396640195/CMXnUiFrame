@@ -12,6 +12,16 @@ import java.util.List;
 
 /**
  * <p>
+ * 定义一个基本视图布局管理器 TopLayoutManager.
+ * <br>
+ * 基本视图是指组成界面的各个基本元素的布局,在这个框架中主要定义了几个如下几个基本视图:
+ * 1.HeaderLayoutManager
+ * 2.TopLayoutManager
+ * 3.CenterLayoutManager
+ * 4.BottomLayoutManager
+ * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
+ * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ *
  * 该布局处于Header布局之下,Center布局之上.
  * Created by 陈真 on 2017/6/12.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
@@ -68,14 +78,16 @@ public class TopLayoutManager extends AbstractLayoutManager {
      * @return 布局文件加载后的视图布局Manager对象
      */
     public static TopLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
-        TopLayoutManager tm = new TopLayoutManager();
-        if (containerLayout.contains(tm)) {
+
+        TopLayoutManager topLayoutManager = new TopLayoutManager();
+
+        if (containerLayout.contains(topLayoutManager)) {
             throw new UIFrameLayoutAlreadyExistException("Top视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            tm.addLayout((PowerfulContainerLayout) containerLayout, layout);
-            containerLayout.addLayoutManager(tm);
+            topLayoutManager.addLayout(containerLayout, layout);
+            containerLayout.addLayoutManager(topLayoutManager);
         }
-        return tm;
+        return topLayoutManager;
     }
 
 }

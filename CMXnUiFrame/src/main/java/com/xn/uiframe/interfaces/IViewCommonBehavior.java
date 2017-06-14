@@ -1,6 +1,9 @@
 package com.xn.uiframe.interfaces;
 
 
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
+
 /**
  * <p>
  * 该接口主要定义界面通用的行为，包括:显示和隐藏LoadView，HeaderView,TopView,CenterView,DialogView,ErrorView等;
@@ -11,42 +14,128 @@ package com.xn.uiframe.interfaces;
 
 public interface IViewCommonBehavior extends IHeaderViewBehavior {
 
-    /**显示加载等待视图界面**/
-    void showLoadingView();
-    /**隐藏加载等待视图界面**/
-    void hideLoadingView();
+    /**
+     * 设置加载等待视图界面的显示和隐藏
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     */
+    void setLoadViewVisible(boolean visible);
 
-    /**显示对话框视图界面**/
-    void showDialogView();
-    /**隐藏对话框视图界面**/
-    void hideDialogView();
+    /**
+     * 加载等待视图界面是否为可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     */
+    boolean isLoadViewVisible();
 
-    /**显示错误信息展示界面**/
-    void showErrorView();
-    /**隐藏错误信息展示界面**/
-    void hideErrorView();
+    /**
+     * 设置对话框层视图是否可以显示
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     */
+    void setDialogViewVisible(boolean visible);
 
-    /**显示中间内容区域视图**/
-    void showCenterView();
-    /**隐藏中间内容区域视图**/
-    void hideCenterView();
+    /**
+     * 对话框视图界面是否处于可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isDialogViewVisible();
 
-    /**显示头部区域视图**/
-    void showHeaderView();
-    /**隐藏头部区域视图**/
-    void hideHeaderView();
+    /**
+     * 设置错误异常界面是否显示
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     */
+    void setErrorViewVisible(boolean visible);
 
-    /**显示头部之下的顶部区域视图**/
-    void showTopView();
-    /**隐藏头部之下的顶部区域视图**/
-    void hideTopView();
+    /**
+     * 错误信息展示视图是否处于可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isErrorViewVisible();
 
-    /**显示备用全屏视图**/
-    void showExtraFullView();
-    /**隐藏备用全屏视图**/
-    void hideExtraFullView();
+    /**
+     * 设置中间内容区域视图是否为可见状态
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    void setCenterViewVisible(boolean visible);
 
-    /**设置容器颜色**/
-    void setContainerBackgroundColor(int res);
-    void setContainerBackgroundResource(int res);
+    /**
+     * 中间内容区域视图是否处于可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isCenterViewVisible();
+
+    /**
+     * 设置头部视图是否为可见状态
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    void setHeaderViewVisible(boolean visible);
+
+    /**
+     * 隐藏头部区域视图
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isHeaderViewVisible();
+
+    /**
+     * 设置头部之下与中间区域之间的顶部视图是否可见
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    void setTopViewVisible(boolean visible);
+
+    /**
+     * 顶部区域是否处于可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isTopViewVisible();
+
+    /**
+     * 设置备用全屏视图是否为可见状态
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    void setExtraFullViewVisible(boolean visible);
+
+    /**
+     * 备用全屏视图是否处于可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isExtraFullViewVisible();
+
+    /**
+     * 设置底部视图是否为可见状态
+     *
+     * @param visible true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    void setBottomViewVisible(boolean visible);
+
+    /**
+     * 底部视图是否处于可见状态
+     *
+     * @return true:显示-可见状态,false:隐藏-不可见状态
+     **/
+    boolean isBottomViewVisible();
+
+    /**
+     * 设置容器颜色
+     *
+     * @param res 颜色资源ID
+     **/
+    void setContainerBackgroundColor(@ColorInt int res);
+
+    /**
+     * 设置容器背景图片
+     * @param res 图片资源ID
+     */
+    void setContainerBackgroundResource(@DrawableRes int res);
 }

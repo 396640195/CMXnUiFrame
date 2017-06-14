@@ -127,87 +127,99 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements I
     }
 
     @Override
-    final public void showLoadingView() {
+    public void setLoadViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.showLoadingView();
+            mBaseViewContainer.setLoadViewVisible(visible);
         }
     }
 
     @Override
-    final public void hideLoadingView() {
+    public boolean isLoadViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isLoadViewVisible();
+    }
+
+    @Override
+    public void setDialogViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideLoadingView();
+            mBaseViewContainer.setDialogViewVisible(visible);
         }
     }
 
     @Override
-    final public void showDialogView() {
+    public boolean isDialogViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isDialogViewVisible();
+    }
+
+    @Override
+    public void setErrorViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.showDialogView();
+            mBaseViewContainer.setErrorViewVisible(visible);
         }
     }
 
     @Override
-    final public void hideDialogView() {
+    public boolean isErrorViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isErrorViewVisible();
+    }
+
+    @Override
+    public void setCenterViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideDialogView();
+            mBaseViewContainer.setCenterViewVisible(visible);
         }
     }
 
     @Override
-    final public void showErrorView() {
+    public boolean isCenterViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isCenterViewVisible();
+    }
+
+    @Override
+    public void setHeaderViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.showErrorView();
+            mBaseViewContainer.setHeaderViewVisible(visible);
         }
     }
 
     @Override
-    final public void hideErrorView() {
+    public boolean isHeaderViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isHeaderViewVisible();
+    }
+
+    @Override
+    public void setTopViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideErrorView();
+            mBaseViewContainer.setTopViewVisible(visible);
         }
     }
 
     @Override
-    final public void showCenterView() {
+    public boolean isTopViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isTopViewVisible();
+    }
+
+    @Override
+    public void setExtraFullViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.showCenterView();
+            mBaseViewContainer.setExtraFullViewVisible(visible);
         }
     }
 
     @Override
-    final public void hideCenterView() {
+    public boolean isExtraFullViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isExtraFullViewVisible();
+    }
+
+    @Override
+    public void setBottomViewVisible(boolean visible) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideCenterView();
+            mBaseViewContainer.setBottomViewVisible(visible);
         }
     }
 
     @Override
-    final public void showHeaderView() {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.showHeaderView();
-        }
-    }
-
-    @Override
-    final public void hideHeaderView() {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideHeaderView();
-        }
-    }
-
-    @Override
-    final public void showTopView() {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.showTopView();
-        }
-    }
-
-    @Override
-    final public void hideTopView() {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideTopView();
-        }
+    public boolean isBottomViewVisible() {
+        return mBaseViewContainer == null ? false : mBaseViewContainer.isBottomViewVisible();
     }
 
     @Override
@@ -255,19 +267,6 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements I
         return textView;
     }
 
-    @Override
-    public void showExtraFullView() {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.showExtraFullView();
-        }
-    }
-
-    @Override
-    public void hideExtraFullView() {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.hideExtraFullView();
-        }
-    }
 
     @Override
     public void setContainerBackgroundColor(int res) {

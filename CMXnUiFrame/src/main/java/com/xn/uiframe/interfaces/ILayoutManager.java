@@ -27,7 +27,7 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
      * @param layout    布局文件
      * @return 返回添加布局之后对应的View实例对象
      */
-    T addLayout(PowerfulContainerLayout container, int layout);
+    T addLayout(IContainerManager container, int layout);
 
 
     /**
@@ -80,4 +80,5 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
 
     /**获取该布局的View对象**/
     View getContentView();
+
 }

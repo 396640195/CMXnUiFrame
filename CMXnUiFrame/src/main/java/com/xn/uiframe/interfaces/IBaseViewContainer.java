@@ -15,5 +15,9 @@ import android.view.View;
  */
 
 public interface IBaseViewContainer extends IViewCommonBehavior {
+    /**
+     * 定义创建视图的方法
+     * @return 返回创建的视图对象
+     */
     View onCreateView();
 }

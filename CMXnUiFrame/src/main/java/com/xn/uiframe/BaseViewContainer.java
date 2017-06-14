@@ -37,101 +37,99 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void showLoadingView() {
-        if (mLoadViewManager != null) {
-            this.mLoadViewManager.setVisible(View.VISIBLE);
+    public void setLoadViewVisible(boolean visible) {
+        if(mLoadViewManager != null){
+            mLoadViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void hideLoadingView() {
-        if (mLoadViewManager != null) {
-            this.mLoadViewManager.setVisible(View.GONE);
+    public boolean isLoadViewVisible() {
+        return mLoadViewManager == null ? false : mLoadViewManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setDialogViewVisible(boolean visible) {
+        if(mDialogViewManager != null){
+            mDialogViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void showDialogView() {
-        if (mDialogViewManager != null) {
-            this.mDialogViewManager.setVisible(View.VISIBLE);
+    public boolean isDialogViewVisible() {
+        return mDialogViewManager == null ? false : mDialogViewManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setErrorViewVisible(boolean visible) {
+        if(mErrorViewManager != null){
+            mErrorViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void hideDialogView() {
-        if (mDialogViewManager != null) {
-            this.mDialogViewManager.setVisible(View.GONE);
+    public boolean isErrorViewVisible() {
+        return mErrorViewManager == null ? false : mErrorViewManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setCenterViewVisible(boolean visible) {
+        if(mCenterLayoutManager != null){
+            mCenterLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void showErrorView() {
-        if (mErrorViewManager != null) {
-            this.mErrorViewManager.setVisible(View.VISIBLE);
+    public boolean isCenterViewVisible() {
+        return mCenterLayoutManager == null ? false : mCenterLayoutManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setHeaderViewVisible(boolean visible) {
+        if(mHeaderLayoutManager != null){
+            mHeaderLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void hideErrorView() {
-        if (mErrorViewManager != null) {
-            this.mErrorViewManager.setVisible(View.GONE);
+    public boolean isHeaderViewVisible() {
+        return mHeaderLayoutManager == null ? false : mHeaderLayoutManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setTopViewVisible(boolean visible) {
+        if(mTopLayoutManager != null){
+            mTopLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void showCenterView() {
-        if (mCenterLayoutManager != null) {
-            this.mCenterLayoutManager.setVisible(View.VISIBLE);
+    public boolean isTopViewVisible() {
+        return mTopLayoutManager == null ? false : mTopLayoutManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setExtraFullViewVisible(boolean visible) {
+        if(mErrorViewManager != null){
+            mErrorViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void hideCenterView() {
-        if (mCenterLayoutManager != null) {
-            this.mCenterLayoutManager.setVisible(View.GONE);
+    public boolean isExtraFullViewVisible() {
+        return mExtraFullViewManager == null ? false : mExtraFullViewManager.getVisibility() == View.VISIBLE ? true : false;
+    }
+
+    @Override
+    public void setBottomViewVisible(boolean visible) {
+        if(mBottomLayoutManager != null){
+            mBottomLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public void showHeaderView() {
-        if (mHeaderLayoutManager != null) {
-            this.mHeaderLayoutManager.setVisible(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideHeaderView() {
-        if (mHeaderLayoutManager != null) {
-            this.mHeaderLayoutManager.setVisible(View.GONE);
-        }
-    }
-
-    @Override
-    public void showTopView() {
-        if (mTopLayoutManager != null) {
-            this.mTopLayoutManager.setVisible(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideTopView() {
-        if (mTopLayoutManager != null) {
-            this.mTopLayoutManager.setVisible(View.GONE);
-        }
-    }
-
-    @Override
-    public void showExtraFullView() {
-        if (this.mExtraFullViewManager != null) {
-            mExtraFullViewManager.setVisible(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void hideExtraFullView() {
-        if (this.mExtraFullViewManager != null) {
-            mExtraFullViewManager.setVisible(View.GONE);
-        }
+    public boolean isBottomViewVisible() {
+        return mBottomLayoutManager == null ? false : mBottomLayoutManager.getVisibility() == View.VISIBLE ? true : false;
     }
 
     @Override

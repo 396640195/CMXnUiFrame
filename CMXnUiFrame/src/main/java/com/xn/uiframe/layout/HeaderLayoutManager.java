@@ -13,7 +13,17 @@ import com.xn.uiframe.interfaces.IHeaderViewBehavior;
 
 /**
  * <p>
- * 该布局主要是定义一个层级，负责展示一个页面的头部，该头部可能包括返回图标，文件等信息. 具体内容取决于addLayout传进来的res布局文件.
+ * 定义一个基本视图布局管理器 HeaderLayoutManager.
+ * 负责展示一个页面的头部，该头部可能包括返回图标，文件等信息. 具体内容取决于addLayout传进来的res布局文件.
+ * <br>
+ * 基本视图是指组成界面的各个基本元素的布局,在这个框架中主要定义了几个如下几个基本视图:
+ * 1.HeaderLayoutManager
+ * 2.TopLayoutManager
+ * 3.CenterLayoutManager
+ * 4.BottomLayoutManager
+ * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
+ * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ * <p>
  * Created by 陈真 on 2017/6/12.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
@@ -29,11 +39,10 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
 
         /**如果不可见，则对该布局不进行处理;**/
-        if (mView == null || getVisibility() != View.VISIBLE) {
+        if (getVisibility() != View.VISIBLE) {
             return;
         }
 
-        //获得当前布局的Margin参数
         /**获得当前布局的Margin参数**/
         ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
         int leftMargin = marginLayoutParams.leftMargin;
@@ -55,7 +64,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         if (containerLayout.contains(header)) {
             throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            header.addLayout((PowerfulContainerLayout) containerLayout, layout);
+            header.addLayout(containerLayout, layout);
             containerLayout.addLayoutManager(header);
         }
         return header;

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 
 /**
@@ -89,9 +90,9 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     public void onMeasure(PowerfulContainerLayout container, int widthMeasureSpec, int heightMeasureSpec) {
 
         /**
-         * 当View处于{@link View.VISIBLE} or {@link View.INVISIBLE}两种情况下，都要测量它的宽高;
+         * 当View处于{@link View.VISIBLE} 才测量它的宽高;
          */
-        if (mView == null || mView.getVisibility() == View.GONE) {
+        if (getVisibility() != View.VISIBLE) {
             return;
         }
 
@@ -136,8 +137,9 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
-    public View addLayout(PowerfulContainerLayout container, int layout) {
-        mView = LayoutInflater.from(container.getContext()).inflate(layout, container, false);
+    public View addLayout(IContainerManager container, int layout) { 
+        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout)container;
+        mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
         return mView;
     }
 

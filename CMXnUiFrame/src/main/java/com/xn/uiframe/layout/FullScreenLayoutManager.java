@@ -11,7 +11,16 @@ import com.xn.uiframe.interfaces.IContainerManager;
 
 /**
  * <p>
+ * 定义一个基本视图布局管理器 HeaderLayoutManager.
  * 该布局主要用来实现全屏遮罩视图，包括对话框,加载等待，异常展示这类全屏遮罩视图.
+ * <br>
+ * 基本视图是指组成界面的各个基本元素的布局,在这个框架中主要定义了几个如下几个基本视图:
+ * 1.HeaderLayoutManager
+ * 2.TopLayoutManager
+ * 3.CenterLayoutManager
+ * 4.BottomLayoutManager
+ * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
+ * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
  * Created by 陈真 on 2017/6/13.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
@@ -27,8 +36,8 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
     public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
         /**
          * 提供默认的全屏布局实现,且只有在该View可见的时候，才绘制该视图;
-         * **/
-        if (mView == null || getVisibility() != View.VISIBLE) {
+         * */
+        if (getVisibility() != View.VISIBLE) {
             return;
         }
 
@@ -60,15 +69,20 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
         if (layer < Layer.LAYER_LOAD_SCREEN) {
             throw new UIFrameIllegalArgumentException("layer参数类型错误，该方法只能添加全屏类型的视图.请查看该接口的参数说明.");
         }
+
         FullScreenLayoutManager fullScreenLayoutManager = new FullScreenLayoutManager(layer);
+
+        //每种视图限定只能添加一个，如果已经存在，则不永许再添加.
         if (containerLayout.contains(fullScreenLayoutManager)) {
-            throw new UIFrameLayoutAlreadyExistException("Top视图已经添加到容器当中了，该视图不能重复添加.");
+            throw new UIFrameLayoutAlreadyExistException("当前类型视图已经添加到容器当中了， 不能重复添加.");
         } else {
-            fullScreenLayoutManager.addLayout((PowerfulContainerLayout) containerLayout, layout);
+            fullScreenLayoutManager.addLayout(containerLayout, layout);
             containerLayout.addLayoutManager(fullScreenLayoutManager);
         }
-        if(layer == Layer.LAYER_DIALOG_SCREEN){
-            View view =  fullScreenLayoutManager.getContentView();
+
+        //如果是对话框视图，则设置背景为半透明色
+        if (layer == Layer.LAYER_DIALOG_SCREEN) {
+            View view = fullScreenLayoutManager.getContentView();
             fullScreenLayoutManager.getContentView().setBackgroundDrawable(view.getResources().getDrawable(R.drawable.ui_frame_dialog_translucency));
         }
         return fullScreenLayoutManager;
