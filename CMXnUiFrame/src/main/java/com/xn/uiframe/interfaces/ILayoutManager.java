@@ -81,4 +81,7 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
     /**获取该布局的View对象**/
     View getContentView();
 
+    void animateY(long seconds);
+    void animateX(long seconds);
+    void animateXY(long seconds);
 }

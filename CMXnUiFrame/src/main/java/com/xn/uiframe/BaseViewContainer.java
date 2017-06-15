@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
+import com.xn.uiframe.interfaces.ILayoutManager;
+import com.xn.uiframe.interfaces.ViewElementCategory;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -37,111 +39,53 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void setLoadViewVisible(boolean visible) {
-        if(mLoadViewManager != null){
-            mLoadViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
+    public void setElementViewVisible(ViewElementCategory elementCategory, boolean visible) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
         }
     }
 
     @Override
-    public boolean isLoadViewVisible() {
-        return mLoadViewManager == null ? false : mLoadViewManager.getVisibility() == View.VISIBLE ? true : false;
+    public boolean isElementViewVisible(ViewElementCategory elementCategory) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        return layoutManager == null ? false : layoutManager.getVisibility() == View.VISIBLE ? true : false;
     }
 
     @Override
-    public void setDialogViewVisible(boolean visible) {
-        if(mDialogViewManager != null){
-            mDialogViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
+    public void animateY(ViewElementCategory elementCategory, long seconds) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.animateY(seconds);
         }
     }
 
     @Override
-    public boolean isDialogViewVisible() {
-        return mDialogViewManager == null ? false : mDialogViewManager.getVisibility() == View.VISIBLE ? true : false;
-    }
-
-    @Override
-    public void setErrorViewVisible(boolean visible) {
-        if(mErrorViewManager != null){
-            mErrorViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
+    public void animateX(ViewElementCategory elementCategory, long seconds) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.animateX(seconds);
         }
     }
 
     @Override
-    public boolean isErrorViewVisible() {
-        return mErrorViewManager == null ? false : mErrorViewManager.getVisibility() == View.VISIBLE ? true : false;
-    }
-
-    @Override
-    public void setCenterViewVisible(boolean visible) {
-        if(mCenterLayoutManager != null){
-            mCenterLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
+    public void animateXY(ViewElementCategory elementCategory, long seconds) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.animateXY(seconds);
         }
-    }
-
-    @Override
-    public boolean isCenterViewVisible() {
-        return mCenterLayoutManager == null ? false : mCenterLayoutManager.getVisibility() == View.VISIBLE ? true : false;
-    }
-
-    @Override
-    public void setHeaderViewVisible(boolean visible) {
-        if(mHeaderLayoutManager != null){
-            mHeaderLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    @Override
-    public boolean isHeaderViewVisible() {
-        return mHeaderLayoutManager == null ? false : mHeaderLayoutManager.getVisibility() == View.VISIBLE ? true : false;
-    }
-
-    @Override
-    public void setTopViewVisible(boolean visible) {
-        if(mTopLayoutManager != null){
-            mTopLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    @Override
-    public boolean isTopViewVisible() {
-        return mTopLayoutManager == null ? false : mTopLayoutManager.getVisibility() == View.VISIBLE ? true : false;
-    }
-
-    @Override
-    public void setExtraFullViewVisible(boolean visible) {
-        if(mErrorViewManager != null){
-            mErrorViewManager.setVisible(visible ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    @Override
-    public boolean isExtraFullViewVisible() {
-        return mExtraFullViewManager == null ? false : mExtraFullViewManager.getVisibility() == View.VISIBLE ? true : false;
-    }
-
-    @Override
-    public void setBottomViewVisible(boolean visible) {
-        if(mBottomLayoutManager != null){
-            mBottomLayoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
-        }
-    }
-
-    @Override
-    public boolean isBottomViewVisible() {
-        return mBottomLayoutManager == null ? false : mBottomLayoutManager.getVisibility() == View.VISIBLE ? true : false;
     }
 
     @Override
     public void setContainerBackgroundColor(int res) {
-        if(mContainer != null){
+        if (mContainer != null) {
             mContainer.setBackgroundColor(res);
         }
     }
 
     @Override
     public void setContainerBackgroundResource(int res) {
-        if(mContainer != null){
+        if (mContainer != null) {
             mContainer.setBackgroundResource(res);
         }
     }
@@ -188,7 +132,7 @@ public class BaseViewContainer implements IBaseViewContainer {
 
     @Override
     public View onCreateView() {
-        mContainer = (PowerfulContainerLayout) LayoutInflater.from(this.mContext).inflate(R.layout.ui_frame_container_layout, null, false);
+        this.mContainer = (PowerfulContainerLayout) LayoutInflater.from(this.mContext).inflate(R.layout.ui_frame_container_layout, null, false);
         this.mHeaderLayoutManager = mBasicViewAdapter.addHeaderView(mContainer);
         this.mTopLayoutManager = mBasicViewAdapter.addTopView(mContainer);
         this.mBottomLayoutManager = mBasicViewAdapter.addBottomView(mContainer);
@@ -198,5 +142,27 @@ public class BaseViewContainer implements IBaseViewContainer {
         this.mExtraFullViewManager = mBasicViewAdapter.addExtraTopView(mContainer);
         this.mDialogViewManager = mBasicViewAdapter.addDialogView(mContainer);
         return mContainer;
+    }
+
+    private ILayoutManager elementCategoryTypeToLayoutManager(ViewElementCategory category) {
+
+        if (category.ordinal() == ViewElementCategory.HeaderView.ordinal()) {
+            return mHeaderLayoutManager;
+        } else if (category.ordinal() == ViewElementCategory.TopView.ordinal()) {
+            return mTopLayoutManager;
+        } else if (category.ordinal() == ViewElementCategory.CenterView.ordinal()) {
+            return mCenterLayoutManager;
+        } else if (category.ordinal() == ViewElementCategory.BottomView.ordinal()) {
+            return mBottomLayoutManager;
+        } else if (category.ordinal() == ViewElementCategory.DialogView.ordinal()) {
+            return mDialogViewManager;
+        } else if (category.ordinal() == ViewElementCategory.ErrorView.ordinal()) {
+            return mErrorViewManager;
+        } else if (category.ordinal() == ViewElementCategory.ExtraView.ordinal()) {
+            return mExtraFullViewManager;
+        } else if (category.ordinal() == ViewElementCategory.LoadView.ordinal()) {
+            return mLoadViewManager;
+        }
+        return null;
     }
 }

@@ -179,4 +179,5 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         }
         super.onDraw(canvas);
     }
+
 }

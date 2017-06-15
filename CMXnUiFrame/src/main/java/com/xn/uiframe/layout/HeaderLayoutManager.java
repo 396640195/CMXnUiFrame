@@ -108,4 +108,5 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         textView.setCompoundDrawables(drawable, null, null, null);
         return textView;
     }
+
 }

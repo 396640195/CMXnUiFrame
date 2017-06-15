@@ -19,4 +19,6 @@ public interface IContainerManager<T> {
       * @return true: 存在该布类型的布局, false:不存在该类型的布局
       */
      boolean contains(T t);
+
+     void requestLayout();
 }

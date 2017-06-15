@@ -20,7 +20,7 @@ android:orientation="vertical">
     android:scaleType="fitXY"
     />
 <Button
-    android:id="@+id/load_test_button"
+    android:id="@+id/ok_button_of_load_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="加载进度视图" />

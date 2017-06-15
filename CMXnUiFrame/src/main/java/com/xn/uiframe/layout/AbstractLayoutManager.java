@@ -1,11 +1,13 @@
 package com.xn.uiframe.layout;
 
+import android.animation.ValueAnimator;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.animation.ViewAnimator;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 
@@ -18,20 +20,30 @@ import com.xn.uiframe.interfaces.ILayoutManager;
  */
 
 public abstract class AbstractLayoutManager implements ILayoutManager<View, ILayoutManager> {
-
-    public AbstractLayoutManager() {}
-
+    private IContainerManager mContainerManager;
+    public AbstractLayoutManager() {
+       this.initAnimator();
+    }
+    private ViewAnimator mViewAnimator;
     public AbstractLayoutManager(int mLayer) {
+        this.initAnimator();
         this.mLayer = mLayer;
     }
 
+    private void initAnimator(){
+        if (android.os.Build.VERSION.SDK_INT < 11) {
+            this.mViewAnimator = new ViewAnimator();
+        }else{
+            this.mViewAnimator = new ViewAnimator(new ViewAnimateListener());
+        }
+    }
     /**
      * 默认层级为对话框全屏模式
      **/
     protected int mLayer = Layer.LAYER_DIALOG_SCREEN;
 
     /**
-     * 当调用了{@link AbstractLayoutManager#addLayout(PowerfulContainerLayout, int)}
+     * 当调用了{@link AbstractLayoutManager#addLayout(IContainerManager, int)}
      * 方法后，会保存当前视图对象;
      */
     protected View mView;
@@ -111,7 +123,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec(basicWidth, View.MeasureSpec.EXACTLY);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int)(basicWidth*mViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
         int basicHeightSpec = View.MeasureSpec.makeMeasureSpec(basicHeight, View.MeasureSpec.EXACTLY);
 
         container.measureChild(mView, basicWidthSpec, basicHeightSpec);
@@ -173,5 +185,28 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     @Override
     public View getContentView() {
         return  mView;
+    }
+
+    @Override
+    public void animateY(long duration) {
+        this.mViewAnimator.animateY(duration);
+    }
+
+    @Override
+    public void animateX(long duration) {
+        this.mViewAnimator.animateX(duration);
+    }
+
+    @Override
+    public void animateXY(long duration) {
+        this.mViewAnimator.animateXY(duration,duration);
+    }
+
+     class ViewAnimateListener  implements ValueAnimator.AnimatorUpdateListener{
+
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+
+        }
     }
 }

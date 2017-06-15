@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.xn.uiframe.activity.UIFrameBasicActivity;
 import com.xn.uiframe.interfaces.IContainerManager;
+import com.xn.uiframe.interfaces.ViewElementCategory;
 import com.xn.uiframe.layout.AbstractLayoutManager;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
@@ -14,7 +15,7 @@ import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
 
-public class MainActivity extends UIFrameBasicActivity implements View.OnClickListener {
+public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,7 @@ public class MainActivity extends UIFrameBasicActivity implements View.OnClickLi
     public FullScreenLayoutManager addDialogView(IContainerManager container) {
         FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
         View view = fsm.getContentView();
-        view.findViewById(R.id.ok_button).setOnClickListener(this);
+        view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
         return fsm;
     }
 
@@ -64,7 +65,7 @@ public class MainActivity extends UIFrameBasicActivity implements View.OnClickLi
     public FullScreenLayoutManager addLoadingView(IContainerManager container) {
         FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
         View view = fullScreenLayoutManager.getContentView();
-        view.findViewById(R.id.load_test_button).setOnClickListener(this);
+        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
         return fullScreenLayoutManager;
     }
 
@@ -72,23 +73,25 @@ public class MainActivity extends UIFrameBasicActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ok:
-                setHeaderViewVisible(isHeaderViewVisible() ? false : true);
+                boolean visible = isElementViewVisible(ViewElementCategory.HeaderView);
+                setElementViewVisible(ViewElementCategory.HeaderView,visible ? false : true);
+                animateX(ViewElementCategory.HeaderView,1500);
                 break;
-            case R.id.show_dialog:
-                setDialogViewVisible(isDialogViewVisible() ? false : true);
+            case R.id.show_dialog_view:
+                setElementViewVisible(ViewElementCategory.DialogView,isElementViewVisible(ViewElementCategory.DialogView)? false : true);
                 break;
             case R.id.show_load_view:
-                setLoadViewVisible(isLoadViewVisible() ? false : true);
+                setElementViewVisible(ViewElementCategory.LoadView,isElementViewVisible(ViewElementCategory.LoadView)? false : true);
                 break;
             case R.id.show_top_view:
-                setTopViewVisible(isTopViewVisible() ? false : true);
+                setElementViewVisible(ViewElementCategory.TopView,isElementViewVisible(ViewElementCategory.TopView)? false : true);
                 break;
-            case R.id.load_test_button:
-                Toast.makeText(MainActivity.this, "Load View clicked.", Toast.LENGTH_LONG).show();
-                setLoadViewVisible(false);
+            case R.id.ok_button_of_load_view:
+                Toast.makeText(BasicSimpleActivity.this, "Load View clicked.", Toast.LENGTH_LONG).show();
+                setElementViewVisible(ViewElementCategory.LoadView,false);
                 break;
-            case R.id.ok_button:
-                setDialogViewVisible(false);
+            case R.id.ok_button_of_dialog:
+                setElementViewVisible(ViewElementCategory.DialogView,false);
                 break;
         }
     }

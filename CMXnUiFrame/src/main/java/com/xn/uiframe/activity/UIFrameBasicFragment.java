@@ -13,6 +13,7 @@ import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.IViewCommonBehavior;
+import com.xn.uiframe.interfaces.ViewElementCategory;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -57,6 +58,7 @@ public class UIFrameBasicFragment extends Fragment implements IBasicViewAdapter,
         return view;
     }
 
+
     @Override
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
         return null;
@@ -96,101 +98,7 @@ public class UIFrameBasicFragment extends Fragment implements IBasicViewAdapter,
     public FullScreenLayoutManager addExtraTopView(IContainerManager container) {
         return null;
     }
-    @Override
-    public void setLoadViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setLoadViewVisible(visible);
-        }
-    }
 
-    @Override
-    public boolean isLoadViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isLoadViewVisible();
-    }
-
-    @Override
-    public void setDialogViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setDialogViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isDialogViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isDialogViewVisible();
-    }
-
-    @Override
-    public void setErrorViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setErrorViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isErrorViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isErrorViewVisible();
-    }
-
-    @Override
-    public void setCenterViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setCenterViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isCenterViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isCenterViewVisible();
-    }
-
-    @Override
-    public void setHeaderViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setHeaderViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isHeaderViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isHeaderViewVisible();
-    }
-
-    @Override
-    public void setTopViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setTopViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isTopViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isTopViewVisible();
-    }
-
-    @Override
-    public void setExtraFullViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setExtraFullViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isExtraFullViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isExtraFullViewVisible();
-    }
-
-    @Override
-    public void setBottomViewVisible(boolean visible) {
-        if (mBaseViewContainer != null) {
-            mBaseViewContainer.setBottomViewVisible(visible);
-        }
-    }
-
-    @Override
-    public boolean isBottomViewVisible() {
-        return mBaseViewContainer == null ? false : mBaseViewContainer.isBottomViewVisible();
-    }
 
     @Override
     final public TextView setHeaderLeftText(int resource) {
@@ -260,5 +168,41 @@ public class UIFrameBasicFragment extends Fragment implements IBasicViewAdapter,
     @Override
     public boolean isNeedPullRefresh() {
         return false;
+    }
+
+    @Override
+    public void setElementViewVisible(ViewElementCategory elementCategory, boolean visible) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.setElementViewVisible(elementCategory, visible);
+        }
+    }
+
+    @Override
+    public boolean isElementViewVisible(ViewElementCategory element) {
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.isElementViewVisible(element);
+        }
+        return false;
+    }
+
+    @Override
+    public void animateY(ViewElementCategory elementCategory, long seconds) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.animateY(elementCategory,seconds);
+        }
+    }
+
+    @Override
+    public void animateX(ViewElementCategory elementCategory, long seconds) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.animateX(elementCategory,seconds);
+        }
+    }
+
+    @Override
+    public void animateXY(ViewElementCategory elementCategory, long seconds) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.animateXY(elementCategory,seconds);
+        }
     }
 }
