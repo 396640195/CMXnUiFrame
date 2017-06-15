@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.ILayoutManager;
@@ -53,26 +54,50 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void animateY(ViewElementCategory elementCategory, long seconds) {
+    public void animateY(ViewElementCategory elementCategory, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
-            layoutManager.animateY(seconds);
+            layoutManager.animateY(duration);
         }
     }
 
     @Override
-    public void animateX(ViewElementCategory elementCategory, long seconds) {
+    public void animateX(ViewElementCategory elementCategory, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
-            layoutManager.animateX(seconds);
+            layoutManager.animateX(duration);
         }
     }
 
     @Override
-    public void animateXY(ViewElementCategory elementCategory, long seconds) {
+    public void animateXY(ViewElementCategory elementCategory, long xDuration, long yDuration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
-            layoutManager.animateXY(seconds);
+            layoutManager.animateXY(xDuration, yDuration);
+        }
+    }
+
+    @Override
+    public void animateY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.animateY(easing, duration);
+        }
+    }
+
+    @Override
+    public void animateX(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.animateX(easing, duration);
+        }
+    }
+
+    @Override
+    public void animateXY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
+        ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
+        if (layoutManager != null) {
+            layoutManager.animateXY(easing, xDuration, yDuration);
         }
     }
 

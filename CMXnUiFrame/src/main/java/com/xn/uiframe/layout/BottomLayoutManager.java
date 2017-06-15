@@ -3,7 +3,6 @@ package com.xn.uiframe.layout;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xn.uiframe.PowerfulContainerLayout;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
 
@@ -27,12 +26,13 @@ import com.xn.uiframe.interfaces.IContainerManager;
  */
 
 public class BottomLayoutManager extends AbstractLayoutManager {
-    public BottomLayoutManager() {
+    public BottomLayoutManager(IContainerManager mContainerManager) {
+        super(mContainerManager);
         this.mLayer = Layer.LAYER_BASIC_BOTTOM_PART;
     }
 
     @Override
-    public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
+    public void onLayout(int left, int top, int right, int bottom) {
         /**如果不可见，则对该布局不进行处理;**/
         if (getVisibility() != View.VISIBLE) {
             return;
@@ -57,11 +57,11 @@ public class BottomLayoutManager extends AbstractLayoutManager {
      * @return 布局文件加载后的视图布局Manager对象
      */
     public static BottomLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
-        BottomLayoutManager bottom = new BottomLayoutManager();
+        BottomLayoutManager bottom = new BottomLayoutManager(containerLayout);
         if (containerLayout.contains(bottom)) {
             throw new UIFrameLayoutAlreadyExistException("Bottom视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            bottom.addLayout(containerLayout, layout);
+            bottom.addLayout(layout);
             containerLayout.addLayoutManager(bottom);
         }
         return bottom;

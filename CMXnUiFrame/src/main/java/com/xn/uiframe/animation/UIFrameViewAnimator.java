@@ -10,16 +10,16 @@ import android.animation.ValueAnimator.AnimatorUpdateListener;
  * 
  * @author Philipp Jahoda
  */
-public class ViewAnimator {
+public class UIFrameViewAnimator {
 
     /** object that is updated upon animation update */
     private AnimatorUpdateListener mListener;
 
-    public ViewAnimator() {
+    public UIFrameViewAnimator() {
 
     }
 
-    public ViewAnimator(AnimatorUpdateListener listener) {
+    public UIFrameViewAnimator(AnimatorUpdateListener listener) {
         mListener = listener;
     }
 
@@ -49,8 +49,8 @@ public class ViewAnimator {
      * @param easingX
      * @param easingY
      */
-    public void animateXY(int durationMillisX, int durationMillisY, EasingFunction easingX,
-            EasingFunction easingY) {
+    public void animateXY(long durationMillisX, long durationMillisY, UIFrameAnimatorInterpolator easingX,
+            UIFrameAnimatorInterpolator easingY) {
 
         if (android.os.Build.VERSION.SDK_INT < 11)
             return;
@@ -84,7 +84,7 @@ public class ViewAnimator {
      * @param durationMillis
      * @param easing
      */
-    public void animateX(int durationMillis, EasingFunction easing) {
+    public void animateX(long durationMillis, UIFrameAnimatorInterpolator easing) {
 
         if (android.os.Build.VERSION.SDK_INT < 11)
             return;
@@ -104,7 +104,7 @@ public class ViewAnimator {
      * @param durationMillis
      * @param easing
      */
-    public void animateY(int durationMillis, EasingFunction easing) {
+    public void animateY(long durationMillis, UIFrameAnimatorInterpolator easing) {
 
         if (android.os.Build.VERSION.SDK_INT < 11)
             return;
@@ -131,8 +131,8 @@ public class ViewAnimator {
      * @param easingX
      * @param easingY
      */
-    public void animateXY(int durationMillisX, int durationMillisY, Easing.EasingOption easingX,
-            Easing.EasingOption easingY) {
+    public void animateXY(long durationMillisX, long durationMillisY, Easing.EasingAnimation easingX,
+            Easing.EasingAnimation easingY) {
 
         if (android.os.Build.VERSION.SDK_INT < 11)
             return;
@@ -166,7 +166,7 @@ public class ViewAnimator {
      * @param durationMillis
      * @param easing
      */
-    public void animateX(int durationMillis, Easing.EasingOption easing) {
+    public void animateX(long durationMillis, Easing.EasingAnimation easing) {
 
         if (android.os.Build.VERSION.SDK_INT < 11)
             return;
@@ -186,7 +186,7 @@ public class ViewAnimator {
      * @param durationMillis
      * @param easing
      */
-    public void animateY(int durationMillis, Easing.EasingOption easing) {
+    public void animateY(long durationMillis, Easing.EasingAnimation easing) {
 
         if (android.os.Build.VERSION.SDK_INT < 11)
             return;
@@ -255,7 +255,7 @@ public class ViewAnimator {
 
     /**
      * Animates the rendering of the chart on the y-axis with the specified
-     * animation time. If animate(...) is called, no further calling of
+     * animation time. If animate(...) is called, no further calling of+
      * invalidate() is necessary to refresh the chart.
      *
      * @param durationMillis

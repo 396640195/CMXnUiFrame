@@ -3,8 +3,8 @@ package com.xn.uiframe.layout;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xn.uiframe.PowerfulContainerLayout;
 import com.xn.uiframe.R;
+import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.exception.UIFrameIllegalArgumentException;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
@@ -28,12 +28,12 @@ import com.xn.uiframe.interfaces.IContainerManager;
 
 public class FullScreenLayoutManager extends AbstractLayoutManager {
 
-    public FullScreenLayoutManager(int mLayer) {
-        super(mLayer);
+    public FullScreenLayoutManager(IContainerManager mContainerManager, int mLayer) {
+        super(mContainerManager, mLayer);
     }
 
     @Override
-    public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
+    public void onLayout(int left, int top, int right, int bottom) {
         /**
          * 提供默认的全屏布局实现,且只有在该View可见的时候，才绘制该视图;
          * */
@@ -70,13 +70,13 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
             throw new UIFrameIllegalArgumentException("layer参数类型错误，该方法只能添加全屏类型的视图.请查看该接口的参数说明.");
         }
 
-        FullScreenLayoutManager fullScreenLayoutManager = new FullScreenLayoutManager(layer);
+        FullScreenLayoutManager fullScreenLayoutManager = new FullScreenLayoutManager(containerLayout, layer);
 
         //每种视图限定只能添加一个，如果已经存在，则不永许再添加.
         if (containerLayout.contains(fullScreenLayoutManager)) {
             throw new UIFrameLayoutAlreadyExistException("当前类型视图已经添加到容器当中了， 不能重复添加.");
         } else {
-            fullScreenLayoutManager.addLayout(containerLayout, layout);
+            fullScreenLayoutManager.addLayout(layout);
             containerLayout.addLayoutManager(fullScreenLayoutManager);
         }
 
@@ -86,5 +86,13 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
             fullScreenLayoutManager.getContentView().setBackgroundDrawable(view.getResources().getDrawable(R.drawable.ui_frame_dialog_translucency));
         }
         return fullScreenLayoutManager;
+    }
+
+    @Override
+    public void setVisible(int visible) {
+        super.setVisible(visible);
+        if(visible == View.VISIBLE){
+            animateY(Easing.EasingAnimation.EaseOutBounce,1000);
+        }
     }
 }

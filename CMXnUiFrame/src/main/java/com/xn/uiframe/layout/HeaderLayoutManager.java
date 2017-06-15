@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.xn.uiframe.PowerfulContainerLayout;
 import com.xn.uiframe.R;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
@@ -31,12 +30,13 @@ import com.xn.uiframe.interfaces.IHeaderViewBehavior;
 
 public class HeaderLayoutManager extends AbstractLayoutManager implements IHeaderViewBehavior {
 
-    public HeaderLayoutManager() {
+    public HeaderLayoutManager(IContainerManager mContainerManager) {
+        super(mContainerManager);
         this.mLayer = Layer.LAYER_BASIC_HEADER_PART;
     }
 
     @Override
-    public void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom) {
+    public void onLayout(int left, int top, int right, int bottom) {
 
         /**如果不可见，则对该布局不进行处理;**/
         if (getVisibility() != View.VISIBLE) {
@@ -60,11 +60,11 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
      * @return 布局文件加载后的视图布局Manager对象
      */
     public static HeaderLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
-        HeaderLayoutManager header = new HeaderLayoutManager();
+        HeaderLayoutManager header = new HeaderLayoutManager(containerLayout);
         if (containerLayout.contains(header)) {
             throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            header.addLayout(containerLayout, layout);
+            header.addLayout(layout);
             containerLayout.addLayoutManager(header);
         }
         return header;

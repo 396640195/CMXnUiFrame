@@ -4,6 +4,8 @@ package com.xn.uiframe.interfaces;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
+import com.xn.uiframe.animation.Easing;
+
 /**
  * <p>
  * 该接口主要定义界面通用的行为，包括:显示和隐藏LoadView，HeaderView,TopView,CenterView,DialogView,ErrorView等;
@@ -48,23 +50,53 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior {
      * 针对该视图进行Y轴动画
      *
      * @param elementCategory 界面视图元素类型
-     * @param seconds
+     * @param duration
      */
-    void animateY(ViewElementCategory elementCategory, long seconds);
+    void animateY(ViewElementCategory elementCategory, long duration);
 
     /**
      * 针对该视图进行X轴动画
      *
      * @param elementCategory 界面视图元素类型
-     * @param seconds
+     * @param duration
      */
-    void animateX(ViewElementCategory elementCategory, long seconds);
+    void animateX(ViewElementCategory elementCategory, long duration); 
 
     /**
      * 针对该视图进行XY轴动画
      *
      * @param elementCategory 界面视图元素类型
-     * @param seconds
+     * @param xDuration        x轴动画时间
+     * @param yDuration        y轴动画时间
      */
-    void animateXY(ViewElementCategory elementCategory, long seconds);
+    void animateXY(ViewElementCategory elementCategory, long xDuration, long yDuration);
+
+    /**
+     * 针对该视图进行Y轴动画
+     *
+     * @param elementCategory 界面视图元素类型
+     * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param duration
+     */
+    void animateY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration);
+
+    /**
+     * 针对该视图进行X轴动画
+     *
+     * @param elementCategory 界面视图元素类型
+     * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param duration
+     */
+    void animateX(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration);
+
+    /**
+     * 针对该视图进行XY轴动画
+     *
+     * @param elementCategory 界面视图元素类型
+     * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param xDuration        x轴动画时间
+     * @param yDuration        y轴动画时间
+     */
+    void animateXY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration);
+
 }

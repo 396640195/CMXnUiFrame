@@ -1,5 +1,9 @@
 package com.xn.uiframe.interfaces;
 
+import android.view.View;
+
+import java.util.List;
+
 /**
  * 定义容器接口
  * Created by 陈真 on 2017/6/13.
@@ -21,4 +25,8 @@ public interface IContainerManager<T> {
      boolean contains(T t);
 
      void requestLayout();
+
+     void measureChild(View view, int widthMeasureSpec, int heightMeasureSpec);
+
+     List<ILayoutManager<View, ILayoutManager>> layoutManagers();
 }

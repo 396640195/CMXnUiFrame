@@ -3,7 +3,7 @@ package com.xn.uiframe.interfaces;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.animation.Easing;
 
 import java.io.Serializable;
 
@@ -23,65 +23,117 @@ import java.io.Serializable;
 
 public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
     /**
-     * @param container PowerfulContainerLayout 父容器对象
      * @param layout    布局文件
      * @return 返回添加布局之后对应的View实例对象
      */
-    T addLayout(IContainerManager container, int layout);
+    T addLayout(int layout);
 
 
     /**
      * 针对添加进来的布局文件对象在容器中进行布局
      *
-     * @param container PowerfulContainerLayout 父容器对象
      * @param left      左上角的x位置
      * @param top       左上角的y位置
      * @param right     右上触的x位置
      * @param bottom    右上触的y位置
      */
-    void onLayout(PowerfulContainerLayout container, int left, int top, int right, int bottom);
+    void onLayout(int left, int top, int right, int bottom);
 
 
     /**
      * 测量布局文件在容器中的高宽
      *
-     * @param container         PowerfulContainerLayout 父容器对象
      * @param widthMeasureSpec  测量宽的基准值
      * @param heightMeasureSpec 测量高的基准值
      */
-    void onMeasure(PowerfulContainerLayout container, int widthMeasureSpec, int heightMeasureSpec);
+    void onMeasure(int widthMeasureSpec, int heightMeasureSpec);
 
     /**
      * 获取当前布局测量的高度.
+     *
      * @return
      */
     int getMeasuredHeight();
-
+    /**
+     * 获取当前布局测量的宽度.
+     *
+     * @return
+     */
+    int getMeasuredWidth();
     /**
      * 获得当前布局的参数信息
+     *
      * @return
      */
     ViewGroup.MarginLayoutParams getMarginLayoutParams();
 
     /**
      * 返回当前布局所在的层级
+     *
      * @return
      */
     int getLayer();
 
     /**
      * 设置当前布局是否可见.
-     * @see {@link android.view.View#VISIBLE },{@link android.view.View#GONE },{@link android.view.View#INVISIBLE }
+     *
      * @param visible
+     * @see {@link android.view.View#VISIBLE },{@link android.view.View#GONE },{@link android.view.View#INVISIBLE }
      */
     void setVisible(int visible);
 
     int getVisibility();
 
-    /**获取该布局的View对象**/
+    /**
+     * 获取该布局的View对象
+     **/
     View getContentView();
 
-    void animateY(long seconds);
-    void animateX(long seconds);
-    void animateXY(long seconds);
+
+    /**
+     * 针对该视图进行Y轴动画
+     *
+     * @param duration 动画时间
+     */
+    void animateY(long duration);
+
+    /**
+     * 针对该视图进行X轴动画
+     *
+     * @param duration 动画时间
+     */
+    void animateX(long duration);
+
+    /**
+     * 针对该视图进行XY轴动画
+     *
+     * @param xDuration x轴动画时间
+     * @param yDuration y轴动画时间
+     */
+    void animateXY(long xDuration, long yDuration); 
+
+    /**
+     * 针对该视图进行Y轴动画
+     *
+     * @param easing  动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param duration
+     */
+    void animateY(Easing.EasingAnimation easing, long duration); 
+
+    /**
+     * 针对该视图进行X轴动画
+     *
+     * @param easing  动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param duration
+     */
+    void animateX(Easing.EasingAnimation easing, long duration); 
+
+    /**
+     * 针对该视图进行XY轴动画
+     *
+     * @param easing   动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param xDuration x轴动画时间
+     * @param yDuration y轴动画时间
+     */
+    void animateXY(Easing.EasingAnimation easing, long xDuration, long yDuration);
 }

@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
-import com.xn.uiframe.animation.ViewAnimator;
+import com.xn.uiframe.animation.Easing;
+import com.xn.uiframe.animation.UIFrameViewAnimator;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 
@@ -20,30 +21,37 @@ import com.xn.uiframe.interfaces.ILayoutManager;
  */
 
 public abstract class AbstractLayoutManager implements ILayoutManager<View, ILayoutManager> {
-    private IContainerManager mContainerManager;
-    public AbstractLayoutManager() {
-       this.initAnimator();
-    }
-    private ViewAnimator mViewAnimator;
-    public AbstractLayoutManager(int mLayer) {
+    protected IContainerManager mContainerManager;
+    private ViewAnimateListener mViewAnimateListener;
+
+    public AbstractLayoutManager(IContainerManager mContainerManager) {
         this.initAnimator();
-        this.mLayer = mLayer;
+        this.mContainerManager = mContainerManager;
     }
 
-    private void initAnimator(){
+    protected UIFrameViewAnimator mViewAnimator;
+
+    public AbstractLayoutManager(IContainerManager mContainerManager, int mLayer) {
+        this.initAnimator();
+        this.mLayer = mLayer;
+        this.mContainerManager = mContainerManager;
+    }
+
+    private void initAnimator() {
         if (android.os.Build.VERSION.SDK_INT < 11) {
-            this.mViewAnimator = new ViewAnimator();
-        }else{
-            this.mViewAnimator = new ViewAnimator(new ViewAnimateListener());
+            this.mViewAnimator = new UIFrameViewAnimator();
+        } else {
+            this.mViewAnimator = new UIFrameViewAnimator(mViewAnimateListener = new ViewAnimateListener());
         }
     }
+
     /**
      * 默认层级为对话框全屏模式
      **/
     protected int mLayer = Layer.LAYER_DIALOG_SCREEN;
 
     /**
-     * 当调用了{@link AbstractLayoutManager#addLayout(IContainerManager, int)}
+     * 当调用了{@link AbstractLayoutManager#addLayout(int)}
      * 方法后，会保存当前视图对象;
      */
     protected View mView;
@@ -54,16 +62,16 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     public static class Layer {
 
         /**
-         *定义Header布局层级，优先绘制Header
+         * 定义Header布局层级，优先绘制Header
          **/
         public static final int LAYER_BASIC_HEADER_PART = 0x10001;
 
         /**
-         *定义Top布局层级，绘制顺序在Header之后;
+         * 定义Top布局层级，绘制顺序在Header之后;
          **/
         public static final int LAYER_BASIC_TOP_PART = 0x10002;
         /**
-         *定义Bottom布局层级，绘制顺序在Center之后
+         * 定义Bottom布局层级，绘制顺序在Center之后
          **/
         public static final int LAYER_BASIC_BOTTOM_PART = 0x10003;
 
@@ -74,7 +82,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         public static final int LAYER_BASIC_CENTER_PART = 0x10004;
         /**
          * 处于该层级的主要是用于实现进度加载，这种异步等待的全屏界面. 它处于
-         *  basic part 层级之上.
+         * basic part 层级之上.
          **/
         public static final int LAYER_LOAD_SCREEN = 0x10005;
 
@@ -99,7 +107,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
-    public void onMeasure(PowerfulContainerLayout container, int widthMeasureSpec, int heightMeasureSpec) {
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
         /**
          * 当View处于{@link View.VISIBLE} 才测量它的宽高;
@@ -123,10 +131,9 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int)(basicWidth*mViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec(basicHeight, View.MeasureSpec.EXACTLY);
-
-        container.measureChild(mView, basicWidthSpec, basicHeightSpec);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * mViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
+        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * mViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
+        mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
 
     }
 
@@ -149,8 +156,8 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
-    public View addLayout(IContainerManager container, int layout) { 
-        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout)container;
+    public View addLayout(int layout) {
+        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
         mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
         return mView;
     }
@@ -158,6 +165,11 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     @Override
     public int getMeasuredHeight() {
         return mView == null ? 0 : mView.getMeasuredHeight();
+    }
+
+    @Override
+    public int getMeasuredWidth() {
+        return mView == null ? 0 : mView.getMeasuredWidth();
     }
 
     @Override
@@ -172,7 +184,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void setVisible(int visible) {
-        if(mView != null) {
+        if (mView != null) {
             mView.setVisibility(visible);
         }
     }
@@ -184,29 +196,96 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public View getContentView() {
-        return  mView;
+        return mView;
     }
 
     @Override
     public void animateY(long duration) {
+        this.beforeAnimate();
         this.mViewAnimator.animateY(duration);
     }
 
     @Override
     public void animateX(long duration) {
-        this.mViewAnimator.animateX(duration);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0,mView.getMeasuredWidth());
+        valueAnimator.addUpdateListener(mViewAnimateListener);
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
     }
 
     @Override
-    public void animateXY(long duration) {
-        this.mViewAnimator.animateXY(duration,duration);
+    public void animateXY(long xDuration, long yDuration) {
+        this.beforeAnimate();
+        this.mViewAnimator.animateXY(xDuration, yDuration);
     }
 
-     class ViewAnimateListener  implements ValueAnimator.AnimatorUpdateListener{
+    @Override
+    public void animateY(Easing.EasingAnimation easing, long duration) {
+////        this.beforeAnimate();
+////        this.mViewAnimator.animateY(duration, easing);
+//        ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
+//        PropertyValuesHolder pvhScaleX = PropertyValuesHolder.ofFloat("height",1f, 0f, 1f);
+//        ObjectAnimator customAnim = ObjectAnimator.ofPropertyValuesHolder(mView,pvhScaleX);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0,mView.getMeasuredHeight());
+        valueAnimator.addUpdateListener(mViewAnimateListener);
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
+    }
+
+    @Override
+    public void animateX(Easing.EasingAnimation easing, long duration) {
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0,mView.getMeasuredWidth());
+        valueAnimator.addUpdateListener(mViewAnimateListener);
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
+    }
+
+    @Override
+    public void animateXY(Easing.EasingAnimation easing, long xDuration, long yDuration) {
+        this.beforeAnimate();
+        this.mViewAnimator.animateXY(xDuration, yDuration, easing, easing);
+    }
+
+    private void beforeAnimate() {
+        if (this.mViewAnimateListener != null) {
+            this.mViewAnimateListener.setWidth(mView.getMeasuredWidth());
+            this.mViewAnimateListener.setHeight(mView.getMeasuredHeight());
+        }
+    }
+
+    class ViewAnimateListener implements ValueAnimator.AnimatorUpdateListener {
+        private int width;
+        private int height;
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
+        }
 
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
+            animateByLayoutParams(animation);
+        }
 
+        private void animateByLayoutParams(ValueAnimator animation) {
+            int value = (int) animation.getAnimatedValue();
+            ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
+            mp.width =  value;
+            mView.setLayoutParams(mp);
+            System.out.println("value="+value);
+        }
+
+        /**
+         * 这种方式实现的动画要求所有布局width,height只能是wrap_content,或者 match_parent才有动画效果
+         * @param animation
+         */
+        private void animateByMeasureCalculate(ValueAnimator animation) {
+            float value = (float) animation.getAnimatedValue();
+            if (value > 1) return;
+            mContainerManager.requestLayout();
         }
     }
 }

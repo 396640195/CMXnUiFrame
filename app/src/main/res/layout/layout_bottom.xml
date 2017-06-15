@@ -3,37 +3,90 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#DA30cd"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical"
+    >
 
-    <Button
-        android:id="@+id/ok"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="控制头部" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DA30cd"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/show_dialog_view"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="弹对话框" />
+        <Button
+            android:id="@+id/animate_header"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="头部动画" />
 
-    <Button
-        android:id="@+id/show_load_view"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="加载缓冲界面" />
+        <Button
+            android:id="@+id/animate_top"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="top动画" />
 
-    <TextView
-        android:id="@+id/show_top_view"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="隐藏TopView" />
+        <Button
+            android:id="@+id/animate_center"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="center动画" />
+
+        <Button
+            android:id="@+id/animate_bottom"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Bottom动画" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        ></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DA30cd"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_of_header_control"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="控制头部" />
+
+        <Button
+            android:id="@+id/show_dialog_view"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="弹对话框" />
+
+        <Button
+            android:id="@+id/show_load_view"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="加载缓冲界面" />
+
+        <Button
+            android:id="@+id/show_top_view"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="隐藏TopView" />
+    </LinearLayout>
+
 </LinearLayout>

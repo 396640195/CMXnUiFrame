@@ -68,7 +68,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
         for (ILayoutManager<View, ILayoutManager> manager : mLayoutManagers) {
-            manager.onLayout(this, l, t, r, b);
+            manager.onLayout(l, t, r, b);
         }
         /**处理不同层级的触摸事件**/
         this.dealWithTouchEvents();
@@ -81,7 +81,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         /**先排序，按顺序进行测量**/
         Collections.sort(mLayoutManagers);
         for (ILayoutManager<View, ILayoutManager> manager : mLayoutManagers) {
-            manager.onMeasure(this, widthMeasureSpec, heightMeasureSpec);
+            manager.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
