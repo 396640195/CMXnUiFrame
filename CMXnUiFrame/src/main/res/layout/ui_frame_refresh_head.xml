@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="60dp"
+            android:layout_marginRight="20dp"
             android:layout_toLeftOf="@id/ui_frame_refresh_header_status_text"
             android:background="@mipmap/ui_frame_pull_flag_icon" />
 
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="60dp"
+            android:layout_marginRight="20dp"
             android:layout_toLeftOf="@id/ui_frame_refresh_header_status_text"
             android:background="@mipmap/ui_frame_loading_icon"
             android:visibility="gone" />

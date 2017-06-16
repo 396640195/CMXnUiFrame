@@ -6,11 +6,13 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.BaseViewContainer;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.IContainerManager;
+import com.xn.uiframe.interfaces.IPullRefreshBehavior;
 import com.xn.uiframe.interfaces.IViewCommonBehavior;
 import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.layout.BottomLayoutManager;
@@ -29,7 +31,11 @@ import com.xn.uiframe.utils.EventBusProxy;
  * </p>
  */
 
-public abstract class UIFrameBasicActivity extends FragmentActivity implements IBasicViewAdapter, IViewCommonBehavior {
+public abstract class UIFrameBasicActivity extends FragmentActivity implements
+        IBasicViewAdapter,
+        IViewCommonBehavior,
+        IPullRefreshBehavior,
+        OnRefreshListener {
 
     protected IBaseViewContainer mBaseViewContainer;
     private static final String SAVED_BUNDLE_KEY = "SAVED_BUNDLE_KEY";
@@ -86,6 +92,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements I
         if (view != null) {
             this.setContentView(view);
         }
+        this.setOnRefreshListener(this);
     }
 
     @Override
@@ -195,11 +202,6 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements I
     }
 
     @Override
-    public boolean isNeedPullRefresh() {
-        return false;
-    }
-
-    @Override
     public void setElementViewVisible(ViewElement elementCategory, boolean visible) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setElementViewVisible(elementCategory, visible);
@@ -217,42 +219,73 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements I
     @Override
     public void animateY(ViewElement elementCategory, long duration) {
         if (mBaseViewContainer != null) {
-             mBaseViewContainer.animateY(elementCategory,duration);
+            mBaseViewContainer.animateY(elementCategory, duration);
         }
     }
 
     @Override
     public void animateX(ViewElement elementCategory, long duration) {
         if (mBaseViewContainer != null) {
-             mBaseViewContainer.animateX(elementCategory,duration);
+            mBaseViewContainer.animateX(elementCategory, duration);
         }
     }
 
     @Override
     public void animateXY(ViewElement elementCategory, long xDuration, long yDuration) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.animateXY(elementCategory,xDuration,yDuration);
+            mBaseViewContainer.animateXY(elementCategory, xDuration, yDuration);
         }
     }
 
     @Override
     public void animateY(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.animateY(elementCategory,easing,duration);
+            mBaseViewContainer.animateY(elementCategory, easing, duration);
         }
     }
 
     @Override
     public void animateX(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.animateX(elementCategory,easing,duration);
+            mBaseViewContainer.animateX(elementCategory, easing, duration);
         }
     }
 
     @Override
     public void animateXY(ViewElement elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
         if (mBaseViewContainer != null) {
-            mBaseViewContainer.animateXY(elementCategory,easing,xDuration,yDuration);
+            mBaseViewContainer.animateXY(elementCategory, easing, xDuration, yDuration);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void setOnRefreshListener(OnRefreshListener listener) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.setOnRefreshListener(listener);
+        }
+    }
+
+    @Override
+    public void stopRefresh(boolean isSuccess) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.stopRefresh(isSuccess);
+        }
+    }
+
+    @Override
+    public void stopLoadMore(boolean isSuccess) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.stopLoadMore(isSuccess);
         }
     }
 }

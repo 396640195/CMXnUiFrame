@@ -3,6 +3,8 @@ package com.xn.uiframe.demo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.xn.uiframe.activity.UIFrameBasicActivity;
@@ -15,6 +17,10 @@ import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
+import com.xn.uiframe.utils.EventBusProxy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener {
     @Override
@@ -57,7 +63,15 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        return CenterLayoutManager.buildLayout(container, R.layout.layout_center);
+        CenterLayoutManager clt = CenterLayoutManager.buildLayout(container, R.layout.layout_center, true);
+        ListView listview = (ListView) clt.getContentView().findViewById(R.id.normal_list_view);
+
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            list.add("测试的" + i);
+        }
+        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
+        return clt;
     }
 
     @Override
@@ -109,7 +123,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
                 animateX(ViewElement.TopView, Easing.EasingAnimation.EaseOutBounce, 500);
                 break;
             case R.id.animate_center:
-                animateY(ViewElement.CenterView, Easing.EasingAnimation.EaseOutBounce,1500);
+                animateY(ViewElement.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
                 break;
             case R.id.animate_bottom:
                 animateX(ViewElement.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
@@ -118,5 +132,25 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        EventBusProxy.dispatcherOnMainThreadDelay(new Runnable() {
+            @Override
+            public void run() {
+                stopRefresh(true);
+            }
+        }, 2000);
+    }
+
+    @Override
+    public void onLoadMore() {
+        EventBusProxy.dispatcherOnMainThreadDelay(new Runnable() {
+            @Override
+            public void run() {
+                stopLoadMore(true);
+            }
+        }, 2000);
     }
 }

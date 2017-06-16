@@ -193,7 +193,7 @@ public class RefreshLayout extends RefreshInterceptLayout {
      * @param dy
      */
     private void goToLoad(int dy){
-        if(actionStatus==1){
+        if(actionStatus==1 && footer != null){
             // 进行Y轴上的滑动
             performScroll(dy);
             if (getScrollY() >= bottomScroll + footer.getMeasuredHeight()) {
@@ -287,6 +287,9 @@ public class RefreshLayout extends RefreshInterceptLayout {
      * 滚动到加载状态
      */
     private void scrolltoLoadStatus() {
+        if(footer == null){
+            return;
+        }
         isLoading=true;
         int start = getScrollY();
         int end = footer.getMeasuredHeight() + bottomScroll;

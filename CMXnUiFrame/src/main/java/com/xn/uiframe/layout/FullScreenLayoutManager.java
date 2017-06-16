@@ -76,7 +76,7 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
         if (containerLayout.contains(fullScreenLayoutManager)) {
             throw new UIFrameLayoutAlreadyExistException("当前类型视图已经添加到容器当中了， 不能重复添加.");
         } else {
-            fullScreenLayoutManager.addLayout(layout);
+            fullScreenLayoutManager.addLayout(layout,false);
             containerLayout.addLayoutManager(fullScreenLayoutManager);
         }
 

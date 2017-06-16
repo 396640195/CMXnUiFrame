@@ -61,7 +61,7 @@ public class BottomLayoutManager extends AbstractLayoutManager {
         if (containerLayout.contains(bottom)) {
             throw new UIFrameLayoutAlreadyExistException("Bottom视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            bottom.addLayout(layout);
+            bottom.addLayout(layout,false);
             containerLayout.addLayoutManager(bottom);
         }
         return bottom;

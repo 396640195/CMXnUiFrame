@@ -4,6 +4,7 @@ package com.xn.uiframe.interfaces;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
+import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.ViewElement;
 
 /**
@@ -46,4 +47,9 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior,IAnimateBehavio
      */
     void setContainerBackgroundResource(@DrawableRes int res);
 
+    /**
+     * 设置下拉刷新回调接口
+     * @param listener
+     */
+    void setOnRefreshListener(OnRefreshListener listener);
 }

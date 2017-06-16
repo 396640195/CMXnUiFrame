@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.ILayoutManager;
+import com.xn.uiframe.interfaces.IPullRefreshBehavior;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -188,5 +190,26 @@ public class BaseViewContainer implements IBaseViewContainer {
             return mLoadViewManager;
         }
         return null;
+    }
+
+    @Override
+    public void setOnRefreshListener(OnRefreshListener listener) {
+        if (mCenterLayoutManager != null) {
+            this.mCenterLayoutManager.setOnRefreshListener(listener);
+        }
+    }
+
+    @Override
+    public void stopRefresh(boolean isSuccess) {
+        if (mCenterLayoutManager != null) {
+            this.mCenterLayoutManager.stopRefresh(isSuccess);
+        }
+    }
+
+    @Override
+    public void stopLoadMore(boolean isSuccess) {
+        if (mCenterLayoutManager != null) {
+            this.mCenterLayoutManager.stopLoadMore(isSuccess);
+        }
     }
 }

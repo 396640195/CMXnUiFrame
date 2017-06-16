@@ -70,9 +70,4 @@ public interface IBasicViewAdapter {
      */
     boolean isNeedEventBus();
 
-    /**
-     * 是否需要使用下拉刷新的功能
-     * @return
-     */
-    boolean isNeedPullRefresh();
 }

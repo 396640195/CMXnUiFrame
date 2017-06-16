@@ -14,7 +14,7 @@ import android.view.View;
  * </p>
  */
 
-public interface IBaseViewContainer extends IViewCommonBehavior {
+public interface IBaseViewContainer extends IViewCommonBehavior,IPullRefreshBehavior {
     /**
      * 定义创建视图的方法
      * @return 返回创建的视图对象

@@ -17,6 +17,22 @@ public class EventBusProxy {
     private static Handler sHandler = new Handler(Looper.getMainLooper());
 
     /**
+     * 主线程中简单执行一个任务
+     * @param task
+     */
+    public static void dispatcherOnMainThread(Runnable task){
+        sHandler.post(task);
+    }
+
+    /**
+     * 主线程中简单执行一个延迟任务
+     * @param task
+     * @param duration
+     */
+    public static void dispatcherOnMainThreadDelay(Runnable task,long duration){
+        sHandler.postDelayed(task,duration);
+    }
+    /**
      * 发送一个Action的消息,接收该消息的类需要注册订阅EventBus消息;
      *
      * @param action

@@ -64,7 +64,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         if (containerLayout.contains(header)) {
             throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            header.addLayout(layout);
+            header.addLayout(layout,false);
             containerLayout.addLayoutManager(header);
         }
         return header;

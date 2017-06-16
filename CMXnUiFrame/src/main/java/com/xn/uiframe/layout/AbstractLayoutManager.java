@@ -12,6 +12,7 @@ import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.animation.UIFrameViewAnimator;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
+import com.xn.uiframe.widget.UIFrameRefreshViewLayout;
 
 /**
  * <p>
@@ -49,7 +50,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     protected int mLayer = Layer.LAYER_DIALOG_SCREEN;
 
     /**
-     * 当调用了{@link AbstractLayoutManager#addLayout(int)}
+     * 当调用了{@link AbstractLayoutManager#addLayout(int,boolean)}
      * 方法后，会保存当前视图对象;
      */
     protected View mView;
@@ -154,10 +155,19 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
-    public View addLayout(int layout) {
-        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
-        mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
-        return mView;
+    public View addLayout(int layout,boolean needPullRefresh) {
+        if(!needPullRefresh) {
+            PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
+            mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
+            return mView;
+        }else{
+            return  this.addLayoutWithPullRefresh(layout);
+        }
+    }
+
+    public View addLayoutWithPullRefresh(int layout) {
+
+        return null;
     }
 
     @Override

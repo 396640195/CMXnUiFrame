@@ -23,19 +23,19 @@ import java.io.Serializable;
 
 public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
     /**
-     * @param layout    布局文件
+     * @param layout          布局文件
+     * @param needPullRefresh 是否支持下拉刷新功能;
      * @return 返回添加布局之后对应的View实例对象
      */
-    T addLayout(int layout);
-
+    T addLayout(int layout, boolean needPullRefresh);
 
     /**
      * 针对添加进来的布局文件对象在容器中进行布局
      *
-     * @param left      左上角的x位置
-     * @param top       左上角的y位置
-     * @param right     右上触的x位置
-     * @param bottom    右上触的y位置
+     * @param left   左上角的x位置
+     * @param top    左上角的y位置
+     * @param right  右上触的x位置
+     * @param bottom 右上触的y位置
      */
     void onLayout(int left, int top, int right, int bottom);
 
@@ -54,12 +54,14 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
      * @return
      */
     int getMeasuredHeight();
+
     /**
      * 获取当前布局测量的宽度.
      *
      * @return
      */
     int getMeasuredWidth();
+
     /**
      * 获得当前布局的参数信息
      *
@@ -110,28 +112,28 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
      * @param xDuration x轴动画时间
      * @param yDuration y轴动画时间
      */
-    void animateXY(long xDuration, long yDuration); 
+    void animateXY(long xDuration, long yDuration);
 
     /**
      * 针对该视图进行Y轴动画
      *
-     * @param easing  动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param easing   动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
      * @param duration
      */
-    void animateY(Easing.EasingAnimation easing, long duration); 
+    void animateY(Easing.EasingAnimation easing, long duration);
 
     /**
      * 针对该视图进行X轴动画
      *
-     * @param easing  动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param easing   动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
      * @param duration
      */
-    void animateX(Easing.EasingAnimation easing, long duration); 
+    void animateX(Easing.EasingAnimation easing, long duration);
 
     /**
      * 针对该视图进行XY轴动画
      *
-     * @param easing   动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
+     * @param easing    动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
      * @param xDuration x轴动画时间
      * @param yDuration y轴动画时间
      */

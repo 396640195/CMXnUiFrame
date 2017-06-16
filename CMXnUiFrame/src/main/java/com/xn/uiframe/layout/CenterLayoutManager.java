@@ -1,11 +1,19 @@
 package com.xn.uiframe.layout;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.dalong.refreshlayout.OnRefreshListener;
+import com.xn.uiframe.PowerfulContainerLayout;
+import com.xn.uiframe.R;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
+import com.xn.uiframe.interfaces.IPullRefreshBehavior;
+import com.xn.uiframe.widget.UIFrameRefreshViewLayout;
 
 import java.util.List;
 
@@ -30,7 +38,7 @@ import java.util.List;
  * </p>
  */
 
-public class CenterLayoutManager extends AbstractLayoutManager {
+public class CenterLayoutManager extends AbstractLayoutManager implements IPullRefreshBehavior {
     public CenterLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
         this.mLayer = Layer.LAYER_BASIC_CENTER_PART;
@@ -100,14 +108,24 @@ public class CenterLayoutManager extends AbstractLayoutManager {
 
         //测量当前布局的高宽
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
-//        System.out.println("basicHeightSpec="+basicHeightSpec+",  measuredHeight="+mView.getMeasuredHeight()+", basicHeight="+basicHeight);
-//        if(basicHeight != mView.getMeasuredHeight()){
-//
-//            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams )mView.getLayoutParams();
-//            layoutParams.height = basicHeight;
-//            mView.setLayoutParams(layoutParams);
-//            System.out.println("basicHeightSpec=  come in. h="+mView.getMeasuredHeight());
-//        }
+
+    }
+
+    @Override
+    public View addLayout(int layout, boolean needPullRefresh) {
+
+        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
+        Context context = powerfulContainer.getContext();
+        //生成下拉刷新控件
+        UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) LayoutInflater.from(context).inflate(R.layout.ui_frame_common_center_layout, powerfulContainer, false);
+        //添加子布局
+        LayoutInflater.from(context).inflate(layout, wrapper, true);
+        //设置布局参数
+        ViewGroup.MarginLayoutParams marginLayout = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT);
+        wrapper.setLayoutParams(marginLayout);
+//        wrapper.addView(child);
+        this.mView = wrapper;
+        return wrapper;
     }
 
     /**
@@ -118,14 +136,39 @@ public class CenterLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
+    public static CenterLayoutManager buildLayout(IContainerManager containerLayout, int layout, boolean needPullRefresh) {
         CenterLayoutManager center = new CenterLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            center.addLayout(layout);
+            center.addLayout(layout, needPullRefresh);
             containerLayout.addLayoutManager(center);
         }
         return center;
+    }
+
+    public void setOnRefreshListener(OnRefreshListener listener) {
+        if (mView instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+            wrapper.setCanRefresh(true);
+            wrapper.setCanLoad(true);
+            wrapper.setOnRefreshListener(listener);
+        }
+    }
+
+    @Override
+    public void stopRefresh(boolean isSuccess) {
+        if (mView instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+            wrapper.stopRefresh(isSuccess);
+        }
+    }
+
+    @Override
+    public void stopLoadMore(boolean isSuccess) {
+        if (mView instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+            wrapper.stopLoadMore(isSuccess);
+        }
     }
 }

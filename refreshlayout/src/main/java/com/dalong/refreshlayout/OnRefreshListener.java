@@ -8,12 +8,12 @@ package com.dalong.refreshlayout;
 public interface OnRefreshListener {
 
     /**
-     * 刷新回调
+     * 下拉刷新回调
      */
     void onRefresh();
 
     /**
-     * 加载更多回调
+     * 上拉加载更多回调
      */
     void onLoadMore();
 }
