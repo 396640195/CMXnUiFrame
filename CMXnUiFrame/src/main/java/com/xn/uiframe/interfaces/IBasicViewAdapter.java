@@ -1,5 +1,7 @@
 package com.xn.uiframe.interfaces;
 
+import android.view.View;
+
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -64,6 +66,8 @@ public interface IBasicViewAdapter {
      */
     FullScreenLayoutManager addExtraTopView(IContainerManager container);
 
+    View addScrollableHeader();
+    View addScrollableFooter();
     /**
      * 是否要使用EventBus
      * @return

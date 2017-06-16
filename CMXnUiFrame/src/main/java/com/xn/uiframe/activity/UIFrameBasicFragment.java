@@ -33,7 +33,7 @@ import com.xn.uiframe.utils.EventBusProxy;
  * </p>
  */
 
-public class UIFrameBasicFragment extends Fragment implements
+public abstract class UIFrameBasicFragment extends Fragment implements
         IBasicViewAdapter,
         IPullRefreshBehavior,
         IViewCommonBehavior,
@@ -258,6 +258,20 @@ public class UIFrameBasicFragment extends Fragment implements
     public void stopLoadMore(boolean isSuccess) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.stopLoadMore(isSuccess);
+        }
+    }
+
+    @Override
+    public void enableRefresh(boolean enable) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.enableRefresh(enable);
+        }
+    }
+
+    @Override
+    public void enableLoadMore(boolean enable) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.enableLoadMore(enable);
         }
     }
 }

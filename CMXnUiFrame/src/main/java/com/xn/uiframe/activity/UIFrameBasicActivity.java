@@ -288,4 +288,18 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
             mBaseViewContainer.stopLoadMore(isSuccess);
         }
     }
+
+    @Override
+    public void enableRefresh(boolean enable) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.enableRefresh(enable);
+        }
+    }
+
+    @Override
+    public void enableLoadMore(boolean enable) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.enableLoadMore(enable);
+        }
+    }
 }

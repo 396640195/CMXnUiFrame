@@ -212,4 +212,14 @@ public class BaseViewContainer implements IBaseViewContainer {
             this.mCenterLayoutManager.stopLoadMore(isSuccess);
         }
     }
+
+    @Override
+    public void enableRefresh(boolean enable) {
+
+    }
+
+    @Override
+    public void enableLoadMore(boolean enable) {
+
+    }
 }

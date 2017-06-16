@@ -14,4 +14,16 @@ public interface IPullRefreshBehavior {
      * @param isSuccess
      */
     void stopLoadMore(boolean isSuccess);
+
+    /**
+     * 是否开启下拉刷新功能
+     * @param enable
+     */
+    void enableRefresh(boolean enable);
+
+    /**
+     * 是否开启上拉加载更多功能;
+     * @param enable
+     */
+    void enableLoadMore(boolean enable);
 }
