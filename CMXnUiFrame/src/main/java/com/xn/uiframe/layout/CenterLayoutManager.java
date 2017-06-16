@@ -100,7 +100,14 @@ public class CenterLayoutManager extends AbstractLayoutManager {
 
         //测量当前布局的高宽
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
-
+//        System.out.println("basicHeightSpec="+basicHeightSpec+",  measuredHeight="+mView.getMeasuredHeight()+", basicHeight="+basicHeight);
+//        if(basicHeight != mView.getMeasuredHeight()){
+//
+//            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams )mView.getLayoutParams();
+//            layoutParams.height = basicHeight;
+//            mView.setLayoutParams(layoutParams);
+//            System.out.println("basicHeightSpec=  come in. h="+mView.getMeasuredHeight());
+//        }
     }
 
     /**

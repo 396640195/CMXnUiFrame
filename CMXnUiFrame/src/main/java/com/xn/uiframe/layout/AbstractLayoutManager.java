@@ -233,7 +233,6 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     public void animateX(Easing.EasingAnimation easing, long duration) {
         ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
         valueAnimator.addUpdateListener(mViewXAnimateListener);
-        //valueAnimator.addListener();
         valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
         valueAnimator.setDuration(duration);
         valueAnimator.start();
@@ -278,28 +277,6 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
             mView.setLayoutParams(mp);
         }
 
-    }
-
-    class ViewAnimatorListener implements Animator.AnimatorListener{
-        @Override
-        public void onAnimationStart(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-
-        }
     }
 
 }
