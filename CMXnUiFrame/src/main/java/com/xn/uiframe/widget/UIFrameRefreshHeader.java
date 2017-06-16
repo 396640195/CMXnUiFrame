@@ -15,10 +15,13 @@ import com.dalong.refreshlayout.OnHeaderListener;
 import com.xn.uiframe.R;
 
 /**
- * Created by zhouweilong on 2016/10/25.
+ * <p>
+ * Created by 陈真 on 2017/6/16.
+ * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
+ * </p>
  */
 
-public class QQHeader extends RelativeLayout implements OnHeaderListener {
+public class UIFrameRefreshHeader extends RelativeLayout implements OnHeaderListener {
 
     // 初始状态
     public static final int INIT = 0;
@@ -45,20 +48,18 @@ public class QQHeader extends RelativeLayout implements OnHeaderListener {
     private boolean isRefreshAfter=false;
 
 
-    public QQHeader(Context context) {
+    public UIFrameRefreshHeader(Context context) {
         super(context);
 
         headerView= LayoutInflater.from(context).inflate(R.layout.ui_frame_refresh_head, this, true);
         // 初始化下拉布局
-        pullView = (ImageView) headerView.findViewById(R.id.pull_icon);
-        refreshStateTextView = (TextView) headerView.findViewById(R.id.state_tv);
-        refreshingView = (ImageView)headerView.findViewById(R.id.refreshing_icon);
-        refreshStateImageView = (ImageView) headerView.findViewById(R.id.state_iv);
+        pullView = (ImageView) headerView.findViewById(R.id.ui_frame_pull_flag_icon);
+        refreshStateTextView = (TextView) headerView.findViewById(R.id.ui_frame_refresh_header_status_text);
+        refreshingView = (ImageView)headerView.findViewById(R.id.ui_frame_loading_icon);
+        refreshStateImageView = (ImageView) headerView.findViewById(R.id.ui_frame_refresh_status_image);
 
-        rotateAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-                context, R.anim.ui_frame_refresh_icon_reverse_anim);
-        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(
-                context, R.anim.ui_frame_refresh_icon_rotating);
+        rotateAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.ui_frame_refresh_icon_reverse_anim);
+        refreshingAnimation = (RotateAnimation) AnimationUtils.loadAnimation(context, R.anim.ui_frame_refresh_icon_rotating);
         // 添加匀速转动动画
         LinearInterpolator lir = new LinearInterpolator();
         rotateAnimation.setInterpolator(lir);
@@ -69,18 +70,15 @@ public class QQHeader extends RelativeLayout implements OnHeaderListener {
     private void measureView(View child) {
         ViewGroup.LayoutParams p = child.getLayoutParams();
         if (p == null) {
-            p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
         int childWidthSpec = ViewGroup.getChildMeasureSpec(0, 0 + 0, p.width);
         int lpHeight = p.height;
         int childHeightSpec;
         if (lpHeight > 0) {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight,
-                    MeasureSpec.EXACTLY);
+            childHeightSpec = MeasureSpec.makeMeasureSpec(lpHeight, MeasureSpec.EXACTLY);
         } else {
-            childHeightSpec = MeasureSpec.makeMeasureSpec(0,
-                    MeasureSpec.UNSPECIFIED);
+            childHeightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         }
         child.measure(childWidthSpec, childHeightSpec);
     }
@@ -116,12 +114,10 @@ public class QQHeader extends RelativeLayout implements OnHeaderListener {
         refreshStateImageView.setVisibility(View.VISIBLE);
         if(isRefreshSuccess){
             refreshStateTextView.setText(R.string.ui_frame_refresh_succeed);
-            refreshStateImageView
-                    .setBackgroundResource(R.mipmap.ui_frame_refresh_succeed_icon);
+            refreshStateImageView.setBackgroundResource(R.mipmap.ui_frame_refresh_succeed_icon);
         }else{
             refreshStateTextView.setText(R.string.ui_frame_refresh_fail);
-            refreshStateImageView
-                    .setBackgroundResource(R.mipmap.ui_frame_refresh_failed_icon);
+            refreshStateImageView.setBackgroundResource(R.mipmap.ui_frame_refresh_failed_icon);
         }
 
 
@@ -133,8 +129,7 @@ public class QQHeader extends RelativeLayout implements OnHeaderListener {
         // 刷新失败
         refreshStateImageView.setVisibility(View.VISIBLE);
         refreshStateTextView.setText(R.string.ui_frame_refresh_cancel);
-        refreshStateImageView
-                .setBackgroundResource(R.mipmap.ui_frame_refresh_failed_icon);
+        refreshStateImageView.setBackgroundResource(R.mipmap.ui_frame_refresh_failed_icon);
     }
 
 

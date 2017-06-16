@@ -26,7 +26,7 @@ import com.xn.uiframe.utils.EventBusProxy;
  * <p>
  * 项目界面使用的通用基类Fragment，可以定制需要的界面元素，包括:Header,Top,Center,Dialog,LoadView,ErrorView,ExtraView.
  * 并且能对这些视图进行显示，隐藏控制。 同时封装了对EventBus注册和反注册,及Bundle的恢复处理逻辑;
- * Created by xn068074 on 2017/6/13.
+ * Created by 陈真 on 2017/6/13.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
  */

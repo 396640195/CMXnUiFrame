@@ -69,14 +69,14 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         return fsm;
     }
 
-    @Override
-    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
-        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
-        View view = fullScreenLayoutManager.getContentView();
-        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
-        setElementViewVisible(ViewElement.LoadView,false);
-        return fullScreenLayoutManager;
-    }
+//    @Override
+//    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
+//        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
+//        View view = fullScreenLayoutManager.getContentView();
+//        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
+//        setElementViewVisible(ViewElement.LoadView,false);
+//        return fullScreenLayoutManager;
+//    }
 
     @Override
     public void onClick(View v) {

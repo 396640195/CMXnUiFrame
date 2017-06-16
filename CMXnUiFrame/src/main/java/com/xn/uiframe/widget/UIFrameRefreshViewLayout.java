@@ -8,17 +8,19 @@ import com.dalong.refreshlayout.FooterView;
 import com.dalong.refreshlayout.RefreshLayout;
 
 /**
- * qq下拉刷新
- * Created by zhouweilong on 2016/10/19.
+ * <p>
+ * Created by 陈真 on 2017/6/16.
+ * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
+ * </p>
  */
 
-public class QQRefreshView extends RefreshLayout {
+public class UIFrameRefreshViewLayout extends RefreshLayout {
 
-    public QQRefreshView(Context context) {
+    public UIFrameRefreshViewLayout(Context context) {
         super(context);
     }
 
-    public QQRefreshView(Context context, AttributeSet attrs) {
+    public UIFrameRefreshViewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -29,7 +31,7 @@ public class QQRefreshView extends RefreshLayout {
     }
 
     public void init() {
-        QQHeader header = new QQHeader(getContext());
+        UIFrameRefreshHeader header = new UIFrameRefreshHeader(getContext());
         FooterView footer = new FooterView(getContext());
 
         addHeader(header);
