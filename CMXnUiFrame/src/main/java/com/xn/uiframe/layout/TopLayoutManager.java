@@ -83,7 +83,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
         if (containerLayout.contains(topLayoutManager)) {
             throw new UIFrameLayoutAlreadyExistException("Top视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            topLayoutManager.addLayout(layout,false);
+            topLayoutManager.addLayout(layout);
             containerLayout.addLayoutManager(topLayoutManager);
         }
         return topLayoutManager;

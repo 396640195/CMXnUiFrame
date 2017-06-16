@@ -1,6 +1,6 @@
 package com.xn.uiframe.layout;
 
-import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,7 @@ import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.PowerfulContainerLayout;
 import com.xn.uiframe.R;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
+import com.xn.uiframe.interfaces.ICompanionViewManager;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 import com.xn.uiframe.interfaces.IPullRefreshBehavior;
@@ -38,7 +39,11 @@ import java.util.List;
  * </p>
  */
 
-public class CenterLayoutManager extends AbstractLayoutManager implements IPullRefreshBehavior {
+public class CenterLayoutManager extends AbstractLayoutManager implements
+        IPullRefreshBehavior,
+        ICompanionViewManager {
+
+    private ListView mListView;
     public CenterLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
         this.mLayer = Layer.LAYER_BASIC_CENTER_PART;
@@ -111,22 +116,22 @@ public class CenterLayoutManager extends AbstractLayoutManager implements IPullR
 
     }
 
-    @Override
-    public View addLayout(int layout, boolean needPullRefresh) {
-
-        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
-        Context context = powerfulContainer.getContext();
-        //生成下拉刷新控件
-        UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) LayoutInflater.from(context).inflate(R.layout.ui_frame_common_center_layout, powerfulContainer, false);
-        //添加子布局
-        LayoutInflater.from(context).inflate(layout, wrapper, true);
-        //设置布局参数
-        ViewGroup.MarginLayoutParams marginLayout = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT);
-        wrapper.setLayoutParams(marginLayout);
-//        wrapper.addView(child);
-        this.mView = wrapper;
-        return wrapper;
-    }
+//    @Override
+//    public View addLayout(int layout, boolean needPullRefresh) {
+//
+//        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
+//        Context context = powerfulContainer.getContext();
+//        //生成下拉刷新控件
+//        UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) LayoutInflater.from(context).inflate(R.layout.ui_frame_common_center_layout, powerfulContainer, false);
+//        //添加子布局
+//        LayoutInflater.from(context).inflate(layout, wrapper, true);
+//        //设置布局参数
+//        ViewGroup.MarginLayoutParams marginLayout = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT);
+//        wrapper.setLayoutParams(marginLayout);
+////        wrapper.addView(child);
+//        this.mView = wrapper;
+//        return wrapper;
+//    }
 
     /**
      * 根据给定的布局文件，在容器中添加一个视图，并返回当前这个视图对象;
@@ -136,12 +141,31 @@ public class CenterLayoutManager extends AbstractLayoutManager implements IPullR
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager buildLayout(IContainerManager containerLayout, int layout, boolean needPullRefresh) {
+    public static CenterLayoutManager buildGeneralLayout(IContainerManager containerLayout, int layout) {
         CenterLayoutManager center = new CenterLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            center.addLayout(layout, needPullRefresh);
+            center.addLayout(layout);
+            containerLayout.addLayoutManager(center);
+        }
+        return center;
+    }
+
+    /**
+     * 根据给定的布局文件，在容器中添加一个视图，并返回当前这个视图对象;
+     * 如果容器中已经存在该类型的视图，则不充许再次添加.
+     *
+     * @param containerLayout 当前界面的顶层容器
+     * @return 布局文件加载后的视图布局Manager对象
+     */
+    public static CenterLayoutManager buildPullRefreshLayout(IContainerManager containerLayout) {
+        CenterLayoutManager center = new CenterLayoutManager(containerLayout);
+        if (containerLayout.contains(center)) {
+            throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
+        } else {
+            center.addLayout(R.layout.ui_frame_center_listview_layout);
+            center.mListView = (ListView)center.getContentView().findViewById(R.id.ui_frame_center_list_view);
             containerLayout.addLayoutManager(center);
         }
         return center;
@@ -170,5 +194,49 @@ public class CenterLayoutManager extends AbstractLayoutManager implements IPullR
             UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
             wrapper.stopLoadMore(isSuccess);
         }
+    }
+
+    @Override
+    public void enableRefresh(boolean enable) {
+        if (mView instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+            wrapper.setCanRefresh(enable);
+        }
+    }
+
+    @Override
+    public void enableLoadMore(boolean enable) {
+        if (mView instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+            wrapper.setCanLoad(enable);
+        }
+    }
+
+    @Override
+    public View addCompanionScrollableHeader(@LayoutRes int layout) {
+
+        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
+        if (mListView != null) {
+            View header = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, null, false);
+            mListView.addHeaderView(header);
+            return header;
+
+        }
+        return null;
+    }
+
+    @Override
+    public View addCompanionScrollableFooter(@LayoutRes int layout) {
+        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
+        if (mView instanceof UIFrameRefreshViewLayout) {
+            View footer = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, null, false);
+            mListView.addFooterView(footer);
+            return footer;
+        }
+        return null;
+    }
+
+    public ListView getListView(){
+        return mListView;
     }
 }

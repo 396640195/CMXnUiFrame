@@ -1,5 +1,6 @@
 package com.xn.uiframe.layout;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -56,12 +57,12 @@ public class BottomLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static BottomLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
+    public static BottomLayoutManager buildLayout(IContainerManager containerLayout, @LayoutRes int layout) {
         BottomLayoutManager bottom = new BottomLayoutManager(containerLayout);
         if (containerLayout.contains(bottom)) {
             throw new UIFrameLayoutAlreadyExistException("Bottom视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
-            bottom.addLayout(layout,false);
+            bottom.addLayout(layout);
             containerLayout.addLayoutManager(bottom);
         }
         return bottom;

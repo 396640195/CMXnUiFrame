@@ -66,6 +66,20 @@ public abstract class UIFrameBasicFragment extends Fragment implements
         return view;
     }
 
+    @Override
+    public void addCompanionScrollableHeader(CenterLayoutManager container) {
+
+    }
+
+    @Override
+    public void addCompanionScrollableFooter(CenterLayoutManager container) {
+
+    }
+
+    @Override
+    public void onCompanionViewAddFinished(CenterLayoutManager container) {
+
+    }
 
     @Override
     public HeaderLayoutManager addHeaderView(IContainerManager container) {

@@ -1,7 +1,7 @@
 package com.xn.uiframe.layout;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
 import com.xn.uiframe.animation.Easing;
-import com.xn.uiframe.animation.UIFrameViewAnimator;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
-import com.xn.uiframe.widget.UIFrameRefreshViewLayout;
 
 /**
  * <p>
@@ -50,7 +48,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     protected int mLayer = Layer.LAYER_DIALOG_SCREEN;
 
     /**
-     * 当调用了{@link AbstractLayoutManager#addLayout(int,boolean)}
+     * 当调用了{@link AbstractLayoutManager#addLayout(int)}
      * 方法后，会保存当前视图对象;
      */
     protected View mView;
@@ -155,19 +153,10 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
-    public View addLayout(int layout,boolean needPullRefresh) {
-        if(!needPullRefresh) {
-            PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
-            mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
-            return mView;
-        }else{
-            return  this.addLayoutWithPullRefresh(layout);
-        }
-    }
-
-    public View addLayoutWithPullRefresh(int layout) {
-
-        return null;
+    public View addLayout(@LayoutRes int layout) {
+        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
+        mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
+        return mView;
     }
 
     @Override

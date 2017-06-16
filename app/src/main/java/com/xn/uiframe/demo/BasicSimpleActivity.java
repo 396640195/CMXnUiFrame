@@ -3,14 +3,12 @@ package com.xn.uiframe.demo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
+import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.activity.UIFrameBasicActivity;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
-import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.layout.AbstractLayoutManager;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
@@ -18,9 +16,6 @@ import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener {
     @Override
@@ -63,14 +58,14 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clt = CenterLayoutManager.buildLayout(container, R.layout.layout_center, true);
-        ListView listview = (ListView) clt.getContentView().findViewById(R.id.normal_list_view);
-
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            list.add("测试的" + i);
-        }
-        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
+        CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center);
+//        ListView listview = (ListView) clt.getContentView().findViewById(R.id.normal_list_view);
+//
+//        List<String> list = new ArrayList<>();
+//        for (int i = 0; i < 15; i++) {
+//            list.add("测试的" + i);
+//        }
+//        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
         return clt;
     }
 
@@ -83,14 +78,14 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         return fsm;
     }
 
-//    @Override
-//    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
-//        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
-//        View view = fullScreenLayoutManager.getContentView();
-//        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
-//        setElementViewVisible(ViewElement.LoadView,false);
-//        return fullScreenLayoutManager;
-//    }
+    @Override
+    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
+        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
+        View view = fullScreenLayoutManager.getContentView();
+        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
+        setElementViewVisible(ViewElement.LoadView,false);
+        return fullScreenLayoutManager;
+    }
 
     @Override
     public void onClick(View v) {

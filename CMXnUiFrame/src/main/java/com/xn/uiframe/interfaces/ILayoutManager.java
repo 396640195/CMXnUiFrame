@@ -1,5 +1,6 @@
 package com.xn.uiframe.interfaces;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,10 +25,9 @@ import java.io.Serializable;
 public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
     /**
      * @param layout          布局文件
-     * @param needPullRefresh 是否支持下拉刷新功能;
      * @return 返回添加布局之后对应的View实例对象
      */
-    T addLayout(int layout, boolean needPullRefresh);
+    T addLayout(@LayoutRes int layout);
 
     /**
      * 针对添加进来的布局文件对象在容器中进行布局

@@ -96,6 +96,20 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
+    public void addCompanionScrollableHeader(CenterLayoutManager container) {
+    }
+
+    @Override
+    public void addCompanionScrollableFooter(CenterLayoutManager container) {
+
+    }
+
+    @Override
+    public void onCompanionViewAddFinished(CenterLayoutManager container) {
+
+    }
+
+    @Override
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
         return null;
     }
@@ -302,4 +316,6 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
             mBaseViewContainer.enableLoadMore(enable);
         }
     }
+
+
 }

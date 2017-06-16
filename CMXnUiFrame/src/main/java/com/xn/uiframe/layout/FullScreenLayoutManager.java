@@ -76,7 +76,7 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
         if (containerLayout.contains(fullScreenLayoutManager)) {
             throw new UIFrameLayoutAlreadyExistException("当前类型视图已经添加到容器当中了， 不能重复添加.");
         } else {
-            fullScreenLayoutManager.addLayout(layout,false);
+            fullScreenLayoutManager.addLayout(layout);
             containerLayout.addLayoutManager(fullScreenLayoutManager);
         }
 
@@ -91,7 +91,7 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
     @Override
     public void setVisible(int visible) {
         super.setVisible(visible);
-        if(visible == View.VISIBLE){
+        if(visible == View.VISIBLE && mLayer == Layer.LAYER_DIALOG_SCREEN){
             animateY(Easing.EasingAnimation.EaseOutBounce,1000);
         }
     }

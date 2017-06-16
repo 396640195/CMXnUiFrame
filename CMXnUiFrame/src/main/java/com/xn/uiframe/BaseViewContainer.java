@@ -1,6 +1,7 @@
 package com.xn.uiframe;
 
 import android.app.Activity;
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -9,8 +10,8 @@ import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
+import com.xn.uiframe.interfaces.ICompanionViewManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
-import com.xn.uiframe.interfaces.IPullRefreshBehavior;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -21,7 +22,7 @@ import com.xn.uiframe.layout.TopLayoutManager;
  * Created by xn068074 on 2017/6/13.
  */
 
-public class BaseViewContainer implements IBaseViewContainer {
+public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManager {
     private PowerfulContainerLayout mContainer;
     private IBasicViewAdapter mBasicViewAdapter;
     private Activity mContext;
@@ -162,7 +163,12 @@ public class BaseViewContainer implements IBaseViewContainer {
         this.mHeaderLayoutManager = mBasicViewAdapter.addHeaderView(mContainer);
         this.mTopLayoutManager = mBasicViewAdapter.addTopView(mContainer);
         this.mBottomLayoutManager = mBasicViewAdapter.addBottomView(mContainer);
+
         this.mCenterLayoutManager = mBasicViewAdapter.addCenterView(mContainer);
+        this.mBasicViewAdapter.addCompanionScrollableHeader(this.mCenterLayoutManager);
+        this.mBasicViewAdapter.addCompanionScrollableFooter(this.mCenterLayoutManager);
+        this.mBasicViewAdapter.onCompanionViewAddFinished(this.mCenterLayoutManager);
+
         this.mLoadViewManager = mBasicViewAdapter.addLoadingView(mContainer);
         this.mErrorViewManager = mBasicViewAdapter.addErrorView(mContainer);
         this.mExtraFullViewManager = mBasicViewAdapter.addExtraTopView(mContainer);
@@ -215,11 +221,31 @@ public class BaseViewContainer implements IBaseViewContainer {
 
     @Override
     public void enableRefresh(boolean enable) {
-
+        if (mCenterLayoutManager != null) {
+            this.mCenterLayoutManager.enableRefresh(enable);
+        }
     }
 
     @Override
     public void enableLoadMore(boolean enable) {
+        if (mCenterLayoutManager != null) {
+            this.mCenterLayoutManager.enableLoadMore(enable);
+        }
+    }
 
+    @Override
+    public View addCompanionScrollableHeader(@LayoutRes int layout) {
+        if (mCenterLayoutManager != null) {
+            return this.mCenterLayoutManager.addCompanionScrollableHeader(layout);
+        }
+        return null;
+    }
+
+    @Override
+    public View addCompanionScrollableFooter(@LayoutRes int layout) {
+        if (mCenterLayoutManager != null) {
+            return this.mCenterLayoutManager.addCompanionScrollableFooter(layout);
+        }
+        return null;
     }
 }

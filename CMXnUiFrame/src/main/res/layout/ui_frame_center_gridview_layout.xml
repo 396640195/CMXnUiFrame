@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/normal_list_view"
+    <GridView
+        android:id="@+id/ui_frame_center_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff000"

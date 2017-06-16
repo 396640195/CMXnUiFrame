@@ -1,7 +1,5 @@
 package com.xn.uiframe.interfaces;
 
-import android.view.View;
-
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -66,8 +64,24 @@ public interface IBasicViewAdapter {
      */
     FullScreenLayoutManager addExtraTopView(IContainerManager container);
 
-    View addScrollableHeader();
-    View addScrollableFooter();
+    /**
+     * 给中间可滚动的列表添加头部伴随视图
+     * @param container
+     * @return 返回添加的头部伴随视图对象
+     */
+    void addCompanionScrollableHeader(CenterLayoutManager container);
+    /**
+     * 给中间可滚动的列表添加底部伴随视图
+     * @param container
+     * @return 返回添加的底部伴随视图对象
+     */
+    void addCompanionScrollableFooter(CenterLayoutManager container);
+
+    /**
+     * 当伴随视图添加完毕后，提供一个回调接口，让ListView设置适配器;
+     * @param container
+     */
+    void onCompanionViewAddFinished(CenterLayoutManager container);
     /**
      * 是否要使用EventBus
      * @return
