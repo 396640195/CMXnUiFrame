@@ -15,7 +15,7 @@ import com.xn.uiframe.ViewElement;
  * </p>
  */
 
-public interface IViewCommonBehavior extends IHeaderViewBehavior,IAnimateBehavior {
+public interface IViewCommonBehavior extends IHeaderViewBehavior,IAnimateBehavior,IPullRefreshBehavior {
 
     /**
      * 设置界面视图元素是否可见

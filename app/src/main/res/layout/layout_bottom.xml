@@ -46,12 +46,12 @@
             android:text="Bottom动画" />
 
         <Button
-            android:id="@+id/relayout"
+            android:id="@+id/pull_refresh"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="触发重新布局" />
+            android:text="PullFresh" />
 
     </LinearLayout>
     <View

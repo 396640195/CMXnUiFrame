@@ -8,13 +8,12 @@ import android.widget.TextView;
 
 import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.BaseViewContainer;
+import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.IContainerManager;
-import com.xn.uiframe.interfaces.IPullRefreshBehavior;
 import com.xn.uiframe.interfaces.IViewCommonBehavior;
-import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -34,7 +33,6 @@ import com.xn.uiframe.utils.EventBusProxy;
 public abstract class UIFrameBasicActivity extends FragmentActivity implements
         IBasicViewAdapter,
         IViewCommonBehavior,
-        IPullRefreshBehavior,
         OnRefreshListener {
 
     protected IBaseViewContainer mBaseViewContainer;

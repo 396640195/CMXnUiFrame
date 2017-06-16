@@ -51,7 +51,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         v.findViewById(R.id.animate_top).setOnClickListener(this);
         v.findViewById(R.id.animate_bottom).setOnClickListener(this);
         v.findViewById(R.id.animate_center).setOnClickListener(this);
-        v.findViewById(R.id.relayout).setOnClickListener(this);
+        v.findViewById(R.id.pull_refresh).setOnClickListener(this);
 
         return blm;
     }
@@ -59,13 +59,6 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
         CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center);
-//        ListView listview = (ListView) clt.getContentView().findViewById(R.id.normal_list_view);
-//
-//        List<String> list = new ArrayList<>();
-//        for (int i = 0; i < 15; i++) {
-//            list.add("测试的" + i);
-//        }
-//        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
         return clt;
     }
 
@@ -123,8 +116,8 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
             case R.id.animate_bottom:
                 animateX(ViewElement.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
                 break;
-            case R.id.relayout:
-
+            case R.id.pull_refresh:
+                    SimplePullRefreshActivity.startMe(this);
                 break;
         }
     }
