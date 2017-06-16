@@ -58,8 +58,8 @@ public class CenterLayoutManager extends AbstractLayoutManager {
         int rightMargin = marginLayoutParams.rightMargin;
         int topMargin = marginLayoutParams.topMargin;
         int topPosition = top + topMargin + upTopMargin;
-        mView.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + mView.getMeasuredHeight());
-        System.out.println("width="+getMeasuredWidth()+",height="+getMeasuredHeight());
+        int measuredHeight = mView.getMeasuredHeight();
+        mView.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + measuredHeight);
     }
 
     @Override
@@ -95,11 +95,12 @@ public class CenterLayoutManager extends AbstractLayoutManager {
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin - basicLayoutHeights;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * mViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * mViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec(basicWidth, View.MeasureSpec.EXACTLY);
+        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec(basicHeight, View.MeasureSpec.EXACTLY);
 
         //测量当前布局的高宽
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
+
     }
 
     /**

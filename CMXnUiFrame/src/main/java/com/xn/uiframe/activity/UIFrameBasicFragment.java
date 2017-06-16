@@ -14,7 +14,7 @@ import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.IViewCommonBehavior;
-import com.xn.uiframe.interfaces.ViewElementCategory;
+import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -172,14 +172,14 @@ public class UIFrameBasicFragment extends Fragment implements IBasicViewAdapter,
     }
 
     @Override
-    public void setElementViewVisible(ViewElementCategory elementCategory, boolean visible) {
+    public void setElementViewVisible(ViewElement elementCategory, boolean visible) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setElementViewVisible(elementCategory, visible);
         }
     }
 
     @Override
-    public boolean isElementViewVisible(ViewElementCategory element) {
+    public boolean isElementViewVisible(ViewElement element) {
         if (mBaseViewContainer != null) {
             return mBaseViewContainer.isElementViewVisible(element);
         }
@@ -187,42 +187,42 @@ public class UIFrameBasicFragment extends Fragment implements IBasicViewAdapter,
     }
 
     @Override
-    public void animateY(ViewElementCategory elementCategory, long duration) {
+    public void animateY(ViewElement elementCategory, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateY(elementCategory,duration);
         }
     }
 
     @Override
-    public void animateX(ViewElementCategory elementCategory, long duration) {
+    public void animateX(ViewElement elementCategory, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateX(elementCategory,duration);
         }
     }
 
     @Override
-    public void animateXY(ViewElementCategory elementCategory, long xDuration, long yDuration) {
+    public void animateXY(ViewElement elementCategory, long xDuration, long yDuration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateXY(elementCategory,xDuration,yDuration);
         }
     }
 
     @Override
-    public void animateY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateY(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateY(elementCategory,easing,duration);
         }
     }
 
     @Override
-    public void animateX(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateX(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateX(elementCategory,easing,duration);
         }
     }
 
     @Override
-    public void animateXY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
+    public void animateXY(ViewElement elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateXY(elementCategory,easing,xDuration,yDuration);
         }

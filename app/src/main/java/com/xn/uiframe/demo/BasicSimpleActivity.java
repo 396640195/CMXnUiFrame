@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.xn.uiframe.activity.UIFrameBasicActivity;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
-import com.xn.uiframe.interfaces.ViewElementCategory;
+import com.xn.uiframe.ViewElement;
 import com.xn.uiframe.layout.AbstractLayoutManager;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
@@ -50,7 +50,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         v.findViewById(R.id.animate_top).setOnClickListener(this);
         v.findViewById(R.id.animate_bottom).setOnClickListener(this);
         v.findViewById(R.id.animate_center).setOnClickListener(this);
-
+        v.findViewById(R.id.relayout).setOnClickListener(this);
 
         return blm;
     }
@@ -65,7 +65,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
         View view = fsm.getContentView();
         view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
-        setElementViewVisible(ViewElementCategory.DialogView, false);
+        setElementViewVisible(ViewElement.DialogView, false);
         return fsm;
     }
 
@@ -74,7 +74,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
         View view = fullScreenLayoutManager.getContentView();
         view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
-        view.setVisibility(View.GONE);
+        setElementViewVisible(ViewElement.LoadView,false);
         return fullScreenLayoutManager;
     }
 
@@ -82,37 +82,40 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_of_header_control:
-                boolean visible = isElementViewVisible(ViewElementCategory.HeaderView);
-                setElementViewVisible(ViewElementCategory.HeaderView, visible ? false : true);
+                boolean visible = isElementViewVisible(ViewElement.HeaderView);
+                setElementViewVisible(ViewElement.HeaderView, visible ? false : true);
                 break;
             case R.id.show_dialog_view:
-                setElementViewVisible(ViewElementCategory.DialogView, isElementViewVisible(ViewElementCategory.DialogView) ? false : true);
+                setElementViewVisible(ViewElement.DialogView, isElementViewVisible(ViewElement.DialogView) ? false : true);
                 break;
             case R.id.show_load_view:
-                setElementViewVisible(ViewElementCategory.LoadView, isElementViewVisible(ViewElementCategory.LoadView) ? false : true);
+                setElementViewVisible(ViewElement.LoadView, isElementViewVisible(ViewElement.LoadView) ? false : true);
                 break;
             case R.id.show_top_view:
-                setElementViewVisible(ViewElementCategory.TopView, isElementViewVisible(ViewElementCategory.TopView) ? false : true);
+                setElementViewVisible(ViewElement.TopView, isElementViewVisible(ViewElement.TopView) ? false : true);
                 break;
             case R.id.ok_button_of_load_view:
                 Toast.makeText(BasicSimpleActivity.this, "Load View clicked.", Toast.LENGTH_LONG).show();
-                setElementViewVisible(ViewElementCategory.LoadView, false);
+                setElementViewVisible(ViewElement.LoadView, false);
                 break;
             case R.id.ok_button_of_dialog:
-                setElementViewVisible(ViewElementCategory.DialogView, false);
+                setElementViewVisible(ViewElement.DialogView, false);
                 break;
 
             case R.id.animate_header:
-                animateX(ViewElementCategory.HeaderView, Easing.EasingAnimation.EaseOutBounce, 500);
+                animateX(ViewElement.HeaderView, Easing.EasingAnimation.EaseOutBounce, 500);
                 break;
             case R.id.animate_top:
-                animateY(ViewElementCategory.TopView, Easing.EasingAnimation.EaseOutBounce, 500);
+                animateX(ViewElement.TopView, Easing.EasingAnimation.EaseOutBounce, 500);
                 break;
             case R.id.animate_center:
-                animateY(ViewElementCategory.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
+                animateY(ViewElement.CenterView, Easing.EasingAnimation.EaseOutBounce,1500);
                 break;
             case R.id.animate_bottom:
-                animateY(ViewElementCategory.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
+                animateX(ViewElement.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
+                break;
+            case R.id.relayout:
+
                 break;
         }
     }

@@ -9,7 +9,6 @@ import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
 import com.xn.uiframe.interfaces.ILayoutManager;
-import com.xn.uiframe.interfaces.ViewElementCategory;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
@@ -40,7 +39,7 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void setElementViewVisible(ViewElementCategory elementCategory, boolean visible) {
+    public void setElementViewVisible(ViewElement elementCategory, boolean visible) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
@@ -48,13 +47,13 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public boolean isElementViewVisible(ViewElementCategory elementCategory) {
+    public boolean isElementViewVisible(ViewElement elementCategory) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         return layoutManager == null ? false : layoutManager.getVisibility() == View.VISIBLE ? true : false;
     }
 
     @Override
-    public void animateY(ViewElementCategory elementCategory, long duration) {
+    public void animateY(ViewElement elementCategory, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateY(duration);
@@ -62,7 +61,7 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void animateX(ViewElementCategory elementCategory, long duration) {
+    public void animateX(ViewElement elementCategory, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateX(duration);
@@ -70,7 +69,7 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void animateXY(ViewElementCategory elementCategory, long xDuration, long yDuration) {
+    public void animateXY(ViewElement elementCategory, long xDuration, long yDuration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateXY(xDuration, yDuration);
@@ -78,7 +77,7 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void animateY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateY(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateY(easing, duration);
@@ -86,7 +85,7 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void animateX(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateX(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateX(easing, duration);
@@ -94,7 +93,7 @@ public class BaseViewContainer implements IBaseViewContainer {
     }
 
     @Override
-    public void animateXY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
+    public void animateXY(ViewElement elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateXY(easing, xDuration, yDuration);
@@ -169,23 +168,23 @@ public class BaseViewContainer implements IBaseViewContainer {
         return mContainer;
     }
 
-    private ILayoutManager elementCategoryTypeToLayoutManager(ViewElementCategory category) {
+    private ILayoutManager elementCategoryTypeToLayoutManager(ViewElement category) {
 
-        if (category.ordinal() == ViewElementCategory.HeaderView.ordinal()) {
+        if (category.ordinal() == ViewElement.HeaderView.ordinal()) {
             return mHeaderLayoutManager;
-        } else if (category.ordinal() == ViewElementCategory.TopView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.TopView.ordinal()) {
             return mTopLayoutManager;
-        } else if (category.ordinal() == ViewElementCategory.CenterView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.CenterView.ordinal()) {
             return mCenterLayoutManager;
-        } else if (category.ordinal() == ViewElementCategory.BottomView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.BottomView.ordinal()) {
             return mBottomLayoutManager;
-        } else if (category.ordinal() == ViewElementCategory.DialogView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.DialogView.ordinal()) {
             return mDialogViewManager;
-        } else if (category.ordinal() == ViewElementCategory.ErrorView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.ErrorView.ordinal()) {
             return mErrorViewManager;
-        } else if (category.ordinal() == ViewElementCategory.ExtraView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.ExtraView.ordinal()) {
             return mExtraFullViewManager;
-        } else if (category.ordinal() == ViewElementCategory.LoadView.ordinal()) {
+        } else if (category.ordinal() == ViewElement.LoadView.ordinal()) {
             return mLoadViewManager;
         }
         return null;

@@ -1,5 +1,6 @@
 package com.xn.uiframe.layout;
 
+import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -22,14 +23,14 @@ import com.xn.uiframe.interfaces.ILayoutManager;
 
 public abstract class AbstractLayoutManager implements ILayoutManager<View, ILayoutManager> {
     protected IContainerManager mContainerManager;
-    private ViewAnimateListener mViewAnimateListener;
+    private ViewXAnimateListener mViewXAnimateListener;
+    private ViewYAnimateListener mViewYAnimateListener;
 
     public AbstractLayoutManager(IContainerManager mContainerManager) {
         this.initAnimator();
         this.mContainerManager = mContainerManager;
     }
 
-    protected UIFrameViewAnimator mViewAnimator;
 
     public AbstractLayoutManager(IContainerManager mContainerManager, int mLayer) {
         this.initAnimator();
@@ -38,11 +39,8 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     private void initAnimator() {
-        if (android.os.Build.VERSION.SDK_INT < 11) {
-            this.mViewAnimator = new UIFrameViewAnimator();
-        } else {
-            this.mViewAnimator = new UIFrameViewAnimator(mViewAnimateListener = new ViewAnimateListener());
-        }
+        this.mViewXAnimateListener = new ViewXAnimateListener();
+        this.mViewYAnimateListener = new ViewYAnimateListener();
     }
 
     /**
@@ -131,8 +129,8 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * mViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * mViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec(basicWidth, View.MeasureSpec.EXACTLY);
+        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec(basicHeight, View.MeasureSpec.EXACTLY);
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
 
     }
@@ -186,6 +184,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     public void setVisible(int visible) {
         if (mView != null) {
             mView.setVisibility(visible);
+            mContainerManager.requestLayout();
         }
     }
 
@@ -201,69 +200,53 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void animateY(long duration) {
-        this.beforeAnimate();
-        this.mViewAnimator.animateY(duration);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
+        valueAnimator.addUpdateListener(mViewYAnimateListener);
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
     }
 
     @Override
     public void animateX(long duration) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0,mView.getMeasuredWidth());
-        valueAnimator.addUpdateListener(mViewAnimateListener);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
+        valueAnimator.addUpdateListener(mViewXAnimateListener);
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
 
     @Override
     public void animateXY(long xDuration, long yDuration) {
-        this.beforeAnimate();
-        this.mViewAnimator.animateXY(xDuration, yDuration);
+        this.animateX(xDuration);
+        this.animateY(yDuration);
     }
 
     @Override
     public void animateY(Easing.EasingAnimation easing, long duration) {
-////        this.beforeAnimate();
-////        this.mViewAnimator.animateY(duration, easing);
-//        ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
-//        PropertyValuesHolder pvhScaleX = PropertyValuesHolder.ofFloat("height",1f, 0f, 1f);
-//        ObjectAnimator customAnim = ObjectAnimator.ofPropertyValuesHolder(mView,pvhScaleX);
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0,mView.getMeasuredHeight());
-        valueAnimator.addUpdateListener(mViewAnimateListener);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
+        valueAnimator.addUpdateListener(mViewYAnimateListener);
+        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
 
     @Override
     public void animateX(Easing.EasingAnimation easing, long duration) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0,mView.getMeasuredWidth());
-        valueAnimator.addUpdateListener(mViewAnimateListener);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
+        valueAnimator.addUpdateListener(mViewXAnimateListener);
+        //valueAnimator.addListener();
+        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
         valueAnimator.setDuration(duration);
         valueAnimator.start();
     }
 
     @Override
     public void animateXY(Easing.EasingAnimation easing, long xDuration, long yDuration) {
-        this.beforeAnimate();
-        this.mViewAnimator.animateXY(xDuration, yDuration, easing, easing);
+        this.animateX(easing, xDuration);
+        this.animateY(easing, yDuration);
     }
 
-    private void beforeAnimate() {
-        if (this.mViewAnimateListener != null) {
-            this.mViewAnimateListener.setWidth(mView.getMeasuredWidth());
-            this.mViewAnimateListener.setHeight(mView.getMeasuredHeight());
-        }
-    }
 
-    class ViewAnimateListener implements ValueAnimator.AnimatorUpdateListener {
-        private int width;
-        private int height;
-
-        public void setWidth(int width) {
-            this.width = width;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
-        }
+    class ViewXAnimateListener implements ValueAnimator.AnimatorUpdateListener {
 
         @Override
         public void onAnimationUpdate(ValueAnimator animation) {
@@ -273,19 +256,50 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         private void animateByLayoutParams(ValueAnimator animation) {
             int value = (int) animation.getAnimatedValue();
             ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
-            mp.width =  value;
+            mp.width = value;
+            mp.height = mView.getMeasuredHeight();
             mView.setLayoutParams(mp);
-            System.out.println("value="+value);
         }
 
-        /**
-         * 这种方式实现的动画要求所有布局width,height只能是wrap_content,或者 match_parent才有动画效果
-         * @param animation
-         */
-        private void animateByMeasureCalculate(ValueAnimator animation) {
-            float value = (float) animation.getAnimatedValue();
-            if (value > 1) return;
-            mContainerManager.requestLayout();
+    }
+
+    class ViewYAnimateListener implements ValueAnimator.AnimatorUpdateListener {
+
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            animateByLayoutParams(animation);
+        }
+
+        private void animateByLayoutParams(ValueAnimator animation) {
+            int value = (int) animation.getAnimatedValue();
+            ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
+            mp.height = value;
+            mp.width = mView.getMeasuredWidth();
+            mView.setLayoutParams(mp);
+        }
+
+    }
+
+    class ViewAnimatorListener implements Animator.AnimatorListener{
+        @Override
+        public void onAnimationStart(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+
         }
     }
+
 }

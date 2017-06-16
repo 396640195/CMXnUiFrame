@@ -4,7 +4,7 @@ package com.xn.uiframe.interfaces;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
-import com.xn.uiframe.animation.Easing;
+import com.xn.uiframe.ViewElement;
 
 /**
  * <p>
@@ -14,7 +14,7 @@ import com.xn.uiframe.animation.Easing;
  * </p>
  */
 
-public interface IViewCommonBehavior extends IHeaderViewBehavior {
+public interface IViewCommonBehavior extends IHeaderViewBehavior,IAnimateBehavior {
 
     /**
      * 设置界面视图元素是否可见
@@ -22,7 +22,7 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior {
      * @param elementCategory 界面视图类型
      * @param visible         true:可见  false:不可见
      */
-    void setElementViewVisible(ViewElementCategory elementCategory, boolean visible);
+    void setElementViewVisible(ViewElement elementCategory, boolean visible);
 
     /**
      * 返回该元素的可见状态
@@ -30,7 +30,7 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior {
      * @param elementCategory 界面视图类型
      * @return true:可见  false:不可见
      */
-    boolean isElementViewVisible(ViewElementCategory elementCategory);
+    boolean isElementViewVisible(ViewElement elementCategory);
 
     /**
      * 设置容器颜色
@@ -45,58 +45,5 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior {
      * @param res 图片资源ID
      */
     void setContainerBackgroundResource(@DrawableRes int res);
-
-    /**
-     * 针对该视图进行Y轴动画
-     *
-     * @param elementCategory 界面视图元素类型
-     * @param duration
-     */
-    void animateY(ViewElementCategory elementCategory, long duration);
-
-    /**
-     * 针对该视图进行X轴动画
-     *
-     * @param elementCategory 界面视图元素类型
-     * @param duration
-     */
-    void animateX(ViewElementCategory elementCategory, long duration); 
-
-    /**
-     * 针对该视图进行XY轴动画
-     *
-     * @param elementCategory 界面视图元素类型
-     * @param xDuration        x轴动画时间
-     * @param yDuration        y轴动画时间
-     */
-    void animateXY(ViewElementCategory elementCategory, long xDuration, long yDuration);
-
-    /**
-     * 针对该视图进行Y轴动画
-     *
-     * @param elementCategory 界面视图元素类型
-     * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param duration
-     */
-    void animateY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration);
-
-    /**
-     * 针对该视图进行X轴动画
-     *
-     * @param elementCategory 界面视图元素类型
-     * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param duration
-     */
-    void animateX(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long duration);
-
-    /**
-     * 针对该视图进行XY轴动画
-     *
-     * @param elementCategory 界面视图元素类型
-     * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param xDuration        x轴动画时间
-     * @param yDuration        y轴动画时间
-     */
-    void animateXY(ViewElementCategory elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration);
 
 }

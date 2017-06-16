@@ -66,7 +66,6 @@ public class TopLayoutManager extends AbstractLayoutManager {
         int topPos = top + headerHeight + topMargin;
         mView.layout(left + leftMargin, topPos, right - rightMargin, topPos + mView.getMeasuredHeight());
 
-        System.out.println("width="+getMeasuredWidth()+",height="+getMeasuredHeight());
     }
 
     /**
