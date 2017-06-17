@@ -1,6 +1,6 @@
 package com.xn.uiframe.interfaces;
 
-import com.xn.uiframe.ViewElement;
+import com.xn.uiframe.ElementView;
 import com.xn.uiframe.animation.Easing;
 
 /**
@@ -15,7 +15,7 @@ public interface IAnimateBehavior {
      * @param elementCategory 界面视图元素类型
      * @param duration
      */
-    void animateY(ViewElement elementCategory, long duration);
+    void animateY(ElementView elementCategory, long duration);
 
     /**
      * 针对该视图进行X轴动画
@@ -23,7 +23,7 @@ public interface IAnimateBehavior {
      * @param elementCategory 界面视图元素类型
      * @param duration
      */
-    void animateX(ViewElement elementCategory, long duration);
+    void animateX(ElementView elementCategory, long duration);
 
     /**
      * 针对该视图进行XY轴动画
@@ -32,7 +32,7 @@ public interface IAnimateBehavior {
      * @param xDuration        x轴动画时间
      * @param yDuration        y轴动画时间
      */
-    void animateXY(ViewElement elementCategory, long xDuration, long yDuration);
+    void animateXY(ElementView elementCategory, long xDuration, long yDuration);
 
     /**
      * 针对该视图进行Y轴动画
@@ -41,7 +41,7 @@ public interface IAnimateBehavior {
      * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
      * @param duration
      */
-    void animateY(ViewElement elementCategory, Easing.EasingAnimation easing, long duration);
+    void animateY(ElementView elementCategory, Easing.EasingAnimation easing, long duration);
 
     /**
      * 针对该视图进行X轴动画
@@ -50,7 +50,7 @@ public interface IAnimateBehavior {
      * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
      * @param duration
      */
-    void animateX(ViewElement elementCategory, Easing.EasingAnimation easing, long duration);
+    void animateX(ElementView elementCategory, Easing.EasingAnimation easing, long duration);
 
     /**
      * 针对该视图进行XY轴动画
@@ -60,5 +60,5 @@ public interface IAnimateBehavior {
      * @param xDuration        x轴动画时间
      * @param yDuration        y轴动画时间
      */
-    void animateXY(ViewElement elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration);
+    void animateXY(ElementView elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration);
 }

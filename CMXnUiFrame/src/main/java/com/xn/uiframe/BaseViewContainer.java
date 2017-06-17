@@ -14,6 +14,7 @@ import com.xn.uiframe.interfaces.ICompanionViewManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
+import com.xn.uiframe.layout.CenterMaskLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
@@ -30,6 +31,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     private TopLayoutManager mTopLayoutManager;
     private BottomLayoutManager mBottomLayoutManager;
     private CenterLayoutManager mCenterLayoutManager;
+    private CenterMaskLayoutManager mCenterMaskLayoutManager;
     private HeaderLayoutManager mHeaderLayoutManager;
     private FullScreenLayoutManager mLoadViewManager;
     private FullScreenLayoutManager mErrorViewManager;
@@ -42,7 +44,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void setElementViewVisible(ViewElement elementCategory, boolean visible) {
+    public void setElementViewVisible(ElementView elementCategory, boolean visible) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
@@ -50,13 +52,13 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public boolean isElementViewVisible(ViewElement elementCategory) {
+    public boolean isElementViewVisible(ElementView elementCategory) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         return layoutManager == null ? false : layoutManager.getVisibility() == View.VISIBLE ? true : false;
     }
 
     @Override
-    public void animateY(ViewElement elementCategory, long duration) {
+    public void animateY(ElementView elementCategory, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateY(duration);
@@ -64,7 +66,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void animateX(ViewElement elementCategory, long duration) {
+    public void animateX(ElementView elementCategory, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateX(duration);
@@ -72,7 +74,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void animateXY(ViewElement elementCategory, long xDuration, long yDuration) {
+    public void animateXY(ElementView elementCategory, long xDuration, long yDuration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateXY(xDuration, yDuration);
@@ -80,7 +82,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void animateY(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateY(ElementView elementCategory, Easing.EasingAnimation easing, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateY(easing, duration);
@@ -88,7 +90,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void animateX(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateX(ElementView elementCategory, Easing.EasingAnimation easing, long duration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateX(easing, duration);
@@ -96,7 +98,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void animateXY(ViewElement elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
+    public void animateXY(ElementView elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
             layoutManager.animateXY(easing, xDuration, yDuration);
@@ -169,6 +171,8 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         this.mBasicViewAdapter.addCompanionScrollableFooter(this.mCenterLayoutManager);
         this.mBasicViewAdapter.onCompanionViewAddFinished(this.mCenterLayoutManager);
 
+        this.mCenterMaskLayoutManager = mBasicViewAdapter.addCenterMaskView(mContainer);
+
         this.mLoadViewManager = mBasicViewAdapter.addLoadingView(mContainer);
         this.mErrorViewManager = mBasicViewAdapter.addErrorView(mContainer);
         this.mExtraFullViewManager = mBasicViewAdapter.addExtraTopView(mContainer);
@@ -176,23 +180,25 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         return mContainer;
     }
 
-    private ILayoutManager elementCategoryTypeToLayoutManager(ViewElement category) {
+    private ILayoutManager elementCategoryTypeToLayoutManager(ElementView category) {
 
-        if (category.ordinal() == ViewElement.HeaderView.ordinal()) {
+        if (category  == ElementView.HeaderView ) {
             return mHeaderLayoutManager;
-        } else if (category.ordinal() == ViewElement.TopView.ordinal()) {
+        } else if (category  == ElementView.TopView ) {
             return mTopLayoutManager;
-        } else if (category.ordinal() == ViewElement.CenterView.ordinal()) {
+        } else if (category  == ElementView.CenterView ){
             return mCenterLayoutManager;
-        } else if (category.ordinal() == ViewElement.BottomView.ordinal()) {
+        } else if(category == ElementView.CenterMaskView){
+            return mCenterMaskLayoutManager;
+        }else if (category == ElementView.BottomView ) {
             return mBottomLayoutManager;
-        } else if (category.ordinal() == ViewElement.DialogView.ordinal()) {
+        } else if (category == ElementView.DialogView ) {
             return mDialogViewManager;
-        } else if (category.ordinal() == ViewElement.ErrorView.ordinal()) {
+        } else if (category  == ElementView.ErrorView ) {
             return mErrorViewManager;
-        } else if (category.ordinal() == ViewElement.ExtraView.ordinal()) {
+        } else if (category == ElementView.ExtraView ) {
             return mExtraFullViewManager;
-        } else if (category.ordinal() == ViewElement.LoadView.ordinal()) {
+        } else if (category == ElementView.LoadView ) {
             return mLoadViewManager;
         }
         return null;

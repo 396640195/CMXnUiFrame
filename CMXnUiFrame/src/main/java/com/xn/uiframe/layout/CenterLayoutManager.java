@@ -29,7 +29,7 @@ import java.util.List;
  * 基本视图是指组成界面的各个基本元素的布局,在这个框架中主要定义了几个如下几个基本视图:
  * 1.HeaderLayoutManager
  * 2.TopLayoutManager
- * 3.CenterLayoutManager
+ * 3.CenterLayoutManager,CenterMaskLayoutManager (用来在中间视图之上显示无数据，异常信息的层)
  * 4.BottomLayoutManager
  * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
  * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;

@@ -78,28 +78,33 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
          */
         public static final int LAYER_BASIC_CENTER_PART = 0x10004;
         /**
+         * 覆盖在CenterLayout之上的层，用来显示无数据，加载中或异常信息的一个局部视图层级;  与全屏{@link Layer#LAYER_ERROR_SCREEN}对应
+         */
+        public static final int LAYER_BASIC_CENTER_MASK_PART = 0x10005;
+
+        /**
          * 处于该层级的主要是用于实现进度加载，这种异步等待的全屏界面. 它处于
          * basic part 层级之上.
          **/
-        public static final int LAYER_LOAD_SCREEN = 0x10005;
+        public static final int LAYER_LOAD_SCREEN = 0x10006;
 
         /**
          * 该层级主要用于来展示异常信息，它处于
          * {@link AbstractLayoutManager.Layer#LAYER_LOAD_SCREEN}层级之上.
          ***/
-        public static final int LAYER_ERROR_SCREEN = 0x10006;
+        public static final int LAYER_ERROR_SCREEN = 0x10007;
 
         /**
          * 该层级用来备用特殊情况，如果前两层不足以满足需求，可以根据需求使用这一层级;
          * 它处于{@link AbstractLayoutManager.Layer#LAYER_ERROR_SCREEN}层级之上.
          **/
-        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10007;
+        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10008;
 
         /**
          * 处于UI的最顶层.该层级主要用来实现对话框的功能,完全替代话框，它的层级处于
          * 它处于{@link AbstractLayoutManager.Layer#LAYER_FULL_SCREEN_EXTRA}层级之上.
          **/
-        public static final int LAYER_DIALOG_SCREEN = 0x10008;
+        public static final int LAYER_DIALOG_SCREEN = 0x10009;
 
     }
 

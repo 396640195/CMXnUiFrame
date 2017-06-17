@@ -4,7 +4,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xn.uiframe.R;
-import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.exception.UIFrameIllegalArgumentException;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
@@ -91,8 +90,5 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
     @Override
     public void setVisible(int visible) {
         super.setVisible(visible);
-        if(visible == View.VISIBLE && mLayer == Layer.LAYER_DIALOG_SCREEN){
-            animateY(Easing.EasingAnimation.EaseOutBounce,1000);
-        }
     }
 }

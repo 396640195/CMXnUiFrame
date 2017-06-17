@@ -5,7 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 
 import com.dalong.refreshlayout.OnRefreshListener;
-import com.xn.uiframe.ViewElement;
+import com.xn.uiframe.ElementView;
 
 /**
  * <p>
@@ -23,7 +23,7 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior,IAnimateBehavio
      * @param elementCategory 界面视图类型
      * @param visible         true:可见  false:不可见
      */
-    void setElementViewVisible(ViewElement elementCategory, boolean visible);
+    void setElementViewVisible(ElementView elementCategory, boolean visible);
 
     /**
      * 返回该元素的可见状态
@@ -31,7 +31,7 @@ public interface IViewCommonBehavior extends IHeaderViewBehavior,IAnimateBehavio
      * @param elementCategory 界面视图类型
      * @return true:可见  false:不可见
      */
-    boolean isElementViewVisible(ViewElement elementCategory);
+    boolean isElementViewVisible(ElementView elementCategory);
 
     /**
      * 设置容器颜色

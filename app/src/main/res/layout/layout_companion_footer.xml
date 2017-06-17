@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="#FFA0c0"
+        android:textColor="#000000"
         android:gravity="center"
         android:padding="15dp"
         android:text="Companion   Footer" />

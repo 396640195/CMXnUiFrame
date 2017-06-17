@@ -2,6 +2,7 @@ package com.xn.uiframe.interfaces;
 
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
+import com.xn.uiframe.layout.CenterMaskLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
@@ -39,6 +40,13 @@ public interface IBasicViewAdapter {
      * @return 返回头部布局管理对象 {@link CenterLayoutManager}
      */
     CenterLayoutManager addCenterView(IContainerManager container);
+
+    /**
+     * 在中间视图之上添加一个覆盖层,用来实现某些特殊需求;
+     * @param container 容器接口的实例对象
+     * @return 返回头部布局管理对象 {@link CenterLayoutManager}
+     */
+    CenterMaskLayoutManager addCenterMaskView(IContainerManager container);
     /**
      * 在界面中添加一个全屏视图,该视图处于界面的最上层;
      * @param container 容器接口的实例对象

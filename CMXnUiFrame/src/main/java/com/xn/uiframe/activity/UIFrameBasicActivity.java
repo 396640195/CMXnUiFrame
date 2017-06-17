@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.BaseViewContainer;
-import com.xn.uiframe.ViewElement;
+import com.xn.uiframe.ElementView;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
@@ -16,6 +16,7 @@ import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.IViewCommonBehavior;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
+import com.xn.uiframe.layout.CenterMaskLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
@@ -128,6 +129,11 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
+    public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
+        return null;
+    }
+
+    @Override
     public FullScreenLayoutManager addDialogView(IContainerManager container) {
         return null;
     }
@@ -214,14 +220,14 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
-    public void setElementViewVisible(ViewElement elementCategory, boolean visible) {
+    public void setElementViewVisible(ElementView elementCategory, boolean visible) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setElementViewVisible(elementCategory, visible);
         }
     }
 
     @Override
-    public boolean isElementViewVisible(ViewElement element) {
+    public boolean isElementViewVisible(ElementView element) {
         if (mBaseViewContainer != null) {
             return mBaseViewContainer.isElementViewVisible(element);
         }
@@ -229,42 +235,42 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
-    public void animateY(ViewElement elementCategory, long duration) {
+    public void animateY(ElementView elementCategory, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateY(elementCategory, duration);
         }
     }
 
     @Override
-    public void animateX(ViewElement elementCategory, long duration) {
+    public void animateX(ElementView elementCategory, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateX(elementCategory, duration);
         }
     }
 
     @Override
-    public void animateXY(ViewElement elementCategory, long xDuration, long yDuration) {
+    public void animateXY(ElementView elementCategory, long xDuration, long yDuration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateXY(elementCategory, xDuration, yDuration);
         }
     }
 
     @Override
-    public void animateY(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateY(ElementView elementCategory, Easing.EasingAnimation easing, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateY(elementCategory, easing, duration);
         }
     }
 
     @Override
-    public void animateX(ViewElement elementCategory, Easing.EasingAnimation easing, long duration) {
+    public void animateX(ElementView elementCategory, Easing.EasingAnimation easing, long duration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateX(elementCategory, easing, duration);
         }
     }
 
     @Override
-    public void animateXY(ViewElement elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
+    public void animateXY(ElementView elementCategory, Easing.EasingAnimation easing, long xDuration, long yDuration) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.animateXY(elementCategory, easing, xDuration, yDuration);
         }
