@@ -113,13 +113,13 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
                 break;
 
             case R.id.animate_header:
-                animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseOutBounce, 500);
+                animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseInQuart, 1000);
                 break;
             case R.id.animate_top:
-                animateX(ElementView.TopView, Easing.EasingAnimation.EaseOutBounce, 500);
+                animateX(ElementView.TopView,Easing.EasingAnimation.EaseInQuart, 1000);
                 break;
             case R.id.animate_center:
-                animateY(ElementView.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
+                animateX(ElementView.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
                 break;
             case R.id.animate_bottom:
                 animateX(ElementView.BottomView, Easing.EasingAnimation.EaseInQuart, 500);

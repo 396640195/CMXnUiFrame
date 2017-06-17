@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.xn.uiframe.PowerfulContainerLayout;
 import com.xn.uiframe.animation.Easing;
+import com.xn.uiframe.animation.UIFrameViewAnimator;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 
@@ -25,6 +26,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     private ViewXAnimateListener mViewXAnimateListener;
     private ViewYAnimateListener mViewYAnimateListener;
 
+    protected UIFrameViewAnimator mUIFrameViewAnimator;
     public AbstractLayoutManager(IContainerManager mContainerManager) {
         this.initAnimator();
         this.mContainerManager = mContainerManager;
@@ -40,6 +42,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     private void initAnimator() {
         this.mViewXAnimateListener = new ViewXAnimateListener();
         this.mViewYAnimateListener = new ViewYAnimateListener();
+        this.mUIFrameViewAnimator = new UIFrameViewAnimator(new ViewAnimateListener());
     }
 
     /**
@@ -133,8 +136,8 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec(basicWidth, View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec(basicHeight, View.MeasureSpec.EXACTLY);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int)(basicWidth*this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
+        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int)(basicHeight*this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
 
     }
@@ -204,14 +207,16 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void animateY(long duration) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
-        valueAnimator.addUpdateListener(mViewYAnimateListener);
-        valueAnimator.setDuration(duration);
-        valueAnimator.start();
+         this.mUIFrameViewAnimator.animateY(duration);
+//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
+//        valueAnimator.addUpdateListener(mViewYAnimateListener);
+//        valueAnimator.setDuration(duration);
+//        valueAnimator.start();
     }
 
     @Override
     public void animateX(long duration) {
+//        this.mUIFrameViewAnimator.animateX(duration);
         ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
         valueAnimator.addUpdateListener(mViewXAnimateListener);
         valueAnimator.setDuration(duration);
@@ -226,11 +231,12 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void animateY(Easing.EasingAnimation easing, long duration) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
-        valueAnimator.addUpdateListener(mViewYAnimateListener);
-        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
-        valueAnimator.setDuration(duration);
-        valueAnimator.start();
+//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
+//        valueAnimator.addUpdateListener(mViewYAnimateListener);
+//        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
+//        valueAnimator.setDuration(duration);
+//        valueAnimator.start();
+        this.mUIFrameViewAnimator.animateY(duration,easing);
     }
 
     @Override
@@ -240,6 +246,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
         valueAnimator.setDuration(duration);
         valueAnimator.start();
+//        this.mUIFrameViewAnimator.animateX(duration,easing);
     }
 
     @Override
@@ -283,4 +290,16 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     }
 
+    class ViewAnimateListener implements ValueAnimator.AnimatorUpdateListener {
+
+        @Override
+        public void onAnimationUpdate(ValueAnimator animation) {
+            animateByLayoutParams(animation);
+        }
+
+        private void animateByLayoutParams(ValueAnimator animation) {
+           mContainerManager.requestLayout();
+        }
+
+    }
 }

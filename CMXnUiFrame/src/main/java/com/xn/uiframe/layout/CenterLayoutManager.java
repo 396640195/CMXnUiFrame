@@ -108,8 +108,8 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin - basicLayoutHeights;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec(basicWidth, View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec(basicHeight, View.MeasureSpec.EXACTLY);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int)(basicWidth*this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
+        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int)(basicHeight*this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
 
         //测量当前布局的高宽
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);

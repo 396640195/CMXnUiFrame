@@ -70,6 +70,7 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
             public void run() {
                 stopRefresh(true);
                 setElementViewVisible(ElementView.CenterMaskView,true);
+                animateY(ElementView.CenterMaskView, Easing.EasingAnimation.EaseOutBounce, 1000);
             }
         }, 2000);
     }
@@ -82,10 +83,10 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
                 setElementViewVisible(ElementView.CenterMaskView,false);
                 break;
             case R.id.animate_header:
-                animateY(ElementView.HeaderView, Easing.EasingAnimation.EaseOutBounce, 500);
+                animateY(ElementView.HeaderView, Easing.EasingAnimation.EaseInOutCirc, 1500);
                 break;
             case R.id.animate_top:
-                animateY(ElementView.TopView, Easing.EasingAnimation.EaseOutBounce, 500);
+                animateY(ElementView.TopView, Easing.EasingAnimation.EaseInOutCirc, 1500);
                 break;
             case R.id.animate_center:
                 animateX(ElementView.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
