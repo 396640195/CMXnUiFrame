@@ -3,6 +3,7 @@ package com.xn.uiframe.demo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.xn.uiframe.ElementView;
@@ -19,6 +20,7 @@ import com.xn.uiframe.layout.TopLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
 
 public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,9 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
-        return HeaderLayoutManager.buildLayout(container, R.layout.layout_header);
+        HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container, R.layout.layout_header);
+        hlm.setHeaderLeftImage(R.mipmap.arrow_left_normal);
+        return  hlm;
     }
 
     @Override
@@ -39,21 +43,9 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public BottomLayoutManager addBottomView(IContainerManager container) {
-
-        BottomLayoutManager blm = BottomLayoutManager.buildLayout(container, R.layout.layout_bottom);
+        BottomLayoutManager blm = BottomLayoutManager.buildLayout(container, R.layout.layout_simple_bottom);
         View v = blm.getContentView();
-
-        v.findViewById(R.id.button_of_header_control).setOnClickListener(this);
-        v.findViewById(R.id.show_dialog_view).setOnClickListener(this);
-        v.findViewById(R.id.show_load_view).setOnClickListener(this);
-        v.findViewById(R.id.show_top_view).setOnClickListener(this);
-
-        v.findViewById(R.id.animate_header).setOnClickListener(this);
-        v.findViewById(R.id.animate_top).setOnClickListener(this);
-        v.findViewById(R.id.animate_bottom).setOnClickListener(this);
-        v.findViewById(R.id.animate_center).setOnClickListener(this);
-        v.findViewById(R.id.pull_refresh).setOnClickListener(this);
-
+        new TabViewHolder((LinearLayout) v,this);
         return blm;
     }
 
@@ -62,31 +54,31 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center);
         return clt;
     }
-
-    @Override
-    public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
-        CenterMaskLayoutManager clt = CenterMaskLayoutManager.buildLayout(container,R.layout.layout_center_mask);
-        clt.getContentView().setVisibility(View.GONE);
-        return clt;
-    }
-
-    @Override
-    public FullScreenLayoutManager addDialogView(IContainerManager container) {
-        FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
-        View view = fsm.getContentView();
-        view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
-        view.setVisibility(View.GONE);
-        return fsm;
-    }
-
-    @Override
-    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
-        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
-        View view = fullScreenLayoutManager.getContentView();
-        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
-        view.setVisibility(View.GONE);
-        return fullScreenLayoutManager;
-    }
+//
+//    @Override
+//    public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
+//        CenterMaskLayoutManager clt = CenterMaskLayoutManager.buildLayout(container,R.layout.layout_center_mask);
+//        clt.getContentView().setVisibility(View.GONE);
+//        return clt;
+//    }
+//
+//    @Override
+//    public FullScreenLayoutManager addDialogView(IContainerManager container) {
+//        FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
+//        View view = fsm.getContentView();
+//        view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
+//        fsm.setVisible(View.GONE);
+//        return fsm;
+//    }
+//
+//    @Override
+//    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
+//        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
+//        View view = fullScreenLayoutManager.getContentView();
+//        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
+//        fullScreenLayoutManager.setVisible(View.GONE);
+//        return fullScreenLayoutManager;
+//    }
 
     @Override
     public void onClick(View v) {

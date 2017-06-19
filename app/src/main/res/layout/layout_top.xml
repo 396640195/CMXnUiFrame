@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="#ff0000"
-        android:gravity="center"
-        android:text="Top View"
-        android:padding="10dp"
-        />
-</LinearLayout>
+    android:layout_height="50dp"
+    android:layout_gravity="center"
+    android:background="#FF864A"
+    android:gravity="center"
+    android:textColor="#000000"
+    android:padding="10dp"
+    android:text="今日新闻:青海首次发现雪豹 两只幼崽都已半个月大小" />
