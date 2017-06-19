@@ -11,9 +11,9 @@ import com.xn.uiframe.layout.TopLayoutManager;
 
 public class SimplePullRefreshActivity extends BasicSimpleActivity {
 
-    private SimpleFragment mHomeFragment = new SimpleFragment();
-    private SimpleFragment mSetFragment = new SimpleFragment();
-    private SimpleFragment mAccountFragment = new SimpleFragment();
+    private SimpleFragment mHomeFragment;
+    private SimpleFragment mSetFragment;
+    private SimpleFragment mAccountFragment;
 
     public static void startMe(Activity from) {
         Intent intent = new Intent();
@@ -41,31 +41,42 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
     public void onTabSelected(int index) {
         switch (index) {
             case 1:
-                changeUIFragment(mAccountFragment);
+                changeUIFragment(mHomeFragment);
                 break;
             case 2:
-                changeUIFragment(mSetFragment);
+                if (mAccountFragment == null) {
+                    Bundle accountBD = new Bundle();
+                    accountBD.putString("content", "From帐号");
+                    mAccountFragment = new SimpleFragment();
+                    mAccountFragment.setArguments(accountBD);
+                    addUIFrameFragment(mAccountFragment);
+                } else {
+                    changeUIFragment(mAccountFragment);
+                }
                 break;
             default:
-                changeUIFragment(mHomeFragment);
+
+                if (mSetFragment == null) {
+                    Bundle setBD = new Bundle();
+                    setBD.putString("content", "From设置");
+                    mSetFragment = new SimpleFragment();
+                    mSetFragment.setArguments(setBD);
+                    addUIFrameFragment(mSetFragment);
+                } else {
+                    changeUIFragment(mSetFragment);
+                }
+
+
         }
     }
 
     @Override
     public void onAllViewConstructed() {
-
+        mHomeFragment = new SimpleFragment();
         Bundle bundleHome = new Bundle();
-        bundleHome.putString("content", "HomeContent");
+        bundleHome.putString("content", "From 首页");
         mHomeFragment.setArguments(bundleHome);
-
-        Bundle accountBD = new Bundle();
-        accountBD.putString("content", "AccountContent");
-        mHomeFragment.setArguments(accountBD);
-
-        Bundle setBD = new Bundle();
-        setBD.putString("content", "SetContent");
-        mHomeFragment.setArguments(setBD);
-
         addUIFrameFragment(mHomeFragment);
     }
+
 }

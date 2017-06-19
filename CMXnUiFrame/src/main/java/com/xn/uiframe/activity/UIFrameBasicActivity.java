@@ -47,6 +47,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.mFragmentManager = getSupportFragmentManager();
         /**初始化Bundle数据**/
         this.initBundle(savedInstanceState);
         /**创建视图,如果为空则忽略**/
