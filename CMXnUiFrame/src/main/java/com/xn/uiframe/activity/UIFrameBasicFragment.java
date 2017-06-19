@@ -36,7 +36,8 @@ import com.xn.uiframe.utils.EventBusProxy;
 public abstract class UIFrameBasicFragment extends Fragment implements
         IBasicViewAdapter,
         IViewCommonBehavior,
-        OnRefreshListener {
+        OnRefreshListener,
+        HeaderLayoutManager.OnHeaderViewClickListener {
 
     protected IBaseViewContainer mBaseViewContainer;
 
@@ -61,7 +62,10 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mBaseViewContainer = new BaseViewContainer(getActivity(), this);
         View view = mBaseViewContainer.onCreateView();
+        /**设置下拉刷新事件**/
         this.setOnRefreshListener(this);
+        /**设置头部视图点击事件**/
+        this.setOnHeaderClickLister(this);
         return view;
     }
 
@@ -99,10 +103,12 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     public CenterLayoutManager addCenterView(IContainerManager container) {
         return null;
     }
+
     @Override
     public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
         return null;
     }
+
     @Override
     public FullScreenLayoutManager addDialogView(IContainerManager container) {
         return null;
@@ -290,8 +296,27 @@ public abstract class UIFrameBasicFragment extends Fragment implements
             mBaseViewContainer.enableLoadMore(enable);
         }
     }
+
     @Override
     public void onAllViewConstructed() {
+
+    }
+
+
+    @Override
+    public void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.setOnHeaderClickLister(lister);
+        }
+    }
+
+    @Override
+    public void onLeftHeaderClicked() {
+
+    }
+
+    @Override
+    public void onRightHeaderClicked() {
 
     }
 }

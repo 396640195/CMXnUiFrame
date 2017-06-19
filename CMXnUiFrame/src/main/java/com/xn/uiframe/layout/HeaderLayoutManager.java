@@ -28,7 +28,9 @@ import com.xn.uiframe.interfaces.IHeaderViewBehavior;
  * </p>
  */
 
-public class HeaderLayoutManager extends AbstractLayoutManager implements IHeaderViewBehavior {
+public class HeaderLayoutManager extends AbstractLayoutManager implements IHeaderViewBehavior, View.OnClickListener {
+
+    private OnHeaderViewClickListener mOnHeaderViewClickListener;
 
     public HeaderLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
@@ -65,6 +67,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
             throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
             header.addLayout(layout);
+            header.setHeaderClickListener();
             containerLayout.addLayoutManager(header);
         }
         return header;
@@ -109,4 +112,37 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         return textView;
     }
 
+    @Override
+    public void setOnHeaderClickLister(OnHeaderViewClickListener lister) {
+        this.mOnHeaderViewClickListener = lister;
+    }
+
+    private void setHeaderClickListener(){
+        TextView right = (TextView) mView.findViewById(R.id.ui_frame_header_right);
+        TextView left = (TextView) mView.findViewById(R.id.ui_frame_header_left);
+        if(right != null){
+            right.setOnClickListener(this);
+        }
+        if(left != null){
+            left.setOnClickListener(this);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (this.mOnHeaderViewClickListener == null) {
+            return;
+        }
+        if (v.getId() == R.id.ui_frame_header_left) {
+            this.mOnHeaderViewClickListener.onLeftHeaderClicked();
+        } else {
+            this.mOnHeaderViewClickListener.onRightHeaderClicked();
+        }
+    }
+
+    public interface OnHeaderViewClickListener {
+        void onLeftHeaderClicked();
+
+        void onRightHeaderClicked();
+    }
 }

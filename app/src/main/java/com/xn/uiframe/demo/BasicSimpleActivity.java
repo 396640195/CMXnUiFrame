@@ -163,4 +163,9 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         }
 
     }
+
+    @Override
+    public void onLeftHeaderClicked() {
+        finish();
+    }
 }

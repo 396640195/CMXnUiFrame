@@ -2,6 +2,8 @@ package com.xn.uiframe.interfaces;
 
 import android.widget.TextView;
 
+import com.xn.uiframe.layout.HeaderLayoutManager;
+
 /**
  * 定义头部视图的具有的操控功能.
  * Created by 陈真 on 2017/6/13.
@@ -43,4 +45,10 @@ public interface IHeaderViewBehavior {
      * @return 返回当前的TextView对象
      */
     TextView setHeaderRightImage(int resource);
+
+    /**
+     * 设置头部视图的点击事件
+     * @param lister
+     */
+    void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister);
 }

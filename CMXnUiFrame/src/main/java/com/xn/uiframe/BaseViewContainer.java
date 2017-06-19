@@ -160,6 +160,13 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
+    public void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister) {
+        if(mHeaderLayoutManager != null) {
+            this.mHeaderLayoutManager.setOnHeaderClickLister(lister);
+        }
+    }
+
+    @Override
     public View onCreateView() {
         this.mContainer = (PowerfulContainerLayout) LayoutInflater.from(this.mContext).inflate(R.layout.ui_frame_container_layout, null, false);
         this.mHeaderLayoutManager = mBasicViewAdapter.addHeaderView(mContainer);
@@ -256,4 +263,5 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         }
         return null;
     }
+
 }

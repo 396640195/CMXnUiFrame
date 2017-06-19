@@ -37,7 +37,8 @@ import com.xn.uiframe.utils.EventBusProxy;
 public abstract class UIFrameBasicActivity extends FragmentActivity implements
         IBasicViewAdapter,
         IViewCommonBehavior,
-        OnRefreshListener {
+        OnRefreshListener,
+        HeaderLayoutManager.OnHeaderViewClickListener{
 
     public FragmentManager mFragmentManager;
     protected IBaseViewContainer mBaseViewContainer;
@@ -56,6 +57,8 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         if (this.isNeedEventBus()) {
             EventBusProxy.register(this);
         }
+        /**设置头部视图点击事件**/
+        this.setOnHeaderClickLister(this);
     }
 
     @Override
@@ -336,6 +339,13 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         finish();
     }
 
+    @Override
+    public void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister) {
+        if(mBaseViewContainer != null){
+            mBaseViewContainer.setOnHeaderClickLister(lister);
+        }
+    }
+
     // 切換Fragment
     public  void changeUIFragment(UIFrameBasicFragment f){
         changeFragment(f, false);
@@ -350,5 +360,15 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         if(!init)
             ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public void onLeftHeaderClicked() {
+
+    }
+
+    @Override
+    public void onRightHeaderClicked() {
+
     }
 }
