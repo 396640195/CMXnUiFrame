@@ -19,7 +19,7 @@ import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
 
-public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener {
+public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener ,TabViewHolder.OnTabSelectListener{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,14 +38,16 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public TopLayoutManager addTopView(IContainerManager container) {
-        return TopLayoutManager.buildLayout(container, R.layout.layout_top);
+        TopLayoutManager tlm= TopLayoutManager.buildLayout(container, R.layout.layout_top);
+        //tlm.setVisible(View.GONE);
+        return tlm;
     }
 
     @Override
     public BottomLayoutManager addBottomView(IContainerManager container) {
         BottomLayoutManager blm = BottomLayoutManager.buildLayout(container, R.layout.layout_simple_bottom);
         View v = blm.getContentView();
-        new TabViewHolder((LinearLayout) v,this);
+        new TabViewHolder((LinearLayout) v,this,this);
         return blm;
     }
 
@@ -54,13 +56,13 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center);
         return clt;
     }
-//
-//    @Override
-//    public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
-//        CenterMaskLayoutManager clt = CenterMaskLayoutManager.buildLayout(container,R.layout.layout_center_mask);
-//        clt.getContentView().setVisibility(View.GONE);
-//        return clt;
-//    }
+
+    @Override
+    public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
+        CenterMaskLayoutManager clt = CenterMaskLayoutManager.buildLayout(container,R.layout.layout_center_mask);
+        clt.getContentView().setVisibility(View.GONE);
+        return clt;
+    }
 //
 //    @Override
 //    public FullScreenLayoutManager addDialogView(IContainerManager container) {
@@ -140,5 +142,22 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
                 stopLoadMore(true);
             }
         }, 2000);
+    }
+
+    @Override
+    public void onTabSelected(int index) {
+        switch (index){
+            case 1:
+                setElementViewVisible(ElementView.CenterMaskView,!isElementViewVisible(ElementView.CenterMaskView));
+                animateY(ElementView.CenterMaskView,Easing.EasingAnimation.EaseInOutQuart,1000);
+                break;
+            case 2:
+                //setElementViewVisible(ElementView.TopView,!isElementViewVisible(ElementView.TopView));
+                if(isElementViewVisible(ElementView.TopView)) {
+                    animateY(ElementView.HeaderView, Easing.EasingAnimation.EaseInBounce, 800);
+                    //animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseInOutQuart, 800);
+                }
+                break;
+        }
     }
 }

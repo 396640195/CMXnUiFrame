@@ -2,30 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:background="#c0c0c0"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#FF00A0"
+        android:layout_height="match_parent"
+        android:background="#c0c0c0"
         android:gravity="center"
-        android:text="ListView Header Text"
-        android:textColor="#000000" />
+        android:text="Center View"
+        android:textSize="22sp"
+        android:textColor="#999009" />
 
-    <!--<ListView-->
-        <!--android:id="@+id/normal_list_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:focusable="true" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:background="#FF00A0"-->
-        <!--android:gravity="center"-->
-        <!--android:text="2017-06-16"-->
-        <!--android:textColor="#000000" />-->
 </LinearLayout>

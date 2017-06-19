@@ -15,9 +15,10 @@ import java.util.List;
 
 public class TabViewHolder implements View.OnClickListener {
     private List<ItemTabView> tabViews;
+    private OnTabSelectListener mOnTabSelectListener;
+    public TabViewHolder(LinearLayout container, Context context,OnTabSelectListener onTabSelectListener) {
 
-    public TabViewHolder(LinearLayout container, Context context) {
-
+        this.mOnTabSelectListener = onTabSelectListener;
         TextView invert = (TextView) container.findViewById(R.id.invert);
         ItemTabView invertTab = new ItemTabView(invert, getDrawable(invert, R.mipmap.icon_account_default, context), getDrawable(invert, R.mipmap.icon_account_focus, context));
         invertTab.setSelected(false);
@@ -49,13 +50,20 @@ public class TabViewHolder implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-
+        int i=0;
         for (ItemTabView tabView : tabViews) {
             if (tabView.mTabView == v) {
                 tabView.setSelected(true);
+                mOnTabSelectListener.onTabSelected(++i);
             } else {
                 tabView.setSelected(false);
+                i++;
             }
         }
+
+    }
+
+    public interface OnTabSelectListener{
+        void onTabSelected(int index);
     }
 }
