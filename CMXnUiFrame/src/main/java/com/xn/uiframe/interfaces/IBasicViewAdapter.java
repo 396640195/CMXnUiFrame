@@ -90,6 +90,11 @@ public interface IBasicViewAdapter {
      * @param container
      */
     void onCompanionViewAddFinished(CenterLayoutManager container);
+
+    /**
+     * 当所有视图构造完成之后调用
+     */
+    void onAllViewConstructed();
     /**
      * 是否要使用EventBus
      * @return

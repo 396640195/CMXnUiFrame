@@ -177,6 +177,8 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         this.mErrorViewManager = mBasicViewAdapter.addErrorView(mContainer);
         this.mExtraFullViewManager = mBasicViewAdapter.addExtraTopView(mContainer);
         this.mDialogViewManager = mBasicViewAdapter.addDialogView(mContainer);
+
+        this.mBasicViewAdapter.onAllViewConstructed();
         return mContainer;
     }
 

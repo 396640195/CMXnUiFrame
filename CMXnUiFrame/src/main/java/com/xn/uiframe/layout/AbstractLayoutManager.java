@@ -216,11 +216,11 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void animateX(long duration) {
-        this.mUIFrameViewAnimator.animateX(duration);
-//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
-//        valueAnimator.addUpdateListener(mViewXAnimateListener);
-//        valueAnimator.setDuration(duration);
-//        valueAnimator.start();
+//        this.mUIFrameViewAnimator.animateX(duration);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
+        valueAnimator.addUpdateListener(mViewXAnimateListener);
+        valueAnimator.setDuration(duration);
+        valueAnimator.start();
     }
 
     @Override
@@ -241,12 +241,12 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void animateX(Easing.EasingAnimation easing, long duration) {
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
-        valueAnimator.addUpdateListener(mViewXAnimateListener);
-        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
-        valueAnimator.setDuration(duration);
-        valueAnimator.start();
-  //      this.mUIFrameViewAnimator.animateX(duration,easing);
+//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
+//        valueAnimator.addUpdateListener(mViewXAnimateListener);
+//        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
+//        valueAnimator.setDuration(duration);
+//        valueAnimator.start();
+        this.mUIFrameViewAnimator.animateX(duration,easing);
     }
 
     @Override

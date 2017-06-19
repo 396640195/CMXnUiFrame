@@ -39,7 +39,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     @Override
     public TopLayoutManager addTopView(IContainerManager container) {
         TopLayoutManager tlm= TopLayoutManager.buildLayout(container, R.layout.layout_top);
-        //tlm.setVisible(View.GONE);
+        tlm.setVisible(View.GONE);
         return tlm;
     }
 
@@ -63,16 +63,16 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         clt.getContentView().setVisibility(View.GONE);
         return clt;
     }
-//
-//    @Override
-//    public FullScreenLayoutManager addDialogView(IContainerManager container) {
-//        FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
-//        View view = fsm.getContentView();
-//        view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
-//        fsm.setVisible(View.GONE);
-//        return fsm;
-//    }
-//
+
+    @Override
+    public FullScreenLayoutManager addDialogView(IContainerManager container) {
+        FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
+        View view = fsm.getContentView();
+        view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
+        //fsm.setVisible(View.GONE);
+        return fsm;
+    }
+
 //    @Override
 //    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
 //        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
@@ -152,12 +152,15 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
                 animateY(ElementView.CenterMaskView,Easing.EasingAnimation.EaseInOutQuart,1000);
                 break;
             case 2:
-                //setElementViewVisible(ElementView.TopView,!isElementViewVisible(ElementView.TopView));
+                setElementViewVisible(ElementView.TopView,!isElementViewVisible(ElementView.TopView));
                 if(isElementViewVisible(ElementView.TopView)) {
-                    animateY(ElementView.HeaderView, Easing.EasingAnimation.EaseInBounce, 800);
-                    //animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseInOutQuart, 800);
+                    animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseOutCubic, 800);
+                    animateY(ElementView.TopView, Easing.EasingAnimation.EaseOutCubic, 5800);
                 }
                 break;
+            default:
+                SimplePullRefreshActivity.startMe(this);
         }
+
     }
 }

@@ -290,4 +290,8 @@ public abstract class UIFrameBasicFragment extends Fragment implements
             mBaseViewContainer.enableLoadMore(enable);
         }
     }
+    @Override
+    public void onAllViewConstructed() {
+
+    }
 }

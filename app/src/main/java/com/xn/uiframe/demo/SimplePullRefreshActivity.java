@@ -2,101 +2,70 @@ package com.xn.uiframe.demo;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.os.Bundle;
 
-import com.xn.uiframe.ElementView;
-import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
-import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
-import com.xn.uiframe.utils.EventBusProxy;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.xn.uiframe.layout.FullScreenLayoutManager;
+import com.xn.uiframe.layout.TopLayoutManager;
 
 public class SimplePullRefreshActivity extends BasicSimpleActivity {
-    @Override
-    public CenterLayoutManager addCenterView(IContainerManager container) {
-        return CenterLayoutManager.buildPullRefreshLayout(container);
-    }
 
-    @Override
-    public void addCompanionScrollableHeader(CenterLayoutManager container) {
-        container.addCompanionScrollableHeader(R.layout.layout_companion_header);
-    }
+    private SimpleFragment mHomeFragment = new SimpleFragment();
+    private SimpleFragment mSetFragment = new SimpleFragment();
+    private SimpleFragment mAccountFragment = new SimpleFragment();
 
-    @Override
-    public void addCompanionScrollableFooter(CenterLayoutManager container) {
-        container.addCompanionScrollableFooter(R.layout.layout_companion_footer);
-    }
-
-    @Override
-    public BottomLayoutManager addBottomView(IContainerManager container) {
-
-        BottomLayoutManager blm = BottomLayoutManager.buildLayout(container, R.layout.layout_bottom_of_pull_refresh);
-        View v = blm.getContentView();
-
-        v.findViewById(R.id.show_top_view).setOnClickListener(this);
-
-        v.findViewById(R.id.animate_header).setOnClickListener(this);
-        v.findViewById(R.id.animate_top).setOnClickListener(this);
-        v.findViewById(R.id.animate_bottom).setOnClickListener(this);
-        v.findViewById(R.id.animate_center).setOnClickListener(this);
-        v.findViewById(R.id.pull_refresh).setOnClickListener(this);
-        return blm;
-    }
-    @Override
-    public void onCompanionViewAddFinished(CenterLayoutManager container) {
-        ListView listview = container.getListView();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            list.add("测试的" + i);
-        }
-        listview.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list));
-    }
-
-    public static void startMe(Activity from){
+    public static void startMe(Activity from) {
         Intent intent = new Intent();
-        intent.setClass(from,SimplePullRefreshActivity.class);
+        intent.setClass(from, SimplePullRefreshActivity.class);
         from.startActivity(intent);
     }
 
     @Override
-    public void onRefresh() {
-        EventBusProxy.dispatcherOnMainThreadDelay(new Runnable() {
-            @Override
-            public void run() {
-                stopRefresh(true);
-                setElementViewVisible(ElementView.CenterMaskView,true);
-                animateY(ElementView.CenterMaskView, Easing.EasingAnimation.EaseOutBounce, 1000);
-            }
-        }, 2000);
+    public FullScreenLayoutManager addDialogView(IContainerManager container) {
+        return null;
     }
 
+    @Override
+    public TopLayoutManager addTopView(IContainerManager container) {
+        return null;
+    }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.show_top_view:
-                setElementViewVisible(ElementView.CenterMaskView,false);
+    public CenterLayoutManager addCenterView(IContainerManager container) {
+        CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container, R.layout.layout_center_fragment);
+        return clt;
+    }
+
+    @Override
+    public void onTabSelected(int index) {
+        switch (index) {
+            case 1:
+                changeUIFragment(mAccountFragment);
                 break;
-            case R.id.animate_header:
-                animateY(ElementView.HeaderView, Easing.EasingAnimation.EaseInOutCirc, 1500);
+            case 2:
+                changeUIFragment(mSetFragment);
                 break;
-            case R.id.animate_top:
-                animateY(ElementView.TopView, Easing.EasingAnimation.EaseInOutCirc, 1500);
-                break;
-            case R.id.animate_center:
-                animateX(ElementView.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
-                break;
-            case R.id.animate_bottom:
-                animateY(ElementView.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
-                break;
-            case R.id.pull_refresh:
-                finish();
-                break;
+            default:
+                changeUIFragment(mHomeFragment);
         }
+    }
+
+    @Override
+    public void onAllViewConstructed() {
+
+        Bundle bundleHome = new Bundle();
+        bundleHome.putString("content", "HomeContent");
+        mHomeFragment.setArguments(bundleHome);
+
+        Bundle accountBD = new Bundle();
+        accountBD.putString("content", "AccountContent");
+        mHomeFragment.setArguments(accountBD);
+
+        Bundle setBD = new Bundle();
+        setBD.putString("content", "SetContent");
+        mHomeFragment.setArguments(setBD);
+
+        addUIFrameFragment(mHomeFragment);
     }
 }

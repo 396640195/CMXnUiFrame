@@ -3,12 +3,15 @@ package com.xn.uiframe.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dalong.refreshlayout.OnRefreshListener;
 import com.xn.uiframe.BaseViewContainer;
 import com.xn.uiframe.ElementView;
+import com.xn.uiframe.R;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IBaseViewContainer;
 import com.xn.uiframe.interfaces.IBasicViewAdapter;
@@ -36,6 +39,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         IViewCommonBehavior,
         OnRefreshListener {
 
+    public FragmentManager mFragmentManager;
     protected IBaseViewContainer mBaseViewContainer;
     private static final String SAVED_BUNDLE_KEY = "SAVED_BUNDLE_KEY";
     private Bundle mSavedInstanceState;
@@ -125,7 +129,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        return null;
+        return CenterLayoutManager.buildGeneralLayout(container, R.layout.ui_frame_center_fragment);
     }
 
     @Override
@@ -321,5 +325,24 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         }
     }
 
+    @Override
+    public void onAllViewConstructed() {
 
+    }
+
+    // 切換Fragment
+    public  void changeUIFragment(UIFrameBasicFragment f){
+        changeFragment(f, false);
+    }
+    // 初始化Fragment(FragmentActivity中呼叫)
+    public  void addUIFrameFragment(UIFrameBasicFragment f){
+        changeFragment(f, true);
+    }
+    private  void changeFragment(UIFrameBasicFragment f, boolean init){
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        ft.replace(R.id.fragment_container, f);
+        if(!init)
+            ft.addToBackStack(null);
+        ft.commit();
+    }
 }
