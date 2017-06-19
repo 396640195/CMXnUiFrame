@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.xn.uiframe.ElementView;
@@ -13,6 +15,9 @@ import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xn068074 on 2017/6/19.
@@ -26,7 +31,7 @@ public class SimpleFragment extends UIFrameBasicFragment {
 
     @Override
     public void addCompanionScrollableFooter(CenterLayoutManager container) {
-        container.addCompanionScrollableHeader(R.layout.layout_companion_footer);
+        container.addCompanionScrollableFooter(R.layout.layout_companion_footer);
     }
 
     @Override
@@ -49,7 +54,12 @@ public class SimpleFragment extends UIFrameBasicFragment {
 
     @Override
     public void onCompanionViewAddFinished(CenterLayoutManager container) {
-
+        ListView listview = container.getListView();
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 15; i++) {
+            list.add("测试的" + i);
+        }
+        listview.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, list));
     }
 
     @Override

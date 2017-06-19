@@ -4,6 +4,7 @@ import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.dalong.refreshlayout.OnRefreshListener;
@@ -44,6 +45,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
         ICompanionViewManager {
 
     private ListView mListView;
+
     public CenterLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
         this.mLayer = Layer.LAYER_BASIC_CENTER_PART;
@@ -108,30 +110,13 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
         int basicWidth = containerWidth - leftMargin - rightMargin;
         int basicHeight = containerHeight - topMargin - bottomMarin - basicLayoutHeights;
 
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int)(basicWidth*this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int)(basicHeight*this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
+        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
+        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
 
         //测量当前布局的高宽
         mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
 
     }
-
-//    @Override
-//    public View addLayout(int layout, boolean needPullRefresh) {
-//
-//        PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
-//        Context context = powerfulContainer.getContext();
-//        //生成下拉刷新控件
-//        UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) LayoutInflater.from(context).inflate(R.layout.ui_frame_common_center_layout, powerfulContainer, false);
-//        //添加子布局
-//        LayoutInflater.from(context).inflate(layout, wrapper, true);
-//        //设置布局参数
-//        ViewGroup.MarginLayoutParams marginLayout = new ViewGroup.MarginLayoutParams(ViewGroup.MarginLayoutParams.MATCH_PARENT, ViewGroup.MarginLayoutParams.MATCH_PARENT);
-//        wrapper.setLayoutParams(marginLayout);
-////        wrapper.addView(child);
-//        this.mView = wrapper;
-//        return wrapper;
-//    }
 
     /**
      * 根据给定的布局文件，在容器中添加一个视图，并返回当前这个视图对象;
@@ -165,7 +150,8 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
             center.addLayout(R.layout.ui_frame_center_listview_layout);
-            center.mListView = (ListView)center.getContentView().findViewById(R.id.ui_frame_center_list_view);
+            center.mListView = (ListView) center.getContentView().findViewById(R.id.ui_frame_center_list_view);
+            center.mListView.setAdapter(new EmptyAdapter());
             containerLayout.addLayoutManager(center);
         }
         return center;
@@ -236,7 +222,29 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
         return null;
     }
 
-    public ListView getListView(){
+    public ListView getListView() {
         return mListView;
+    }
+}
+
+class EmptyAdapter extends BaseAdapter {
+    @Override
+    public int getCount() {
+        return 0;
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        return null;
     }
 }

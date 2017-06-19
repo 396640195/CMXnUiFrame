@@ -331,6 +331,11 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     // 切換Fragment
     public  void changeUIFragment(UIFrameBasicFragment f){
         changeFragment(f, false);
