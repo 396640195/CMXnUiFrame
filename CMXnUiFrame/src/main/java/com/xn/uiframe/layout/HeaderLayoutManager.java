@@ -105,7 +105,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
         Drawable drawable = textView.getContext().getResources().getDrawable(resource);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        textView.setCompoundDrawables(drawable, null, null, null);
+        textView.setCompoundDrawables(null, null, drawable, null);
         return textView;
     }
 
