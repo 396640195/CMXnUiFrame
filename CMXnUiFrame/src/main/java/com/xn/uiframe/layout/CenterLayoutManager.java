@@ -126,7 +126,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager buildGeneralLayout(IContainerManager containerLayout, int layout) {
+    public static CenterLayoutManager buildGeneralLayout(IContainerManager containerLayout,@LayoutRes int layout) {
         CenterLayoutManager center = new CenterLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");

@@ -1,5 +1,6 @@
 package com.xn.uiframe.layout;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -64,7 +65,7 @@ public class FullScreenLayoutManager extends AbstractLayoutManager {
      *                        {@link com.xn.uiframe.layout.AbstractLayoutManager.Layer#LAYER_FULL_SCREEN_EXTRA}
      * @return 布局文件加载后的视图对象
      */
-    public static FullScreenLayoutManager buildLayout(IContainerManager containerLayout, int layout, int layer) {
+    public static FullScreenLayoutManager buildLayout(IContainerManager containerLayout, @LayoutRes int layout, int layer) {
 
         if (layer < Layer.LAYER_LOAD_SCREEN) {
             throw new UIFrameIllegalArgumentException("layer参数类型错误，该方法只能添加全屏类型的视图.请查看该接口的参数说明.");

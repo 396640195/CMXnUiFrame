@@ -319,4 +319,29 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     public void onRightHeaderClicked() {
 
     }
+
+
+    @Override
+    public TextView setHeaderLeftText(String content) {
+        if(mBaseViewContainer != null){
+            return  mBaseViewContainer.setHeaderLeftText(content);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderCenterText(String content) {
+        if(mBaseViewContainer != null){
+            return  mBaseViewContainer.setHeaderCenterText(content);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderRightText(String content) {
+        if(mBaseViewContainer != null){
+            return  mBaseViewContainer.setHeaderRightText(content);
+        }
+        return null;
+    }
 }

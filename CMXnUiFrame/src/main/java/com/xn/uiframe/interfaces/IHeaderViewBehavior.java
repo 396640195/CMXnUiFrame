@@ -1,5 +1,7 @@
 package com.xn.uiframe.interfaces;
 
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.widget.TextView;
 
 import com.xn.uiframe.layout.HeaderLayoutManager;
@@ -16,35 +18,56 @@ public interface IHeaderViewBehavior {
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderLeftText(int resource);
+    TextView setHeaderLeftText(@StringRes int resource);
+
+    /**
+     * 设置头部左边的文字
+     * @param content 字符
+     * @return 返回当前的TextView对象
+     */
+    TextView setHeaderLeftText(String content);
 
     /**
      * 设置头部左边的图片资源
      * @param resource 图片资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderLeftImage(int resource);
+    TextView setHeaderLeftImage(@DrawableRes  int resource);
 
     /**
      * 设置头部中间的文字内容
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderCenterText(int resource);
+    TextView setHeaderCenterText(@StringRes int resource);
+
+    /**
+     * 设置头部中间的文字内容
+     * @param content 字符
+     * @return 返回当前的TextView对象
+     */
+    TextView setHeaderCenterText(String content);
 
     /**
      * 设置头部右边的文字内容
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderRightText(int resource);
+    TextView setHeaderRightText(@StringRes int resource);
+
+    /**
+     * 设置头部右边的文字内容
+     * @param content 字符资
+     * @return 返回当前的TextView对象
+     */
+    TextView setHeaderRightText(String content);
 
     /**
      * 设置头部右边的图片资源
      * @param resource 图片资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderRightImage(int resource);
+    TextView setHeaderRightImage(@DrawableRes  int resource);
 
     /**
      * 设置头部视图的点击事件

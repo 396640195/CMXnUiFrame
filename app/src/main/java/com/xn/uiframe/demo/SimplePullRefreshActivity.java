@@ -72,11 +72,14 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
 
     @Override
     public void onAllViewConstructed() {
+
         mHomeFragment = new SimpleFragment();
         Bundle bundleHome = new Bundle();
         bundleHome.putString("content", "From 首页");
         mHomeFragment.setArguments(bundleHome);
         addUIFrameFragment(mHomeFragment);
+
+        setHeaderCenterText("下拉刷新");
     }
 
 }

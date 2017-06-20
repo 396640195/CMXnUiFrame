@@ -264,4 +264,27 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         return null;
     }
 
+    @Override
+    public TextView setHeaderLeftText(String content) {
+        if (mHeaderLayoutManager != null) {
+           return mHeaderLayoutManager.setHeaderLeftText(content);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderRightText(String content) {
+        if (mHeaderLayoutManager != null) {
+            return mHeaderLayoutManager.setHeaderRightText(content);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderCenterText(String content) {
+        if (mHeaderLayoutManager != null) {
+            return mHeaderLayoutManager.setHeaderCenterText(content);
+        }
+        return null;
+    }
 }

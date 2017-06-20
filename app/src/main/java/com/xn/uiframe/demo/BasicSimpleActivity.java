@@ -31,7 +31,8 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
-        HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container, R.layout.layout_header);
+        //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container, R.layout.layout_header);
+        HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container);
         hlm.setHeaderLeftImage(R.mipmap.arrow_left_normal);
         return  hlm;
     }
@@ -167,5 +168,10 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     @Override
     public void onLeftHeaderClicked() {
         finish();
+    }
+
+    @Override
+    public void onRightHeaderClicked() {
+        animateY(ElementView.BottomView,1000);
     }
 }

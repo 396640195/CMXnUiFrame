@@ -1,6 +1,7 @@
 package com.xn.uiframe.layout;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static HeaderLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
+    public static HeaderLayoutManager buildLayout(IContainerManager containerLayout, @LayoutRes int layout) {
         HeaderLayoutManager header = new HeaderLayoutManager(containerLayout);
         if (containerLayout.contains(header)) {
             throw new UIFrameLayoutAlreadyExistException("Header视图已经添加到容器当中了，该视图不能重复添加.");
@@ -72,6 +73,19 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         }
         return header;
     }
+
+
+    /**
+     * 根据给定的布局文件，在容器中添加一个视图，并返回当前这个视图对象;
+     * 如果容器中已经存在该类型的视图，则不充许再次添加.
+     *
+     * @param containerLayout 当前界面的顶层容器
+     * @return 布局文件加载后的视图布局Manager对象
+     */
+    public static HeaderLayoutManager buildLayout(IContainerManager containerLayout) {
+        return buildLayout(containerLayout, R.layout.ui_frame_common_header_layout);
+    }
+
 
     @Override
     public TextView setHeaderLeftText(int resource) {
@@ -117,13 +131,13 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         this.mOnHeaderViewClickListener = lister;
     }
 
-    private void setHeaderClickListener(){
+    private void setHeaderClickListener() {
         TextView right = (TextView) mView.findViewById(R.id.ui_frame_header_right);
         TextView left = (TextView) mView.findViewById(R.id.ui_frame_header_left);
-        if(right != null){
+        if (right != null) {
             right.setOnClickListener(this);
         }
-        if(left != null){
+        if (left != null) {
             left.setOnClickListener(this);
         }
     }
@@ -144,5 +158,26 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         void onLeftHeaderClicked();
 
         void onRightHeaderClicked();
+    }
+
+    @Override
+    public TextView setHeaderLeftText(String content) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_left);
+        textView.setText(content);
+        return textView;
+    }
+
+    @Override
+    public TextView setHeaderRightText(String content) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
+        textView.setText(content);
+        return textView;
+    }
+
+    @Override
+    public TextView setHeaderCenterText(String content) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_center);
+        textView.setText(content);
+        return textView;
     }
 }

@@ -1,5 +1,6 @@
 package com.xn.uiframe.layout;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -110,7 +111,7 @@ public class CenterMaskLayoutManager extends AbstractLayoutManager{
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterMaskLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
+    public static CenterMaskLayoutManager buildLayout(IContainerManager containerLayout,@LayoutRes int layout) {
         CenterMaskLayoutManager center = new CenterMaskLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("CenterMask视图已经添加到容器当中了，该视图不能重复添加.");

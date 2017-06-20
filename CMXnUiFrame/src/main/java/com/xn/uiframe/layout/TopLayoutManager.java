@@ -1,5 +1,6 @@
 package com.xn.uiframe.layout;
 
+import android.support.annotation.LayoutRes;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -76,7 +77,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static TopLayoutManager buildLayout(IContainerManager containerLayout, int layout) {
+    public static TopLayoutManager buildLayout(IContainerManager containerLayout,@LayoutRes int layout) {
 
         TopLayoutManager topLayoutManager = new TopLayoutManager(containerLayout);
 
