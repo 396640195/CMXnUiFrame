@@ -1,5 +1,6 @@
 package com.xn.uiframe.interfaces;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.widget.TextView;
@@ -35,6 +36,12 @@ public interface IHeaderViewBehavior {
     TextView setHeaderLeftImage(@DrawableRes  int resource);
 
     /**
+     * 设置头部左边的图片资源
+     * @param drawable 图片Drawable
+     * @return 返回当前的TextView对象
+     */
+    TextView setHeaderLeftDrawable(Drawable drawable);
+    /**
      * 设置头部中间的文字内容
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
@@ -68,7 +75,12 @@ public interface IHeaderViewBehavior {
      * @return 返回当前的TextView对象
      */
     TextView setHeaderRightImage(@DrawableRes  int resource);
-
+    /**
+     * 设置头部左边的图片资源
+     * @param drawable 图片Drawable
+     * @return 返回当前的TextView对象
+     */
+    TextView setHeaderRightDrawable(Drawable drawable);
     /**
      * 设置头部视图的点击事件
      * @param lister

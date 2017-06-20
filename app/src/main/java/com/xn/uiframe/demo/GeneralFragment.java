@@ -5,14 +5,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.xn.uiframe.ElementView;
 import com.xn.uiframe.activity.UIFrameBasicFragment;
-import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
@@ -24,14 +21,11 @@ import java.util.List;
  * Created by xn068074 on 2017/6/19.
  */
 
-public class SimpleFragment extends UIFrameBasicFragment {
+public class GeneralFragment extends UIFrameBasicFragment {
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_web_view);
-        WebView webView =(WebView)clm.getContentView().findViewById(R.id.webview);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("file:///android_asset/axn_project_detail.html");
+        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center_general);
         return clm;
     }
 
@@ -47,6 +41,7 @@ public class SimpleFragment extends UIFrameBasicFragment {
         }
         return view;
     }
+
 
     @Override
     public void onRefresh() {

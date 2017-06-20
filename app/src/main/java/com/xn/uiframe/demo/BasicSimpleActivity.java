@@ -1,5 +1,6 @@
 package com.xn.uiframe.demo;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -20,7 +21,7 @@ import com.xn.uiframe.layout.TopLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
 
 public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener ,TabViewHolder.OnTabSelectListener{
-
+    protected TabViewHolder mTabViewHolder;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,9 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
         //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container, R.layout.layout_header);
         HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container);
-        hlm.setHeaderLeftImage(R.mipmap.arrow_left_normal);
+        Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
+        drawable.setBounds(0,0,(int)(drawable.getMinimumWidth()*0.8),(int)(drawable.getMinimumHeight()*0.8));
+        hlm.setHeaderLeftDrawable(drawable);
         return  hlm;
     }
 
@@ -48,7 +51,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     public BottomLayoutManager addBottomView(IContainerManager container) {
         BottomLayoutManager blm = BottomLayoutManager.buildLayout(container, R.layout.layout_simple_bottom);
         View v = blm.getContentView();
-        new TabViewHolder((LinearLayout) v,this,this);
+        mTabViewHolder = new TabViewHolder((LinearLayout) v,this,this);
         return blm;
     }
 
@@ -70,7 +73,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
         View view = fsm.getContentView();
         view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
-        //fsm.setVisible(View.GONE);
+        fsm.setVisible(View.GONE);
         return fsm;
     }
 
@@ -173,5 +176,6 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     @Override
     public void onRightHeaderClicked() {
         animateY(ElementView.BottomView,1000);
+        setElementViewVisible(ElementView.DialogView,true);
     }
 }

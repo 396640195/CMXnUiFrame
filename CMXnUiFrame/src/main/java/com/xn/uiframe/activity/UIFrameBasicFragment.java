@@ -1,5 +1,6 @@
 package com.xn.uiframe.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -341,6 +342,22 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     public TextView setHeaderRightText(String content) {
         if(mBaseViewContainer != null){
             return  mBaseViewContainer.setHeaderRightText(content);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderLeftDrawable(Drawable drawable) {
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderLeftDrawable(drawable);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderRightDrawable(Drawable drawable) {
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderRightDrawable(drawable);
         }
         return null;
     }

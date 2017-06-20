@@ -15,5 +15,4 @@
         android:gravity="center"
         android:padding="15dp"
         android:text="Companion   Header" />
-
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.xn.uiframe;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,8 @@ import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
 
 /**
- * Created by xn068074 on 2017/6/13.
+ *  UIFrame视图容器类，封装了UI基本操作，
+ * Created by 陈真 on 2017/6/13.
  */
 
 public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManager {
@@ -174,10 +176,11 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         this.mBottomLayoutManager = mBasicViewAdapter.addBottomView(mContainer);
 
         this.mCenterLayoutManager = mBasicViewAdapter.addCenterView(mContainer);
-        this.mBasicViewAdapter.addCompanionScrollableHeader(this.mCenterLayoutManager);
-        this.mBasicViewAdapter.addCompanionScrollableFooter(this.mCenterLayoutManager);
-        this.mBasicViewAdapter.onCompanionViewAddFinished(this.mCenterLayoutManager);
-
+        if(mCenterLayoutManager.getCenterBuildType() == CenterLayoutManager.CENTER_TYPE_PULL_LISTVIEW) {
+            this.mBasicViewAdapter.addCompanionScrollableHeader(this.mCenterLayoutManager);
+            this.mBasicViewAdapter.addCompanionScrollableFooter(this.mCenterLayoutManager);
+            this.mBasicViewAdapter.onCompanionViewAddFinished(this.mCenterLayoutManager);
+        }
         this.mCenterMaskLayoutManager = mBasicViewAdapter.addCenterMaskView(mContainer);
 
         this.mLoadViewManager = mBasicViewAdapter.addLoadingView(mContainer);
@@ -284,6 +287,22 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     public TextView setHeaderCenterText(String content) {
         if (mHeaderLayoutManager != null) {
             return mHeaderLayoutManager.setHeaderCenterText(content);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderLeftDrawable(Drawable drawable) {
+        if (mHeaderLayoutManager != null) {
+            return mHeaderLayoutManager.setHeaderLeftDrawable(drawable);
+        }
+        return null;
+    }
+
+    @Override
+    public TextView setHeaderRightDrawable(Drawable drawable) {
+        if (mHeaderLayoutManager != null) {
+            return mHeaderLayoutManager.setHeaderRightDrawable(drawable);
         }
         return null;
     }

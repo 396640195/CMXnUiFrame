@@ -6,29 +6,17 @@ import android.os.Bundle;
 
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
-import com.xn.uiframe.layout.FullScreenLayoutManager;
-import com.xn.uiframe.layout.TopLayoutManager;
 
 public class SimplePullRefreshActivity extends BasicSimpleActivity {
 
     private SimpleFragment mHomeFragment;
-    private SimpleFragment mSetFragment;
-    private SimpleFragment mAccountFragment;
+    private ListFragment mSetFragment;
+    private GeneralFragment mAccountFragment;
 
     public static void startMe(Activity from) {
         Intent intent = new Intent();
         intent.setClass(from, SimplePullRefreshActivity.class);
         from.startActivity(intent);
-    }
-
-    @Override
-    public FullScreenLayoutManager addDialogView(IContainerManager container) {
-        return null;
-    }
-
-    @Override
-    public TopLayoutManager addTopView(IContainerManager container) {
-        return null;
     }
 
     @Override
@@ -41,13 +29,20 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
     public void onTabSelected(int index) {
         switch (index) {
             case 1:
+                if (mHomeFragment == null) {
+                    mHomeFragment = new SimpleFragment();
+                    Bundle bundleHome = new Bundle();
+                    bundleHome.putString("content", "From 首页");
+                    mHomeFragment.setArguments(bundleHome);
+                    addUIFrameFragment(mHomeFragment);
+                }
                 changeUIFragment(mHomeFragment);
                 break;
             case 2:
                 if (mAccountFragment == null) {
                     Bundle accountBD = new Bundle();
                     accountBD.putString("content", "From帐号");
-                    mAccountFragment = new SimpleFragment();
+                    mAccountFragment = new GeneralFragment();
                     mAccountFragment.setArguments(accountBD);
                     addUIFrameFragment(mAccountFragment);
                 } else {
@@ -59,7 +54,7 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
                 if (mSetFragment == null) {
                     Bundle setBD = new Bundle();
                     setBD.putString("content", "From设置");
-                    mSetFragment = new SimpleFragment();
+                    mSetFragment = new ListFragment();
                     mSetFragment.setArguments(setBD);
                     addUIFrameFragment(mSetFragment);
                 } else {
@@ -72,14 +67,9 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
 
     @Override
     public void onAllViewConstructed() {
-
-        mHomeFragment = new SimpleFragment();
-        Bundle bundleHome = new Bundle();
-        bundleHome.putString("content", "From 首页");
-        mHomeFragment.setArguments(bundleHome);
-        addUIFrameFragment(mHomeFragment);
-
+        mTabViewHolder.setSelected(1);
         setHeaderCenterText("下拉刷新");
+
     }
 
 }

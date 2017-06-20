@@ -44,7 +44,7 @@ public class TabViewHolder implements View.OnClickListener {
 
     private Drawable getDrawable(View view, int res, Context context) {
         Drawable d = context.getResources().getDrawable(res);
-        d.setBounds(0,0,d.getMinimumWidth(),d.getMinimumHeight());
+        d.setBounds(0,0,(int)(d.getMinimumWidth()*0.7),(int)(d.getMinimumHeight()*0.7));
         return  d;
     }
 
@@ -61,6 +61,19 @@ public class TabViewHolder implements View.OnClickListener {
             }
         }
 
+    }
+
+    public void setSelected(int index){
+        int i=0;
+        for (ItemTabView tabView : tabViews) {
+            if (i == index) {
+                tabView.setSelected(true);
+                mOnTabSelectListener.onTabSelected(++i);
+            } else {
+                tabView.setSelected(false);
+            }
+            i++;
+        }
     }
 
     public interface OnTabSelectListener{

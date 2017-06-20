@@ -44,7 +44,22 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
         IPullRefreshBehavior,
         ICompanionViewManager {
 
+    private int mCenterBuildType;
+
     private ListView mListView;
+
+    /**
+     * 普通类型，不带pullrefresh功能
+     */
+    public static final int CENTER_TYPE_GENERAL = 0x101;
+    /**
+     * 带pullrefresh功能，不带listview
+     */
+    public static final int CENTER_TYPE_PULL_REFRESH = 0x102;
+    /**
+     * 带pullrefresh功能，带listview
+     */
+    public static final int CENTER_TYPE_PULL_LISTVIEW = 0x103;
 
     public CenterLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
@@ -126,12 +141,13 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager buildGeneralLayout(IContainerManager containerLayout,@LayoutRes int layout) {
+    public static CenterLayoutManager buildGeneralLayout(IContainerManager containerLayout, @LayoutRes int layout) {
         CenterLayoutManager center = new CenterLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
         } else {
             center.addLayout(layout);
+            center.mCenterBuildType = CENTER_TYPE_GENERAL;
             containerLayout.addLayoutManager(center);
         }
         return center;
@@ -144,7 +160,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
      * @param containerLayout 当前界面的顶层容器
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager buildPullRefreshLayout(IContainerManager containerLayout) {
+    public static CenterLayoutManager buildPullRefreshLayoutWithListView(IContainerManager containerLayout) {
         CenterLayoutManager center = new CenterLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
@@ -152,6 +168,8 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
             center.addLayout(R.layout.ui_frame_center_listview_layout);
             center.mListView = (ListView) center.getContentView().findViewById(R.id.ui_frame_center_list_view);
             center.mListView.setAdapter(new EmptyAdapter());
+            center.mCenterBuildType = CENTER_TYPE_PULL_LISTVIEW;
+
             containerLayout.addLayoutManager(center);
         }
         return center;
@@ -224,6 +242,10 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     public ListView getListView() {
         return mListView;
+    }
+
+    public int getCenterBuildType() {
+        return mCenterBuildType;
     }
 }
 

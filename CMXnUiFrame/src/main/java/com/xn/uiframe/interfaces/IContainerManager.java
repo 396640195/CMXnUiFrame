@@ -1,5 +1,6 @@
 package com.xn.uiframe.interfaces;
 
+import android.content.Context;
 import android.view.View;
 
 import java.util.List;
@@ -29,4 +30,6 @@ public interface IContainerManager<T> {
      void measureChild(View view, int widthMeasureSpec, int heightMeasureSpec);
 
      List<ILayoutManager<View, ILayoutManager>> layoutManagers();
+
+     Context getContext();
 }

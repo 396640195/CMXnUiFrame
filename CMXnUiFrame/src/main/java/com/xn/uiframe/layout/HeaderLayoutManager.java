@@ -180,4 +180,18 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         textView.setText(content);
         return textView;
     }
+
+    @Override
+    public TextView setHeaderLeftDrawable(Drawable drawable) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_left);
+        textView.setCompoundDrawables(drawable, null, null, null);
+        return textView;
+    }
+
+    @Override
+    public TextView setHeaderRightDrawable(Drawable drawable) {
+        TextView textView = (TextView) mView.findViewById(R.id.ui_frame_header_right);
+        textView.setCompoundDrawables(null, null, drawable, null);
+        return textView;
+    }
 }
