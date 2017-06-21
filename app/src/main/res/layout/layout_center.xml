@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xn.uiframe.widget.UIFrameRefreshViewLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#c0c0c0"
-        android:gravity="center"
-        android:text="Center View"
-        android:textSize="22sp"
-        android:textColor="#999009" />
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:background="#c0c0c0"
+                android:gravity="center"
+                android:text="Center View 1"
+                android:textColor="#999009"
+                android:textSize="22sp" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:background="#c0c0c0"
+                android:gravity="center"
+                android:text="Center View 2"
+                android:textColor="#999009"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:background="#c0c0c0"
+                android:gravity="center"
+                android:text="Center View 3"
+                android:textColor="#999009"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+
+    </ScrollView>
+</com.xn.uiframe.widget.UIFrameRefreshViewLayout>
