@@ -1,1 +1,1 @@
-include ':app', ':CMXnUiFrame',':refreshlayout'
+include ':app', ':XNUiFrame'
