@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ui_frame_refresh_succeed_icon.png",
+        "source": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\src\\main\\res\\mipmap-xhdpi\\ui_frame_refresh_succeed_icon.png"
+    },
+    {
+        "merged": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ui_frame_loading_icon.png",
+        "source": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\src\\main\\res\\mipmap-xhdpi\\ui_frame_loading_icon.png"
+    },
+    {
+        "merged": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ui_frame_refresh_failed_icon.png",
+        "source": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\src\\main\\res\\mipmap-xhdpi\\ui_frame_refresh_failed_icon.png"
+    },
+    {
+        "merged": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi-v4\\ui_frame_pull_flag_icon.png",
+        "source": "D:\\D\\Android\\CMUiFrame\\CMXnUiFrame\\src\\main\\res\\mipmap-xhdpi\\ui_frame_pull_flag_icon.png"
+    }
+]
