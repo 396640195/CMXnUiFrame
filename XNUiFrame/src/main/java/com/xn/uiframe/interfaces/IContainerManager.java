@@ -29,7 +29,7 @@ public interface IContainerManager<T> {
 
      void measureChild(View view, int widthMeasureSpec, int heightMeasureSpec);
 
-     List<ILayoutManager<View, ILayoutManager>> layoutManagers();
+     List<ILayoutManager<ILayoutManager>> layoutManagers();
 
      Context getContext();
 }

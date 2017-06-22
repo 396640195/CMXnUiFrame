@@ -25,7 +25,7 @@ public class GeneralFragment extends UIFrameBasicFragment {
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center_general);
+        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayoutManager(container,R.layout.layout_center_general);
         return clm;
     }
 

@@ -13,7 +13,7 @@
         android:background="#c0c0c0"
         android:drawableTop="@mipmap/icon_share_wechatmoments"
         android:gravity="center"
-        android:text="没有加载到数据"
+        android:text="没有加载到数据___02"
         android:textColor="#ff0000"
         android:padding="10dp"
         />

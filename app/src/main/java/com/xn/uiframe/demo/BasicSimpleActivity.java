@@ -11,17 +11,18 @@ import com.xn.uiframe.ElementView;
 import com.xn.uiframe.activity.UIFrameBasicActivity;
 import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
-import com.xn.uiframe.layout.AbstractLayoutManager;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.CenterMaskLayoutManager;
+import com.xn.uiframe.layout.DialogLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
 
-public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener ,TabViewHolder.OnTabSelectListener{
+public class BasicSimpleActivity extends UIFrameBasicActivity implements View.OnClickListener, TabViewHolder.OnTabSelectListener {
     protected TabViewHolder mTabViewHolder;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,99 +33,133 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
-        //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container, R.layout.layout_header);
-        HeaderLayoutManager hlm = HeaderLayoutManager.buildLayout(container);
+        //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container, R.layout.layout_header);
+        HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
         Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
-        drawable.setBounds(0,0,(int)(drawable.getMinimumWidth()*0.8),(int)(drawable.getMinimumHeight()*0.8));
+        drawable.setBounds(0, 0, (int) (drawable.getMinimumWidth() * 0.8), (int) (drawable.getMinimumHeight() * 0.8));
         hlm.setHeaderLeftDrawable(drawable);
-        return  hlm;
+        return hlm;
     }
 
     @Override
     public TopLayoutManager addTopView(IContainerManager container) {
-        TopLayoutManager tlm= TopLayoutManager.buildLayout(container, R.layout.layout_top);
-        tlm.setVisible(View.GONE);
+        TopLayoutManager tlm = TopLayoutManager.buildLayoutManager(container, R.layout.layout_top);
+        tlm.setVisibility(View.GONE);
         return tlm;
     }
 
     @Override
     public BottomLayoutManager addBottomView(IContainerManager container) {
         BottomLayoutManager blm = BottomLayoutManager.buildLayout(container, R.layout.layout_simple_bottom);
-        View v = blm.getContentView();
-        mTabViewHolder = new TabViewHolder((LinearLayout) v,this,this);
+        View view = blm.getContentView();
+        mTabViewHolder = new TabViewHolder((LinearLayout) view, this, this);
         return blm;
     }
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_center);
+        CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayoutManager(container, R.layout.layout_center);
         return clt;
     }
+
+    private View mMask01, mMask02;
 
     @Override
     public CenterMaskLayoutManager addCenterMaskView(IContainerManager container) {
-        CenterMaskLayoutManager clt = CenterMaskLayoutManager.buildLayout(container,R.layout.layout_center_mask);
-        clt.getContentView().setVisibility(View.GONE);
+        CenterMaskLayoutManager clt = CenterMaskLayoutManager.buildLayoutManager(container);
+        mMask01 = clt.addLayout(R.layout.layout_center_mask01);
+        mMask02 = clt.addLayout(R.layout.layout_center_mask02);
+        //只有一个mask视图可以用这个方法
+        //clt.setVisibility(View.GONE);
+        mMask01.setVisibility(View.GONE);
+        mMask02.setVisibility(View.GONE);
+
+        mMask01.setOnClickListener(this);
+        mMask02.setOnClickListener(this);
+
         return clt;
     }
 
+    private View mDialog01, mDialog02;
+
     @Override
-    public FullScreenLayoutManager addDialogView(IContainerManager container) {
-        FullScreenLayoutManager fsm = FullScreenLayoutManager.buildLayout(container, R.layout.layout_dialog, AbstractLayoutManager.Layer.LAYER_DIALOG_SCREEN);
-        View view = fsm.getContentView();
-        view.findViewById(R.id.ok_button_of_dialog).setOnClickListener(this);
-        fsm.setVisible(View.GONE);
+    public DialogLayoutManager addDialogView(IContainerManager container) {
+        DialogLayoutManager fsm = DialogLayoutManager.buildLayoutManager(container);
+
+        mDialog01 = fsm.addLayout(R.layout.layout_dialog_01);
+        mDialog01.findViewById(R.id.ok_button_of_dialog_01).setOnClickListener(this);
+        mDialog01.setVisibility(View.GONE);
+
+        mDialog02 = fsm.addLayout(R.layout.layout_dialog_02);
+        mDialog02.findViewById(R.id.ok_button_of_dialog_02).setOnClickListener(this);
+        mDialog02.setVisibility(View.GONE);
+
         return fsm;
     }
 
-//    @Override
-//    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
-//        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayout(container, R.layout.layout_loading_view, AbstractLayoutManager.Layer.LAYER_LOAD_SCREEN);
-//        View view = fullScreenLayoutManager.getContentView();
-//        view.findViewById(R.id.ok_button_of_load_view).setOnClickListener(this);
-//        fullScreenLayoutManager.setVisible(View.GONE);
-//        return fullScreenLayoutManager;
-//    }
+    View fullScreen01, fullScreen02;
+
+    @Override
+    public FullScreenLayoutManager addExtraFullScreenView(IContainerManager container) {
+        FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayoutManager(container);
+        fullScreen01 = fullScreenLayoutManager.addLayout(R.layout.layout_full_screen_01);
+        fullScreen02 = fullScreenLayoutManager.addLayout(R.layout.layout_full_screen_02);
+        fullScreen01.setOnClickListener(this);
+        fullScreen02.setOnClickListener(this);
+        return fullScreenLayoutManager;
+    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_of_header_control:
-                boolean visible = isElementViewVisible(ElementView.HeaderView);
-                setElementViewVisible(ElementView.HeaderView, visible ? false : true);
-                break;
-            case R.id.show_dialog_view:
-                setElementViewVisible(ElementView.DialogView, isElementViewVisible(ElementView.DialogView) ? false : true);
-                break;
-            case R.id.show_load_view:
-                setElementViewVisible(ElementView.LoadView, isElementViewVisible(ElementView.LoadView) ? false : true);
-                break;
-            case R.id.show_top_view:
-                setElementViewVisible(ElementView.TopView, isElementViewVisible(ElementView.TopView) ? false : true);
-                break;
-            case R.id.ok_button_of_load_view:
-                Toast.makeText(BasicSimpleActivity.this, "Load View clicked.", Toast.LENGTH_LONG).show();
-                setElementViewVisible(ElementView.LoadView, false);
-                break;
-            case R.id.ok_button_of_dialog:
-                setElementViewVisible(ElementView.DialogView, false);
-                break;
+        if (v == fullScreen01) {
+            fullScreen01.setVisibility(View.GONE);
+        } else if (v == fullScreen02) {
+            fullScreen02.setVisibility(View.GONE);
+        } else if (v == mMask01) {
+            mMask01.setVisibility(View.GONE);
+        } else if (v == mMask02) {
+            mMask02.setVisibility(View.GONE);
+        } else {
 
-            case R.id.animate_header:
-                animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseInQuart, 1000);
-                break;
-            case R.id.animate_top:
-                animateX(ElementView.TopView,Easing.EasingAnimation.EaseInQuart, 1000);
-                break;
-            case R.id.animate_center:
-                animateX(ElementView.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
-                break;
-            case R.id.animate_bottom:
-                animateX(ElementView.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
-                break;
-            case R.id.pull_refresh:
+            switch (v.getId()) {
+                case R.id.button_of_header_control:
+                    boolean visible = isElementViewVisible(ElementView.HeaderView);
+                    setElementViewVisible(ElementView.HeaderView, visible ? false : true);
+                    break;
+                case R.id.show_dialog_view:
+                    setElementViewVisible(ElementView.DialogView, isElementViewVisible(ElementView.DialogView) ? false : true);
+                    break;
+
+                case R.id.show_top_view:
+                    setElementViewVisible(ElementView.TopView, isElementViewVisible(ElementView.TopView) ? false : true);
+                    break;
+
+                case R.id.ok_button_of_dialog_01:
+                    //如果只有一个对话框，可以调用这个方法
+                    //setElementViewVisible(ElementView.DialogView, false);
+                    mDialog01.setVisibility(View.GONE);
+                    break;
+                case R.id.ok_button_of_dialog_02:
+                    //如果只有一个对话框，可以调用这个方法
+                    //setElementViewVisible(ElementView.DialogView, false);
+                    mDialog02.setVisibility(View.GONE);
+                    break;
+                case R.id.animate_header:
+                    animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseInQuart, 1000);
+                    break;
+                case R.id.animate_top:
+                    animateX(ElementView.TopView, Easing.EasingAnimation.EaseInQuart, 1000);
+                    break;
+                case R.id.animate_center:
+                    animateX(ElementView.CenterView, Easing.EasingAnimation.EaseOutBounce, 1500);
+                    break;
+                case R.id.animate_bottom:
+                    animateX(ElementView.BottomView, Easing.EasingAnimation.EaseInQuart, 500);
+                    break;
+                case R.id.pull_refresh:
                     SimplePullRefreshActivity.startMe(this);
-                break;
+                    break;
+            }
         }
     }
 
@@ -133,6 +168,9 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         EventBusProxy.dispatcherOnMainThreadDelay(new Runnable() {
             @Override
             public void run() {
+                mMask01.setVisibility(View.VISIBLE);
+                mMask02.setVisibility(View.VISIBLE);
+                animateY(ElementView.CenterMaskView, Easing.EasingAnimation.EaseInOutQuart, 1000);
                 stopRefresh(true);
             }
         }, 2000);
@@ -150,14 +188,17 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public void onTabSelected(int index) {
-        switch (index){
+        switch (index) {
             case 1:
-                setElementViewVisible(ElementView.CenterMaskView,!isElementViewVisible(ElementView.CenterMaskView));
-                animateY(ElementView.CenterMaskView,Easing.EasingAnimation.EaseInOutQuart,1000);
+                //只有一个mask视图，可以调用该方法
+                setElementViewVisible(ElementView.CenterMaskView, !isElementViewVisible(ElementView.CenterMaskView));
+                mMask01.setVisibility(View.VISIBLE);
+                mMask02.setVisibility(View.VISIBLE);
+                animateY(ElementView.CenterMaskView, Easing.EasingAnimation.EaseInOutQuart, 1000);
                 break;
             case 2:
-                setElementViewVisible(ElementView.TopView,!isElementViewVisible(ElementView.TopView));
-                if(isElementViewVisible(ElementView.TopView)) {
+                setElementViewVisible(ElementView.TopView, !isElementViewVisible(ElementView.TopView));
+                if (isElementViewVisible(ElementView.TopView)) {
                     animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseOutCubic, 800);
                     animateY(ElementView.TopView, Easing.EasingAnimation.EaseOutCubic, 5800);
                 }
@@ -175,7 +216,10 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
 
     @Override
     public void onRightHeaderClicked() {
-        animateY(ElementView.BottomView,1000);
-        setElementViewVisible(ElementView.DialogView,true);
+        //多个视图需要持有该view再操控
+        mDialog02.setVisibility(View.VISIBLE);
+        animateY(ElementView.BottomView, 1000);
+        //针对一个对话框视图，可以用此方法;
+        setElementViewVisible(ElementView.DialogView, true);
     }
 }

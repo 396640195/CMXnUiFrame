@@ -28,7 +28,7 @@ public class SimpleFragment extends UIFrameBasicFragment {
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayout(container,R.layout.layout_web_view);
+        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayoutManager(container,R.layout.layout_web_view);
         WebView webView =(WebView)clm.getContentView().findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("file:///android_asset/axn_project_detail.html");

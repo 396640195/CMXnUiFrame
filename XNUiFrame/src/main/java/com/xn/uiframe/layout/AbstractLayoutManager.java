@@ -13,6 +13,9 @@ import com.xn.uiframe.animation.UIFrameViewAnimator;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.ILayoutManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  * 抽象布局管理类: 主要实现各种布局管理的公性特征，并定义布局的层次关系类型;
@@ -21,10 +24,9 @@ import com.xn.uiframe.interfaces.ILayoutManager;
  * </p>
  */
 
-public abstract class AbstractLayoutManager implements ILayoutManager<View, ILayoutManager> {
+public abstract class AbstractLayoutManager implements ILayoutManager<ILayoutManager> {
     protected IContainerManager mContainerManager;
     private ViewXAnimateListener mViewXAnimateListener;
-    private ViewYAnimateListener mViewYAnimateListener;
 
     protected UIFrameViewAnimator mUIFrameViewAnimator;
     public AbstractLayoutManager(IContainerManager mContainerManager) {
@@ -41,7 +43,6 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     private void initAnimator() {
         this.mViewXAnimateListener = new ViewXAnimateListener();
-        this.mViewYAnimateListener = new ViewYAnimateListener();
         this.mUIFrameViewAnimator = new UIFrameViewAnimator(new ViewAnimateListener());
     }
 
@@ -54,7 +55,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
      * 当调用了{@link AbstractLayoutManager#addLayout(int)}
      * 方法后，会保存当前视图对象;
      */
-    protected View mView;
+    protected List<View> mViewCollections = new ArrayList<>();
 
     /**
      * 定义UI框架中视图有哪些层级，决定视图在容器中绘制的先后顺序.
@@ -81,64 +82,54 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
          */
         public static final int LAYER_BASIC_CENTER_PART = 0x10004;
         /**
-         * 覆盖在CenterLayout之上的层，用来显示无数据，加载中或异常信息的一个局部视图层级;  与全屏{@link Layer#LAYER_ERROR_SCREEN}对应
+         * 覆盖在CenterLayout之上的层，用来显示无数据，加载中或异常信息的一个局部视图层级;  与全屏{@link Layer#LAYER_FULL_SCREEN_EXTRA}对应
          */
         public static final int LAYER_BASIC_CENTER_MASK_PART = 0x10005;
 
         /**
-         * 处于该层级的主要是用于实现进度加载，这种异步等待的全屏界面. 它处于
-         * basic part 层级之上.
-         **/
-        public static final int LAYER_LOAD_SCREEN = 0x10006;
-
-        /**
-         * 该层级主要用于来展示异常信息，它处于
-         * {@link AbstractLayoutManager.Layer#LAYER_LOAD_SCREEN}层级之上.
-         ***/
-        public static final int LAYER_ERROR_SCREEN = 0x10007;
-
-        /**
          * 该层级用来备用特殊情况，如果前两层不足以满足需求，可以根据需求使用这一层级;
-         * 它处于{@link AbstractLayoutManager.Layer#LAYER_ERROR_SCREEN}层级之上.
+         * 它处于{@link AbstractLayoutManager.Layer#LAYER_BASIC_CENTER_PART}层级之上.
          **/
-        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10008;
+        public static final int LAYER_FULL_SCREEN_EXTRA = 0x10010;
 
         /**
          * 处于UI的最顶层.该层级主要用来实现对话框的功能,完全替代话框，它的层级处于
          * 它处于{@link AbstractLayoutManager.Layer#LAYER_FULL_SCREEN_EXTRA}层级之上.
          **/
-        public static final int LAYER_DIALOG_SCREEN = 0x10009;
+        public static final int LAYER_DIALOG_SCREEN = 0x10020;
 
     }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        /**
-         * 当View处于{@link View.VISIBLE} 才测量它的宽高;
-         */
-        if (getVisibility() != View.VISIBLE) {
-            return;
+        for(View view:mViewCollections) {
+            /**
+             * 当View处于{@link View.VISIBLE} 才测量它的宽高;
+             */
+            if (view.getVisibility() != View.VISIBLE) {
+                continue;
+            }
+
+            //获得当前容器布局宽和高
+            int containerWidth = View.MeasureSpec.getSize(widthMeasureSpec);
+            int containerHeight = View.MeasureSpec.getSize(heightMeasureSpec);
+
+            //获得当前布局的Margin参数
+            ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
+            int leftMargin = marginLayoutParams.leftMargin;
+            int rightMargin = marginLayoutParams.rightMargin;
+            int topMargin = marginLayoutParams.topMargin;
+            int bottomMarin = marginLayoutParams.bottomMargin;
+
+            //计算当前布局的测量基准数据
+            int basicWidth = containerWidth - leftMargin - rightMargin;
+            int basicHeight = containerHeight - topMargin - bottomMarin;
+
+            int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
+            int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
+            mContainerManager.measureChild(view, basicWidthSpec, basicHeightSpec);
         }
-
-        //获得当前容器布局宽和高
-        int containerWidth = View.MeasureSpec.getSize(widthMeasureSpec);
-        int containerHeight = View.MeasureSpec.getSize(heightMeasureSpec);
-
-        //获得当前布局的Margin参数
-        ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
-        int leftMargin = marginLayoutParams.leftMargin;
-        int rightMargin = marginLayoutParams.rightMargin;
-        int topMargin = marginLayoutParams.topMargin;
-        int bottomMarin = marginLayoutParams.bottomMargin;
-
-        //计算当前布局的测量基准数据
-        int basicWidth = containerWidth - leftMargin - rightMargin;
-        int basicHeight = containerHeight - topMargin - bottomMarin;
-
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int)(basicWidth*this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int)(basicHeight*this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
-        mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
 
     }
 
@@ -162,24 +153,37 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public View addLayout(@LayoutRes int layout) {
+        if(mViewCollections.size() > 0 ){
+            return null;
+        }
         PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
-        mView = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
-        return mView;
+        View  view = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
+        mViewCollections.add(view);
+        return view;
     }
 
     @Override
     public int getMeasuredHeight() {
-        return mView == null ? 0 : mView.getMeasuredHeight();
+        for(View view:mViewCollections){
+            return view.getMeasuredHeight();
+        }
+        return 0;
     }
 
     @Override
     public int getMeasuredWidth() {
-        return mView == null ? 0 : mView.getMeasuredWidth();
+        for(View view:mViewCollections){
+            return view.getMeasuredWidth();
+        }
+        return 0;
     }
 
     @Override
     public ViewGroup.MarginLayoutParams getMarginLayoutParams() {
-        return mView == null ? null : (ViewGroup.MarginLayoutParams) mView.getLayoutParams();
+        for(View view:mViewCollections){
+            return (ViewGroup.MarginLayoutParams)view.getLayoutParams();
+        }
+        return null;
     }
 
     @Override
@@ -188,39 +192,71 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
     }
 
     @Override
-    public void setVisible(int visible) {
-        if (mView != null) {
-            mView.setVisibility(visible);
-            mContainerManager.requestLayout();
+    public void setVisibility(int visible) {
+        //当该层级只有一个视图的时候，可以调用该方法;如果有多个层级视图，则在初始化的时候持有返回的对象，再进行操控;
+        for(View view:mViewCollections) {
+            if(view.getVisibility() == View.VISIBLE && visible == View.GONE) {
+                view.setVisibility(visible);
+                break;
+            }else if(view.getVisibility() == View.GONE && visible == View.VISIBLE){
+                view.setVisibility(visible);
+                break;
+            }
         }
     }
 
     @Override
     public int getVisibility() {
-        return mView == null ? View.GONE : mView.getVisibility();
+        //如果该层级有一个视图是要见的，则认为该层级是可见的;
+        for(View view:mViewCollections) {
+            if(view.getVisibility() == View.VISIBLE) {
+                return view.VISIBLE;
+            }
+        }
+        return View.GONE;
     }
 
     @Override
     public View getContentView() {
-        return mView;
+        return mViewCollections == null || mViewCollections.size() == 0 ? null : mViewCollections.get(0);
+    }
+
+    @Override
+    public List<View> getContentViews() {
+        return mViewCollections;
+    }
+
+    @Override
+    public void setClickable(boolean clickable) {
+        if(clickable) {
+            for (View view : mViewCollections) {
+                if (view.getVisibility() == View.VISIBLE) {
+                    view.setClickable(true);
+                } else {
+                    view.setClickable(false);
+                }
+            }
+        }else{
+            for (View view : mViewCollections) {
+                view.setClickable(false);
+            }
+        }
     }
 
     @Override
     public void animateY(long duration) {
          this.mUIFrameViewAnimator.animateY(duration);
-//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
-//        valueAnimator.addUpdateListener(mViewYAnimateListener);
-//        valueAnimator.setDuration(duration);
-//        valueAnimator.start();
     }
 
     @Override
     public void animateX(long duration) {
-//        this.mUIFrameViewAnimator.animateX(duration);
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
-        valueAnimator.addUpdateListener(mViewXAnimateListener);
-        valueAnimator.setDuration(duration);
-        valueAnimator.start();
+        for(View view:mViewCollections) {
+            if(view.getVisibility() != View.VISIBLE)continue;
+            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, view.getMeasuredWidth());
+            valueAnimator.addUpdateListener(mViewXAnimateListener);
+            valueAnimator.setDuration(duration);
+            valueAnimator.start();
+        }
     }
 
     @Override
@@ -231,21 +267,11 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
 
     @Override
     public void animateY(Easing.EasingAnimation easing, long duration) {
-//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredHeight());
-//        valueAnimator.addUpdateListener(mViewYAnimateListener);
-//        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
-//        valueAnimator.setDuration(duration);
-//        valueAnimator.start();
         this.mUIFrameViewAnimator.animateY(duration,easing);
     }
 
     @Override
     public void animateX(Easing.EasingAnimation easing, long duration) {
-//        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, mView.getMeasuredWidth());
-//        valueAnimator.addUpdateListener(mViewXAnimateListener);
-//        valueAnimator.setInterpolator(Easing.getEasingFunctionFromOption(easing));
-//        valueAnimator.setDuration(duration);
-//        valueAnimator.start();
         this.mUIFrameViewAnimator.animateX(duration,easing);
     }
 
@@ -264,31 +290,18 @@ public abstract class AbstractLayoutManager implements ILayoutManager<View, ILay
         }
 
         private void animateByLayoutParams(ValueAnimator animation) {
-            int value = (int) animation.getAnimatedValue();
-            ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
-            mp.width = value;
-            mp.height = mView.getMeasuredHeight();
-            mView.setLayoutParams(mp);
+            for(View view:mViewCollections) {
+                if(view.getVisibility() != View.VISIBLE)continue;
+                int value = (int) animation.getAnimatedValue();
+                ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
+                mp.width = value;
+                mp.height = view.getMeasuredHeight();
+                view.setLayoutParams(mp);
+            }
         }
 
     }
 
-    class ViewYAnimateListener implements ValueAnimator.AnimatorUpdateListener {
-
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            animateByLayoutParams(animation);
-        }
-
-        private void animateByLayoutParams(ValueAnimator animation) {
-            int value = (int) animation.getAnimatedValue();
-            ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
-            mp.height = value;
-            mp.width = mView.getMeasuredWidth();
-            mView.setLayoutParams(mp);
-        }
-
-    }
 
     class ViewAnimateListener implements ValueAnimator.AnimatorUpdateListener {
 

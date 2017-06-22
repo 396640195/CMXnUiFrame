@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.xn.uiframe.animation.Easing;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -22,12 +23,12 @@ import java.io.Serializable;
  * </p>
  */
 
-public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
+public interface ILayoutManager<T> extends Comparable<T>, Serializable {
     /**
      * @param layout          布局文件
      * @return 返回添加布局之后对应的View实例对象
      */
-    T addLayout(@LayoutRes int layout);
+    View addLayout(@LayoutRes int layout);
 
     /**
      * 针对添加进来的布局文件对象在容器中进行布局
@@ -70,6 +71,11 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
     ViewGroup.MarginLayoutParams getMarginLayoutParams();
 
     /**
+     * 设置当前层级是否可以点击
+     * @param clickable
+     */
+    void setClickable(boolean clickable);
+    /**
      * 返回当前布局所在的层级
      *
      * @return
@@ -82,15 +88,19 @@ public interface ILayoutManager<T, E> extends Comparable<E>, Serializable {
      * @param visible
      * @see {@link android.view.View#VISIBLE },{@link android.view.View#GONE },{@link android.view.View#INVISIBLE }
      */
-    void setVisible(int visible);
+    void setVisibility(int visible);
 
     int getVisibility();
 
     /**
      * 获取该布局的View对象
      **/
-    View getContentView();
+    List<View> getContentViews();
 
+    /**
+     * 获取该布局的View对象
+     **/
+    View getContentView();
 
     /**
      * 针对该视图进行Y轴动画

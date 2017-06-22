@@ -34,19 +34,21 @@ public class BottomLayoutManager extends AbstractLayoutManager {
 
     @Override
     public void onLayout(int left, int top, int right, int bottom) {
-        /**如果不可见，则对该布局不进行处理;**/
-        if (getVisibility() != View.VISIBLE) {
-            return;
+        for(View view : mViewCollections) {
+            /**如果不可见，则对该布局不进行处理;**/
+            if (getVisibility() != View.VISIBLE) {
+                continue;
+            }
+
+            /**获得当前布局的Margin参数**/
+            ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
+            int leftMargin = marginLayoutParams.leftMargin;
+            int rightMargin = marginLayoutParams.rightMargin;
+            int topMargin = marginLayoutParams.topMargin;
+
+            int topPosition = bottom - topMargin - view.getMeasuredHeight();
+            view.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + view.getMeasuredHeight());
         }
-
-        /**获得当前布局的Margin参数**/
-        ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
-        int leftMargin = marginLayoutParams.leftMargin;
-        int rightMargin = marginLayoutParams.rightMargin;
-        int topMargin = marginLayoutParams.topMargin;
-
-        int topPosition = bottom - topMargin - mView.getMeasuredHeight();
-        mView.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + mView.getMeasuredHeight());
     }
 
     /**
@@ -67,4 +69,6 @@ public class BottomLayoutManager extends AbstractLayoutManager {
         }
         return bottom;
     }
+
+
 }

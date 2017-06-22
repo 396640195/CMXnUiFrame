@@ -37,36 +37,37 @@ public class TopLayoutManager extends AbstractLayoutManager {
     @Override
     public void onLayout(int left, int top, int right, int bottom) {
 
-        /**如果不可见，则对该布局不进行处理;**/
-        if (getVisibility() != View.VISIBLE) {
-            return;
-        }
-
-        List<ILayoutManager<View, ILayoutManager>> managers = mContainerManager.layoutManagers();
-        HeaderLayoutManager headerLayoutManager = null;
-        int headerHeight = 0;
-        /**获得头部布局对象**/
-        for (ILayoutManager layoutManager : managers) {
-            if (layoutManager instanceof HeaderLayoutManager) {
-                headerLayoutManager = (HeaderLayoutManager) layoutManager;
-                break;
+        for(View view: mViewCollections) {
+            /**如果不可见，则对该布局不进行处理;**/
+            if (view.getVisibility() != View.VISIBLE) {
+                continue;
             }
+
+            List<ILayoutManager<ILayoutManager>> managers = mContainerManager.layoutManagers();
+            HeaderLayoutManager headerLayoutManager = null;
+            int headerHeight = 0;
+            /**获得头部布局对象**/
+            for (ILayoutManager layoutManager : managers) {
+                if (layoutManager instanceof HeaderLayoutManager) {
+                    headerLayoutManager = (HeaderLayoutManager) layoutManager;
+                    break;
+                }
+            }
+
+            if (headerLayoutManager != null && headerLayoutManager.getVisibility() != View.GONE) {
+                ViewGroup.MarginLayoutParams hLayoutParams = headerLayoutManager.getMarginLayoutParams();
+                headerHeight = hLayoutParams.topMargin + hLayoutParams.bottomMargin + headerLayoutManager.getMeasuredHeight();
+            }
+            /**获得当前布局的Margin参数**/
+            ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
+            int leftMargin = marginLayoutParams.leftMargin;
+            int rightMargin = marginLayoutParams.rightMargin;
+            int topMargin = marginLayoutParams.topMargin;
+
+            /**获得头部布局的高度**/
+            int topPos = top + headerHeight + topMargin;
+            view.layout(left + leftMargin, topPos, right - rightMargin, topPos + view.getMeasuredHeight());
         }
-
-        if (headerLayoutManager != null && headerLayoutManager.getVisibility() != View.GONE) {
-            ViewGroup.MarginLayoutParams hLayoutParams = headerLayoutManager.getMarginLayoutParams();
-            headerHeight = hLayoutParams.topMargin + hLayoutParams.bottomMargin + headerLayoutManager.getMeasuredHeight();
-        }
-        /**获得当前布局的Margin参数**/
-        ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
-        int leftMargin = marginLayoutParams.leftMargin;
-        int rightMargin = marginLayoutParams.rightMargin;
-        int topMargin = marginLayoutParams.topMargin;
-
-        /**获得头部布局的高度**/
-        int topPos = top + headerHeight + topMargin;
-        mView.layout(left + leftMargin, topPos, right - rightMargin, topPos + mView.getMeasuredHeight());
-
     }
 
     /**
@@ -77,7 +78,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static TopLayoutManager buildLayout(IContainerManager containerLayout,@LayoutRes int layout) {
+    public static TopLayoutManager buildLayoutManager(IContainerManager containerLayout,@LayoutRes int layout) {
 
         TopLayoutManager topLayoutManager = new TopLayoutManager(containerLayout);
 

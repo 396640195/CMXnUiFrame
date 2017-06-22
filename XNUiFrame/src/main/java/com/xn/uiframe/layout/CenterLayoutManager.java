@@ -49,17 +49,13 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
     private ListView mListView;
 
     /**
-     * 普通类型，不带pullrefresh功能
+     * 普通类型，不带pull refresh功能
      */
     public static final int CENTER_TYPE_GENERAL = 0x101;
     /**
-     * 带pullrefresh功能，不带listview
+     * 带pull refresh功能，带list view
      */
-    public static final int CENTER_TYPE_PULL_REFRESH = 0x102;
-    /**
-     * 带pullrefresh功能，带listview
-     */
-    public static final int CENTER_TYPE_PULL_LISTVIEW = 0x103;
+    public static final int CENTER_TYPE_PULL_LIST_VIEW = 0x102;
 
     public CenterLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
@@ -68,69 +64,72 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     @Override
     public void onLayout(int left, int top, int right, int bottom) {
-        /**如果不可见，则对该布局不进行处理;**/
-        if (getVisibility() != View.VISIBLE) {
-            return;
-        }
-        /**计算Center上下被占用的空间高度**/
-        int upTopMargin = 0;
-        List<ILayoutManager<View, ILayoutManager>> managers = mContainerManager.layoutManagers();
-        for (ILayoutManager layoutManager : managers) {
-            if (layoutManager.getLayer() <= Layer.LAYER_BASIC_TOP_PART && layoutManager.getVisibility() != View.GONE) {
-                ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
-                upTopMargin += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin + layoutManager.getMeasuredHeight());
+        for(View view : mViewCollections) {
+            /**如果不可见，则对该布局不进行处理;**/
+            if (view.getVisibility() != View.VISIBLE) {
+                continue;
             }
-        }
+            /**计算Center上下被占用的空间高度**/
+            int upTopMargin = 0;
+            List<ILayoutManager<ILayoutManager>> managers = mContainerManager.layoutManagers();
+            for (ILayoutManager layoutManager : managers) {
+                if (layoutManager.getLayer() <= Layer.LAYER_BASIC_TOP_PART && layoutManager.getVisibility() != View.GONE) {
+                    ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
+                    upTopMargin += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin + layoutManager.getMeasuredHeight());
+                }
+            }
 
-        /**获得当前布局的Margin参数**/
-        ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
-        int leftMargin = marginLayoutParams.leftMargin;
-        int rightMargin = marginLayoutParams.rightMargin;
-        int topMargin = marginLayoutParams.topMargin;
-        int topPosition = top + topMargin + upTopMargin;
-        int measuredHeight = mView.getMeasuredHeight();
-        mView.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + measuredHeight);
+            /**获得当前布局的Margin参数**/
+            ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
+            int leftMargin = marginLayoutParams.leftMargin;
+            int rightMargin = marginLayoutParams.rightMargin;
+            int topMargin = marginLayoutParams.topMargin;
+            int topPosition = top + topMargin + upTopMargin;
+            int measuredHeight = view.getMeasuredHeight();
+            view.layout(left + leftMargin, topPosition, right - rightMargin, topPosition + measuredHeight);
+        }
     }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        /**
-         * 当View处于{@link View.VISIBLE} 才测量它的宽高;
-         */
-        if (getVisibility() != View.VISIBLE) {
-            return;
-        }
-        //获得基本视图所占高度
-        int basicLayoutHeights = 0;
-        List<ILayoutManager<View, ILayoutManager>> layoutManagers = mContainerManager.layoutManagers();
-        for (ILayoutManager<View, ILayoutManager> layoutManager : layoutManagers) {
-            if (layoutManager.getLayer() < mLayer && layoutManager.getVisibility() != View.GONE) {
-                basicLayoutHeights += layoutManager.getMeasuredHeight();
-                ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
-                basicLayoutHeights += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin);
+        for(View view : mViewCollections) {
+            /**
+             * 当View处于{@link View.VISIBLE} 才测量它的宽高;
+             */
+            if (view.getVisibility() != View.VISIBLE) {
+                continue;
             }
+            //获得基本视图所占高度
+            int basicLayoutHeights = 0;
+            List<ILayoutManager<ILayoutManager>> layoutManagers = mContainerManager.layoutManagers();
+            for (ILayoutManager<ILayoutManager> layoutManager : layoutManagers) {
+                if (layoutManager.getLayer() < mLayer && layoutManager.getVisibility() != View.GONE) {
+                    basicLayoutHeights += layoutManager.getMeasuredHeight();
+                    ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
+                    basicLayoutHeights += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin);
+                }
+            }
+            //获得当前容器布局宽和高
+            int containerWidth = View.MeasureSpec.getSize(widthMeasureSpec);
+            int containerHeight = View.MeasureSpec.getSize(heightMeasureSpec);
+
+            //获得当前布局的Margin参数
+            ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
+            int leftMargin = marginLayoutParams.leftMargin;
+            int rightMargin = marginLayoutParams.rightMargin;
+            int topMargin = marginLayoutParams.topMargin;
+            int bottomMarin = marginLayoutParams.bottomMargin;
+
+            //计算当前布局的测量基准数据
+            int basicWidth = containerWidth - leftMargin - rightMargin;
+            int basicHeight = containerHeight - topMargin - bottomMarin - basicLayoutHeights;
+
+            int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
+            int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
+
+            //测量当前布局的高宽
+            mContainerManager.measureChild(view, basicWidthSpec, basicHeightSpec);
         }
-        //获得当前容器布局宽和高
-        int containerWidth = View.MeasureSpec.getSize(widthMeasureSpec);
-        int containerHeight = View.MeasureSpec.getSize(heightMeasureSpec);
-
-        //获得当前布局的Margin参数
-        ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
-        int leftMargin = marginLayoutParams.leftMargin;
-        int rightMargin = marginLayoutParams.rightMargin;
-        int topMargin = marginLayoutParams.topMargin;
-        int bottomMarin = marginLayoutParams.bottomMargin;
-
-        //计算当前布局的测量基准数据
-        int basicWidth = containerWidth - leftMargin - rightMargin;
-        int basicHeight = containerHeight - topMargin - bottomMarin - basicLayoutHeights;
-
-        int basicWidthSpec = View.MeasureSpec.makeMeasureSpec((int) (basicWidth * this.mUIFrameViewAnimator.getPhaseX()), View.MeasureSpec.EXACTLY);
-        int basicHeightSpec = View.MeasureSpec.makeMeasureSpec((int) (basicHeight * this.mUIFrameViewAnimator.getPhaseY()), View.MeasureSpec.EXACTLY);
-
-        //测量当前布局的高宽
-        mContainerManager.measureChild(mView, basicWidthSpec, basicHeightSpec);
-
     }
 
     /**
@@ -141,7 +140,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static CenterLayoutManager buildGeneralLayout(IContainerManager containerLayout, @LayoutRes int layout) {
+    public static CenterLayoutManager buildGeneralLayoutManager(IContainerManager containerLayout, @LayoutRes int layout) {
         CenterLayoutManager center = new CenterLayoutManager(containerLayout);
         if (containerLayout.contains(center)) {
             throw new UIFrameLayoutAlreadyExistException("Center视图已经添加到容器当中了，该视图不能重复添加.");
@@ -168,7 +167,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
             center.addLayout(R.layout.ui_frame_center_listview_layout);
             center.mListView = (ListView) center.getContentView().findViewById(R.id.ui_frame_center_list_view);
             center.mListView.setAdapter(new EmptyAdapter());
-            center.mCenterBuildType = CENTER_TYPE_PULL_LISTVIEW;
+            center.mCenterBuildType = CENTER_TYPE_PULL_LIST_VIEW;
 
             containerLayout.addLayoutManager(center);
         }
@@ -176,8 +175,9 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
     }
 
     public void setOnRefreshListener(OnRefreshListener listener) {
-        if (mView instanceof UIFrameRefreshViewLayout) {
-            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+        View view = getContentView();
+        if (view instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) view;
             wrapper.setCanRefresh(true);
             wrapper.setCanLoad(true);
             wrapper.setOnRefreshListener(listener);
@@ -186,32 +186,36 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     @Override
     public void stopRefresh(boolean isSuccess) {
-        if (mView instanceof UIFrameRefreshViewLayout) {
-            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+        View view = getContentView();
+        if (view instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) view;
             wrapper.stopRefresh(isSuccess);
         }
     }
 
     @Override
     public void stopLoadMore(boolean isSuccess) {
-        if (mView instanceof UIFrameRefreshViewLayout) {
-            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+        View view = getContentView();
+        if (view instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) view;
             wrapper.stopLoadMore(isSuccess);
         }
     }
 
     @Override
     public void enableRefresh(boolean enable) {
-        if (mView instanceof UIFrameRefreshViewLayout) {
-            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+        View view = getContentView();
+        if (view instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) view;
             wrapper.setCanRefresh(enable);
         }
     }
 
     @Override
     public void enableLoadMore(boolean enable) {
-        if (mView instanceof UIFrameRefreshViewLayout) {
-            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) this.mView;
+        View view = getContentView();
+        if (view instanceof UIFrameRefreshViewLayout) {
+            UIFrameRefreshViewLayout wrapper = (UIFrameRefreshViewLayout) view;
             wrapper.setCanLoad(enable);
         }
     }
@@ -231,8 +235,9 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     @Override
     public View addCompanionScrollableFooter(@LayoutRes int layout) {
+        View view = getContentView();
         PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
-        if (mView instanceof UIFrameRefreshViewLayout) {
+        if (view instanceof UIFrameRefreshViewLayout) {
             View footer = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, null, false);
             mListView.addFooterView(footer);
             return footer;
@@ -247,6 +252,8 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
     public int getCenterBuildType() {
         return mCenterBuildType;
     }
+
+
 }
 
 class EmptyAdapter extends BaseAdapter {

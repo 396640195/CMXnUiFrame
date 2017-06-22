@@ -3,6 +3,7 @@ package com.xn.uiframe.interfaces;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.CenterMaskLayoutManager;
+import com.xn.uiframe.layout.DialogLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
@@ -50,27 +51,15 @@ public interface IBasicViewAdapter {
     /**
      * 在界面中添加一个全屏视图,该视图处于界面的最上层;
      * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link FullScreenLayoutManager}
+     * @return 返回DialogLayoutManager布局管理对象 {@link DialogLayoutManager}
      */
-    FullScreenLayoutManager addDialogView(IContainerManager container);
-    /**
-     * 在界面中添加一个全屏视图,该视图处于Dialog视图之下，LoadView之上;
-     * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link FullScreenLayoutManager}
-     */
-    FullScreenLayoutManager addErrorView(IContainerManager container);
-    /**
-     * 在界面中添加一个全屏视图,该视图处于基本视图之上，ErrorView视图之下;
-     * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link FullScreenLayoutManager}
-     */
-    FullScreenLayoutManager addLoadingView(IContainerManager container);
+    DialogLayoutManager addDialogView(IContainerManager container);
     /**
      * 在界面中添加一个全屏视图,该视图处于Dialog视图之下;
      * @param container 容器接口的实例对象
      * @return 返回头部布局管理对象 {@link FullScreenLayoutManager}
      */
-    FullScreenLayoutManager addExtraTopView(IContainerManager container);
+    FullScreenLayoutManager addExtraFullScreenView(IContainerManager container);
 
     /**
      * 给中间可滚动的列表添加头部伴随视图

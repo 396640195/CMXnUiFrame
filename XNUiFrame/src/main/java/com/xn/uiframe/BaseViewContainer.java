@@ -15,6 +15,7 @@ import com.xn.uiframe.interfaces.ILayoutManager;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.CenterMaskLayoutManager;
+import com.xn.uiframe.layout.DialogLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
@@ -35,9 +36,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     private CenterLayoutManager mCenterLayoutManager;
     private CenterMaskLayoutManager mCenterMaskLayoutManager;
     private HeaderLayoutManager mHeaderLayoutManager;
-    private FullScreenLayoutManager mLoadViewManager;
-    private FullScreenLayoutManager mErrorViewManager;
-    private FullScreenLayoutManager mDialogViewManager;
+    private DialogLayoutManager mDialogLayoutManager;
     private FullScreenLayoutManager mExtraFullViewManager;
 
     public BaseViewContainer(Activity context, IBasicViewAdapter adapter) {
@@ -49,7 +48,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     public void setElementViewVisible(ElementView elementCategory, boolean visible) {
         ILayoutManager layoutManager = elementCategoryTypeToLayoutManager(elementCategory);
         if (layoutManager != null) {
-            layoutManager.setVisible(visible ? View.VISIBLE : View.GONE);
+            layoutManager.setVisibility(visible ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -176,19 +175,23 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         this.mBottomLayoutManager = mBasicViewAdapter.addBottomView(mContainer);
 
         this.mCenterLayoutManager = mBasicViewAdapter.addCenterView(mContainer);
-        if(mCenterLayoutManager.getCenterBuildType() == CenterLayoutManager.CENTER_TYPE_PULL_LISTVIEW) {
+        if(mCenterLayoutManager.getCenterBuildType() == CenterLayoutManager.CENTER_TYPE_PULL_LIST_VIEW) {
             this.mBasicViewAdapter.addCompanionScrollableHeader(this.mCenterLayoutManager);
             this.mBasicViewAdapter.addCompanionScrollableFooter(this.mCenterLayoutManager);
             this.mBasicViewAdapter.onCompanionViewAddFinished(this.mCenterLayoutManager);
         }
-        this.mCenterMaskLayoutManager = mBasicViewAdapter.addCenterMaskView(mContainer);
 
-        this.mLoadViewManager = mBasicViewAdapter.addLoadingView(mContainer);
-        this.mErrorViewManager = mBasicViewAdapter.addErrorView(mContainer);
-        this.mExtraFullViewManager = mBasicViewAdapter.addExtraTopView(mContainer);
-        this.mDialogViewManager = mBasicViewAdapter.addDialogView(mContainer);
+        this.mCenterMaskLayoutManager = mBasicViewAdapter.addCenterMaskView(mContainer);
+        this.mContainer.addLayoutManager(this.mCenterMaskLayoutManager);
+
+        this.mExtraFullViewManager = mBasicViewAdapter.addExtraFullScreenView(mContainer);
+        this.mContainer.addLayoutManager(this.mExtraFullViewManager);
+
+        this.mDialogLayoutManager = mBasicViewAdapter.addDialogView(mContainer);
+        this.mContainer.addLayoutManager(this.mDialogLayoutManager);
 
         this.mBasicViewAdapter.onAllViewConstructed();
+
         return mContainer;
     }
 
@@ -205,13 +208,9 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         }else if (category == ElementView.BottomView ) {
             return mBottomLayoutManager;
         } else if (category == ElementView.DialogView ) {
-            return mDialogViewManager;
-        } else if (category  == ElementView.ErrorView ) {
-            return mErrorViewManager;
+            return mDialogLayoutManager;
         } else if (category == ElementView.ExtraView ) {
             return mExtraFullViewManager;
-        } else if (category == ElementView.LoadView ) {
-            return mLoadViewManager;
         }
         return null;
     }

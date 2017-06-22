@@ -35,9 +35,9 @@ import java.util.List;
  * </p>
  */
 
-public class PowerfulContainerLayout extends ViewGroup implements IContainerManager<ILayoutManager<View, ILayoutManager>> {
+public class PowerfulContainerLayout extends ViewGroup implements IContainerManager<ILayoutManager<ILayoutManager>> {
 
-    private List<ILayoutManager<View, ILayoutManager>> mLayoutManagers;
+    private List<ILayoutManager<ILayoutManager>> mLayoutManagers;
     private int mBackgroundColor = 0;
     private int mBackgroundResource = 0;
 
@@ -67,7 +67,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 
-        for (ILayoutManager<View, ILayoutManager> manager : mLayoutManagers) {
+        for (ILayoutManager<ILayoutManager> manager : mLayoutManagers) {
             manager.onLayout(l, t, r, b);
         }
         /**处理不同层级的触摸事件**/
@@ -80,7 +80,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         /**先排序，按顺序进行测量**/
         Collections.sort(mLayoutManagers);
-        for (ILayoutManager<View, ILayoutManager> manager : mLayoutManagers) {
+        for (ILayoutManager<ILayoutManager> manager : mLayoutManagers) {
             manager.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
@@ -89,7 +89,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         super.measureChild(view, widthMeasureSpec, heightMeasureSpec);
     }
 
-    public List<ILayoutManager<View, ILayoutManager>> layoutManagers() {
+    public List<ILayoutManager<ILayoutManager>> layoutManagers() {
         return mLayoutManagers;
     }
 
@@ -98,13 +98,17 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         return new MarginLayoutParams(getContext(), attrs);
     }
 
-    public void addLayoutManager(ILayoutManager<View, ILayoutManager> layoutManager) {
+    public void addLayoutManager(ILayoutManager<ILayoutManager> layoutManager) {
+        if(layoutManager == null)return;
         this.layoutManagers().add(layoutManager);
-        this.addView(layoutManager.getContentView());
+        for(View view: layoutManager.getContentViews()) {
+            this.addView(view);
+        }
     }
 
     @Override
-    public boolean contains(ILayoutManager<View, ILayoutManager> layoutManager) {
+    public boolean contains(ILayoutManager<ILayoutManager> layoutManager) {
+        if(layoutManager == null) return false;
         return this.mLayoutManagers.contains(layoutManager);
     }
 
@@ -140,14 +144,14 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         if (topVisibleLayout.getLayer() <= AbstractLayoutManager.Layer.LAYER_BASIC_CENTER_PART) {
             for (int i = mLayoutManagers.size() - 1; i > 0; i--) {
                 ILayoutManager layoutManager = mLayoutManagers.get(i);
-                layoutManager.getContentView().setClickable(true);
+                layoutManager.setClickable(true);
             }
         } else {
-            topVisibleLayout.getContentView().setClickable(true);
+            topVisibleLayout.setClickable(true);
             for (int i = mLayoutManagers.size() - 1; i > 0; i--) {
                 ILayoutManager layoutManager = mLayoutManagers.get(i);
                 if (layoutManager.getLayer() < topVisibleLayout.getLayer()) {
-                    layoutManager.getContentView().setClickable(false);
+                    layoutManager.setClickable(false);
                 }
             }
         }

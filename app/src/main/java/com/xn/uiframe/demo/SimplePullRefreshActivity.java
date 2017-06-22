@@ -21,7 +21,7 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayout(container, R.layout.layout_center_fragment);
+        CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayoutManager(container, R.layout.layout_center_fragment);
         return clt;
     }
 

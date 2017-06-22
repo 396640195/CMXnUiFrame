@@ -11,6 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_background"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="100dp"
         android:orientation="vertical">
 
         <TextView
@@ -19,13 +21,13 @@
             android:alpha="1"
             android:gravity="center"
             android:textColor="#000000"
-            android:text="对话框" />
+            android:text="对话框_02" />
 
         <Button
-            android:id="@+id/ok_button_of_dialog"
+            android:id="@+id/ok_button_of_dialog_02"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="确认" />
+            android:text="确认02" />
     </LinearLayout>
 
 </LinearLayout>

@@ -19,6 +19,7 @@ import com.xn.uiframe.interfaces.IViewCommonBehavior;
 import com.xn.uiframe.layout.BottomLayoutManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.layout.CenterMaskLayoutManager;
+import com.xn.uiframe.layout.DialogLayoutManager;
 import com.xn.uiframe.layout.FullScreenLayoutManager;
 import com.xn.uiframe.layout.HeaderLayoutManager;
 import com.xn.uiframe.layout.TopLayoutManager;
@@ -111,22 +112,12 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     }
 
     @Override
-    public FullScreenLayoutManager addDialogView(IContainerManager container) {
+    public DialogLayoutManager addDialogView(IContainerManager container) {
         return null;
     }
 
     @Override
-    public FullScreenLayoutManager addErrorView(IContainerManager container) {
-        return null;
-    }
-
-    @Override
-    public FullScreenLayoutManager addLoadingView(IContainerManager container) {
-        return null;
-    }
-
-    @Override
-    public FullScreenLayoutManager addExtraTopView(IContainerManager container) {
+    public FullScreenLayoutManager addExtraFullScreenView(IContainerManager container) {
         return null;
     }
 
