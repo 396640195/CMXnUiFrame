@@ -14,13 +14,25 @@ import java.util.List;
  * <p>
  * 定义一个基本视图布局管理器 TopLayoutManager.
  * <br>
+ * <p>
+ *  使用方法: activity中覆盖此方法,调用TopLayoutManager静态方法构造一个头部对象;
+ * <code>
+    @Override
+    public TopLayoutManager addTopView(IContainerManager container)
+    {
+       TopLayoutManager tlm = TopLayoutManager.buildLayoutManager(container, R.layout.layout_top);
+       tlm.setVisibility(View.GONE);
+      return tlm;
+    }
+ * <p/>
+ * </code>
+ * <p>
  * 基本视图是指组成界面的各个基本元素的布局,在这个框架中主要定义了几个如下几个基本视图:
  * 1.HeaderLayoutManager
  * 2.TopLayoutManager
  * 3.CenterLayoutManager & CenterMaskLayoutManager
  * 4.BottomLayoutManager
- * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
- * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ * 基它全屏类型的视图包括: DialogLayoutManager,FullScreenLayoutManager
  * <p>
  * 该布局处于Header布局之下,Center布局之上.
  * Created by 陈真 on 2017/6/12.
@@ -37,7 +49,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
     @Override
     public void onLayout(int left, int top, int right, int bottom) {
 
-        for(View view: mViewCollections) {
+        for (View view : mViewCollections) {
             /**如果不可见，则对该布局不进行处理;**/
             if (view.getVisibility() != View.VISIBLE) {
                 continue;
@@ -78,7 +90,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
      * @param layout          需要添加的布局文件
      * @return 布局文件加载后的视图布局Manager对象
      */
-    public static TopLayoutManager buildLayoutManager(IContainerManager containerLayout,@LayoutRes int layout) {
+    public static TopLayoutManager buildLayoutManager(IContainerManager containerLayout, @LayoutRes int layout) {
 
         TopLayoutManager topLayoutManager = new TopLayoutManager(containerLayout);
 

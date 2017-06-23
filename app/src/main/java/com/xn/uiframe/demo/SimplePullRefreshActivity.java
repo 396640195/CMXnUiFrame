@@ -35,8 +35,9 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
                     bundleHome.putString("content", "From 首页");
                     mHomeFragment.setArguments(bundleHome);
                     addUIFrameFragment(mHomeFragment);
+                }else {
+                    changeUIFragment(mHomeFragment);
                 }
-                changeUIFragment(mHomeFragment);
                 break;
             case 2:
                 if (mAccountFragment == null) {

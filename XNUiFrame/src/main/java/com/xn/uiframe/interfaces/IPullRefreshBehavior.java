@@ -1,6 +1,7 @@
 package com.xn.uiframe.interfaces;
 
 /**
+ * pull refresh接口定义
  * Created by 陈真 on 2017/6/16.
  */
 public interface IPullRefreshBehavior {

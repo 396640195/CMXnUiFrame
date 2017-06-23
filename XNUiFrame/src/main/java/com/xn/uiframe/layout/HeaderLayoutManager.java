@@ -21,9 +21,25 @@ import com.xn.uiframe.interfaces.IHeaderViewBehavior;
  * 2.TopLayoutManager
  * 3.CenterLayoutManager
  * 4.BottomLayoutManager
- * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
- * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ * 基它全屏类型的视图包括: DialogLayoutManager,FullScreenLayoutManager
  * <p>
+ * <p>使用方法:</p>
+ * <code>
+ *
+  @Override public HeaderLayoutManager addHeaderView(IContainerManager container)
+  {
+       //指定一个布局文件构造一个头部视图
+       //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container, R.layout.layout_header);
+       //构造一个默认的头部视图
+       HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
+       //设置头部视图的图标,其它类似;
+       Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
+       drawable.setBounds(0, 0, (int) (drawable.getMinimumWidth() * 0.8), (int) (drawable.getMinimumHeight() * 0.8));
+       hlm.setHeaderLeftDrawable(drawable);
+
+       return hlm;
+  }
+ * </code>
  * Created by 陈真 on 2017/6/12.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
@@ -40,7 +56,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
 
     @Override
     public void onLayout(int left, int top, int right, int bottom) {
-        for(View view: mViewCollections) {
+        for (View view : mViewCollections) {
             /**如果不可见，则对该布局不进行处理;**/
             if (view.getVisibility() != View.VISIBLE) {
                 continue;

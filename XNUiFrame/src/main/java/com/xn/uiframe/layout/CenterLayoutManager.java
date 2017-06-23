@@ -32,9 +32,38 @@ import java.util.List;
  * 2.TopLayoutManager
  * 3.CenterLayoutManager,CenterMaskLayoutManager (用来在中间视图之上显示无数据，异常信息的层)
  * 4.BottomLayoutManager
- * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
- * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ * 基它全屏类型的视图包括: DialogLayoutManager,FullScreenLayoutManager
  * <p>
+ * <p>使用方法</p>
+ * <code>
+  @Override public CenterLayoutManager addCenterView(IContainerManager container)
+  {
+       //调用静态方法构造一个中间视图,布局完全由自已定义
+       CenterLayoutManager clt = CenterLayoutManager.buildGeneralLayoutManager(container, R.layout.layout_center);
+       return clt;
+  }
+ * </code>
+ * <p>
+ * <p>构造一个带ListView和伴随视图的中间视图层
+ * <code>
+
+  @Override public void addCompanionScrollableHeader(CenterLayoutManager container)
+  {
+       container.addCompanionScrollableHeader(R.layout.layout_companion_header);
+  }
+
+  @Override public void addCompanionScrollableFooter(CenterLayoutManager container)
+  {
+       container.addCompanionScrollableFooter(R.layout.layout_companion_footer);
+  }
+
+  @Override public CenterLayoutManager addCenterView(IContainerManager container)
+  {
+       CenterLayoutManager clm = CenterLayoutManager.buildPullRefreshLayoutWithListView(container);
+       return clm;
+  }
+
+ * </code>
  * Created by 陈真 on 2017/6/13.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
@@ -64,7 +93,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     @Override
     public void onLayout(int left, int top, int right, int bottom) {
-        for(View view : mViewCollections) {
+        for (View view : mViewCollections) {
             /**如果不可见，则对该布局不进行处理;**/
             if (view.getVisibility() != View.VISIBLE) {
                 continue;
@@ -92,7 +121,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        for(View view : mViewCollections) {
+        for (View view : mViewCollections) {
             /**
              * 当View处于{@link View.VISIBLE} 才测量它的宽高;
              */

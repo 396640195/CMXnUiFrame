@@ -24,8 +24,24 @@ import java.util.List;
  * 2.TopLayoutManager
  * 3.CenterLayoutManager
  * 4.BottomLayoutManager
- * 基它全屏类型的视图包括: Dialog,LoadView,ErrorView,ExtraView(备用全屏视图)
- * 这几个全屏视图都通过 FullScreenLayoutManager 来实现，只需要给定它的类型参数指定它属于哪个视图类型;
+ * 基它全屏类型的视图包括: DialogLayoutManager,FullScreenLayoutManager
+ * <p>使用方法</p>
+ * <code>
+ *
+     View fullScreen01, fullScreen02;
+
+     @Override
+     public FullScreenLayoutManager addExtraFullScreenView(IContainerManager container)
+     {
+         FullScreenLayoutManager fullScreenLayoutManager = FullScreenLayoutManager.buildLayoutManager(container);
+         fullScreen01 = fullScreenLayoutManager.addLayout(R.layout.layout_full_screen_01);
+         fullScreen02 = fullScreenLayoutManager.addLayout(R.layout.layout_full_screen_02);
+         fullScreen01.setOnClickListener(this);
+         fullScreen02.setOnClickListener(this);
+         return fullScreenLayoutManager;
+     }
+
+ * </code>
  * Created by 陈真 on 2017/6/13.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
  * </p>
