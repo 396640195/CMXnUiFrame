@@ -339,11 +339,17 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         }
     }
 
-    // 切換Fragment
+    /**
+     * 切换Fragment
+     */
     public  void changeUIFragment(UIFrameBasicFragment f){
         changeFragment(f, false);
     }
-    // 初始化Fragment(FragmentActivity中呼叫)
+
+    /**
+     * 初始化Fragment
+     * @param f
+     */
     public  void addUIFrameFragment(UIFrameBasicFragment f){
         changeFragment(f, true);
     }
