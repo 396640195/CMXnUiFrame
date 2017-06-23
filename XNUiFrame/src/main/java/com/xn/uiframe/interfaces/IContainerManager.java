@@ -25,11 +25,23 @@ public interface IContainerManager<T> {
       */
      boolean contains(T t);
 
+     /**
+      * 请求重新布局
+      */
      void requestLayout();
 
+     /**
+      * 给定一个View进行测量它的高宽
+      * @param view
+      * @param widthMeasureSpec
+      * @param heightMeasureSpec
+      */
      void measureChild(View view, int widthMeasureSpec, int heightMeasureSpec);
 
+     /**
+      * 获得容器里的所有布局管理对象
+      * @return
+      */
      List<ILayoutManager<ILayoutManager>> layoutManagers();
 
-     Context getContext();
 }

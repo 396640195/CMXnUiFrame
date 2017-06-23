@@ -25,27 +25,27 @@ public interface IBasicViewAdapter {
     /**
      * 在界面中添加一个顶部视图,该视图处于界面的Header视图之下,Center视图之上;
      * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link TopLayoutManager}
+     * @return 返回Top布局管理对象 {@link TopLayoutManager}
      */
     TopLayoutManager addTopView(IContainerManager container);
 
     /**
      * 在界面中添加一个底部视图,该视图处于界面的Center视图之下;
      * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link BottomLayoutManager}
+     * @return 返回Bottom布局管理对象 {@link BottomLayoutManager}
      */
     BottomLayoutManager addBottomView(IContainerManager container);
     /**
      * 在界面中添加一个中间视图,该视图处于界面的中间位置，主要用来展示界面的主要内容;
      * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link CenterLayoutManager}
+     * @return 返回Center布局管理对象 {@link CenterLayoutManager}
      */
     CenterLayoutManager addCenterView(IContainerManager container);
 
     /**
      * 在中间视图之上添加一个覆盖层,用来实现某些特殊需求;
      * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link CenterLayoutManager}
+     * @return 返回Center Mask布局管理对象 {@link CenterLayoutManager}
      */
     CenterMaskLayoutManager addCenterMaskView(IContainerManager container);
     /**
@@ -57,7 +57,7 @@ public interface IBasicViewAdapter {
     /**
      * 在界面中添加一个全屏视图,该视图处于Dialog视图之下;
      * @param container 容器接口的实例对象
-     * @return 返回头部布局管理对象 {@link FullScreenLayoutManager}
+     * @return 返回FullScreenLayoutManager布局管理对象 {@link FullScreenLayoutManager}
      */
     FullScreenLayoutManager addExtraFullScreenView(IContainerManager container);
 

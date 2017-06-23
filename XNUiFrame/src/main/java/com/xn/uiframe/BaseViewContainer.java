@@ -37,7 +37,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     private CenterMaskLayoutManager mCenterMaskLayoutManager;
     private HeaderLayoutManager mHeaderLayoutManager;
     private DialogLayoutManager mDialogLayoutManager;
-    private FullScreenLayoutManager mExtraFullViewManager;
+    private FullScreenLayoutManager mFullScreenLayoutManager;
 
     public BaseViewContainer(Activity context, IBasicViewAdapter adapter) {
         this.mContext = context;
@@ -184,8 +184,8 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         this.mCenterMaskLayoutManager = mBasicViewAdapter.addCenterMaskView(mContainer);
         this.mContainer.addLayoutManager(this.mCenterMaskLayoutManager);
 
-        this.mExtraFullViewManager = mBasicViewAdapter.addExtraFullScreenView(mContainer);
-        this.mContainer.addLayoutManager(this.mExtraFullViewManager);
+        this.mFullScreenLayoutManager = mBasicViewAdapter.addExtraFullScreenView(mContainer);
+        this.mContainer.addLayoutManager(this.mFullScreenLayoutManager);
 
         this.mDialogLayoutManager = mBasicViewAdapter.addDialogView(mContainer);
         this.mContainer.addLayoutManager(this.mDialogLayoutManager);
@@ -209,8 +209,8 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
             return mBottomLayoutManager;
         } else if (category == ElementView.DialogView ) {
             return mDialogLayoutManager;
-        } else if (category == ElementView.ExtraView ) {
-            return mExtraFullViewManager;
+        } else if (category == ElementView.FullScreenView ) {
+            return mFullScreenLayoutManager;
         }
         return null;
     }

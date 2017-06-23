@@ -26,7 +26,6 @@ import java.util.List;
 
 public abstract class AbstractLayoutManager implements ILayoutManager<ILayoutManager> {
     protected IContainerManager mContainerManager;
-    private ViewXAnimateListener mViewXAnimateListener;
 
     protected UIFrameViewAnimator mUIFrameViewAnimator;
     public AbstractLayoutManager(IContainerManager mContainerManager) {
@@ -42,7 +41,6 @@ public abstract class AbstractLayoutManager implements ILayoutManager<ILayoutMan
     }
 
     private void initAnimator() {
-        this.mViewXAnimateListener = new ViewXAnimateListener();
         this.mUIFrameViewAnimator = new UIFrameViewAnimator(new ViewAnimateListener());
     }
 
@@ -250,13 +248,7 @@ public abstract class AbstractLayoutManager implements ILayoutManager<ILayoutMan
 
     @Override
     public void animateX(long duration) {
-        for(View view:mViewCollections) {
-            if(view.getVisibility() != View.VISIBLE)continue;
-            ValueAnimator valueAnimator = ValueAnimator.ofInt(0, view.getMeasuredWidth());
-            valueAnimator.addUpdateListener(mViewXAnimateListener);
-            valueAnimator.setDuration(duration);
-            valueAnimator.start();
-        }
+        this.mUIFrameViewAnimator.animateX(duration);
     }
 
     @Override
@@ -280,28 +272,6 @@ public abstract class AbstractLayoutManager implements ILayoutManager<ILayoutMan
         this.animateX(easing, xDuration);
         this.animateY(easing, yDuration);
     }
-
-
-    class ViewXAnimateListener implements ValueAnimator.AnimatorUpdateListener {
-
-        @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
-            animateByLayoutParams(animation);
-        }
-
-        private void animateByLayoutParams(ValueAnimator animation) {
-            for(View view:mViewCollections) {
-                if(view.getVisibility() != View.VISIBLE)continue;
-                int value = (int) animation.getAnimatedValue();
-                ViewGroup.MarginLayoutParams mp = getMarginLayoutParams();
-                mp.width = value;
-                mp.height = view.getMeasuredHeight();
-                view.setLayoutParams(mp);
-            }
-        }
-
-    }
-
 
     class ViewAnimateListener implements ValueAnimator.AnimatorUpdateListener {
 

@@ -5,5 +5,5 @@ package com.xn.uiframe;
  */
 
 public enum ElementView {
-    HeaderView, TopView, CenterView,CenterMaskView, BottomView, DialogView, ExtraView
+    HeaderView, TopView, CenterView,CenterMaskView, BottomView, DialogView, FullScreenView
 }

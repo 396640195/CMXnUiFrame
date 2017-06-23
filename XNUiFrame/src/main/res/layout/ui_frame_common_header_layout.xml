@@ -1,38 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="#FFFFFF"
+    style="@style/ui_frame_header_container_style"
     >
-
     <TextView
         android:id="@+id/ui_frame_header_left"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        style="@style/ui_frame_header_left_text_style"
         android:text="返回"
-        android:layout_marginLeft="10dp"
-        android:drawablePadding="13dp"
         android:layout_alignParentLeft="true"
-        android:textColor="#000000"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/ui_frame_header_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/ui_frame_header_center_text_style"
         android:text="标题"
-        android:textColor="#000000"
         android:layout_centerInParent="true"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/ui_frame_header_right"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        style="@style/ui_frame_header_right_text_style"
         android:layout_alignParentRight="true"
         android:text="More"
-        android:layout_marginRight="10dp"
-        android:textColor="#000000"
-        android:layout_marginLeft="13dp"
         android:gravity="center" />
 </RelativeLayout>
