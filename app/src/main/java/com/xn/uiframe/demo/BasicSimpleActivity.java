@@ -106,6 +106,10 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         fullScreen02 = fullScreenLayoutManager.addLayout(R.layout.layout_full_screen_02);
         fullScreen01.setOnClickListener(this);
         fullScreen02.setOnClickListener(this);
+
+        fullScreen01.setVisibility(View.GONE);
+        fullScreen02.setVisibility(View.GONE);
+
         return fullScreenLayoutManager;
     }
 

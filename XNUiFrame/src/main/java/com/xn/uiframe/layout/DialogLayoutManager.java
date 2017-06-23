@@ -58,6 +58,7 @@ public class DialogLayoutManager extends FullScreenLayoutManager {
     public View addLayout(@LayoutRes int layout) {
         PowerfulContainerLayout powerfulContainer = (PowerfulContainerLayout) mContainerManager;
         View  view = LayoutInflater.from(powerfulContainer.getContext()).inflate(layout, powerfulContainer, false);
+        view.setBackgroundDrawable(view.getResources().getDrawable(R.drawable.ui_frame_dialog_translucency));
         mViewCollections.add(view);
         return view;
     }
