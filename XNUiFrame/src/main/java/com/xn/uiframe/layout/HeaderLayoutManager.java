@@ -117,8 +117,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_left);
         Drawable drawable = textView.getContext().getResources().getDrawable(resource);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        textView.setCompoundDrawables(drawable, null, null, null);
+        textView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
         return textView;
     }
 
@@ -143,8 +142,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_right);
         Drawable drawable = textView.getContext().getResources().getDrawable(resource);
-        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-        textView.setCompoundDrawables(null, null, drawable, null);
+        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
         return textView;
     }
 
