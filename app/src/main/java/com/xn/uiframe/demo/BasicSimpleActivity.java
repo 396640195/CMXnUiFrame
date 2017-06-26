@@ -35,9 +35,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
     public HeaderLayoutManager addHeaderView(IContainerManager container) {
         //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container, R.layout.layout_header);
         HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
-        Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
-        drawable.setBounds(0, 0, (int) (drawable.getMinimumWidth() * 0.8), (int) (drawable.getMinimumHeight() * 0.8));
-        hlm.setHeaderLeftDrawable(drawable);
+        hlm.setHeaderLeftImage(R.mipmap.arrow_left_normal,0.8f);
         return hlm;
     }
 
@@ -202,10 +200,9 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
                 break;
             case 2:
                 setElementViewVisible(ElementView.TopView, !isElementViewVisible(ElementView.TopView));
-                if (isElementViewVisible(ElementView.TopView)) {
-                    animateX(ElementView.HeaderView, Easing.EasingAnimation.EaseOutCubic, 800);
-                    animateY(ElementView.TopView, Easing.EasingAnimation.EaseOutCubic, 5800);
-                }
+                setElementViewVisible(ElementView.HeaderView, !isElementViewVisible(ElementView.HeaderView));
+                animateXY(ElementView.HeaderView,  2000,5800);
+                animateXY(ElementView.TopView,3800,5000);
                 break;
             default:
                 SimplePullRefreshActivity.startMe(this);

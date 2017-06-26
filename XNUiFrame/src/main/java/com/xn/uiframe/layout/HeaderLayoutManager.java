@@ -114,11 +114,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
 
     @Override
     public TextView setHeaderLeftImage(int resource) {
-        View view = getContentView();
-        TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_left);
-        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
-        textView.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-        return textView;
+        return this.setHeaderLeftImage(resource,1f);
     }
 
     @Override
@@ -139,11 +135,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
 
     @Override
     public TextView setHeaderRightImage(int resource) {
-        View view = getContentView();
-        TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_right);
-        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
-        textView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
-        return textView;
+        return this.setHeaderRightImage(resource,1f);
     }
 
     @Override
@@ -206,17 +198,21 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     }
 
     @Override
-    public TextView setHeaderLeftDrawable(Drawable drawable) {
+    public TextView setHeaderLeftImage(int resource,float scaleFactor) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_left);
+        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
+        drawable.setBounds(0,0,(int)(drawable.getIntrinsicWidth()*scaleFactor),(int)(drawable.getIntrinsicHeight()*scaleFactor));
         textView.setCompoundDrawables(drawable, null, null, null);
         return textView;
     }
 
     @Override
-    public TextView setHeaderRightDrawable(Drawable drawable) {
+    public TextView setHeaderRightImage(int resource,float scaleFactor) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_right);
+        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
+        drawable.setBounds(0,0,(int)(drawable.getIntrinsicWidth()*scaleFactor),(int)(drawable.getIntrinsicHeight()*scaleFactor));
         textView.setCompoundDrawables(null, null, drawable, null);
         return textView;
     }

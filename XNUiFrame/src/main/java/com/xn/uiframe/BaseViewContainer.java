@@ -2,6 +2,7 @@ package com.xn.uiframe;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -291,17 +292,17 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public TextView setHeaderLeftDrawable(Drawable drawable) {
+    public TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor) {
         if (mHeaderLayoutManager != null) {
-            return mHeaderLayoutManager.setHeaderLeftDrawable(drawable);
+            return mHeaderLayoutManager.setHeaderLeftImage(resource,scaleFactor);
         }
         return null;
     }
 
     @Override
-    public TextView setHeaderRightDrawable(Drawable drawable) {
+    public TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor) {
         if (mHeaderLayoutManager != null) {
-            return mHeaderLayoutManager.setHeaderRightDrawable(drawable);
+            return mHeaderLayoutManager.setHeaderRightImage(resource,scaleFactor);
         }
         return null;
     }

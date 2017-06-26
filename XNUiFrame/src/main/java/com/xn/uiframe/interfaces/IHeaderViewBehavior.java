@@ -16,6 +16,7 @@ import com.xn.uiframe.layout.HeaderLayoutManager;
 public interface IHeaderViewBehavior {
     /**
      * 设置头部左边的文字
+     *
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
      */
@@ -23,6 +24,7 @@ public interface IHeaderViewBehavior {
 
     /**
      * 设置头部左边的文字
+     *
      * @param content 字符
      * @return 返回当前的TextView对象
      */
@@ -30,19 +32,24 @@ public interface IHeaderViewBehavior {
 
     /**
      * 设置头部左边的图片资源
+     *
      * @param resource 图片资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderLeftImage(@DrawableRes  int resource);
+    TextView setHeaderLeftImage(@DrawableRes int resource);
 
     /**
      * 设置头部左边的图片资源
-     * @param drawable 图片Drawable
+     *
+     * @param resource    图片Drawable
+     * @param scaleFactor 缩放因子 浮点
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderLeftDrawable(Drawable drawable);
+    TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor);
+
     /**
      * 设置头部中间的文字内容
+     *
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
      */
@@ -50,6 +57,7 @@ public interface IHeaderViewBehavior {
 
     /**
      * 设置头部中间的文字内容
+     *
      * @param content 字符
      * @return 返回当前的TextView对象
      */
@@ -57,6 +65,7 @@ public interface IHeaderViewBehavior {
 
     /**
      * 设置头部右边的文字内容
+     *
      * @param resource 字符资源ID
      * @return 返回当前的TextView对象
      */
@@ -64,6 +73,7 @@ public interface IHeaderViewBehavior {
 
     /**
      * 设置头部右边的文字内容
+     *
      * @param content 字符资
      * @return 返回当前的TextView对象
      */
@@ -71,18 +81,24 @@ public interface IHeaderViewBehavior {
 
     /**
      * 设置头部右边的图片资源
+     *
      * @param resource 图片资源ID
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderRightImage(@DrawableRes  int resource);
+    TextView setHeaderRightImage(@DrawableRes int resource);
+
     /**
      * 设置头部左边的图片资源
-     * @param drawable 图片Drawable
+     *
+     * @param resource    图片Drawable
+     * @param scaleFactor 缩放因子 浮点
      * @return 返回当前的TextView对象
      */
-    TextView setHeaderRightDrawable(Drawable drawable);
+    TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor);
+
     /**
      * 设置头部视图的点击事件
+     *
      * @param lister
      */
     void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister);
