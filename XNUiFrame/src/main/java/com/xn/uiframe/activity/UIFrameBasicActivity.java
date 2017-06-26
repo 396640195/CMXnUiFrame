@@ -2,8 +2,10 @@ package com.xn.uiframe.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -157,7 +159,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
 
     @Override
-    final public TextView setHeaderLeftText(int resource) {
+    final public TextView setHeaderLeftText(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderLeftText(resource);
@@ -175,7 +177,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
-    final public TextView setHeaderCenterText(int resource) {
+    final public TextView setHeaderCenterText(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderCenterText(resource);
@@ -184,7 +186,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
-    final public TextView setHeaderRightText(int resource) {
+    final public TextView setHeaderRightText(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderRightText(resource);
@@ -193,7 +195,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
-    final public TextView setHeaderRightImage(int resource) {
+    final public TextView setHeaderRightImage(@DrawableRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderRightImage(resource);
@@ -203,14 +205,14 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
 
     @Override
-    public void setContainerBackgroundColor(int res) {
+    public void setContainerBackgroundColor(@ColorInt int res) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setContainerBackgroundColor(res);
         }
     }
 
     @Override
-    public void setContainerBackgroundResource(int res) {
+    public void setContainerBackgroundResource(@DrawableRes int res) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setContainerBackgroundResource(res);
         }

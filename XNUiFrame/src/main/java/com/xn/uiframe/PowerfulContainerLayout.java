@@ -174,7 +174,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
     protected void onDraw(Canvas canvas) {
         if (mBackgroundColor != 0) {
             Paint p = new Paint();
-            p.setColor(Color.BLUE);
+            p.setColor(mBackgroundColor);
             canvas.drawRect(0f, 0f, this.getMeasuredWidth() * 1f, this.getMeasuredHeight() * 1f, p);
         } else if (mBackgroundResource != 0) {
             Drawable drawable = getResources().getDrawable(mBackgroundResource);
