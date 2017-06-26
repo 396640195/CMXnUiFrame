@@ -1,9 +1,11 @@
-package com.xn.uiframe.demo;
+package com.xiaoniu.uiframe.demo;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.xiaoniu.uiframe.R;
+import com.xiaoniu.uiframe.demo01.FundRecordActivity;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 
@@ -73,4 +75,8 @@ public class SimplePullRefreshActivity extends BasicSimpleActivity {
 
     }
 
+    @Override
+    public void onRightHeaderClicked() {
+        FundRecordActivity.startMe(this);
+    }
 }

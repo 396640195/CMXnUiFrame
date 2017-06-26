@@ -1,4 +1,4 @@
-package com.xn.uiframe.demo;
+package com.xiaoniu.uiframe.demo;
 
 import android.graphics.drawable.Drawable;
 import android.widget.TextView;

@@ -2,8 +2,11 @@ package com.xn.uiframe.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,7 +127,7 @@ public abstract class UIFrameBasicFragment extends Fragment implements
 
 
     @Override
-    final public TextView setHeaderLeftText(int resource) {
+    final public TextView setHeaderLeftText(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderLeftText(resource);
@@ -133,7 +136,7 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     }
 
     @Override
-    final public TextView setHeaderLeftImage(int resource) {
+    final public TextView setHeaderLeftImage(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderLeftImage(resource);
@@ -142,7 +145,7 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     }
 
     @Override
-    final public TextView setHeaderCenterText(int resource) {
+    final public TextView setHeaderCenterText(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderCenterText(resource);
@@ -151,7 +154,7 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     }
 
     @Override
-    final public TextView setHeaderRightText(int resource) {
+    final public TextView setHeaderRightText(@StringRes int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderRightText(resource);
@@ -160,7 +163,7 @@ public abstract class UIFrameBasicFragment extends Fragment implements
     }
 
     @Override
-    final public TextView setHeaderRightImage(int resource) {
+    final public TextView setHeaderRightImage(@DrawableRes  int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderRightImage(resource);
@@ -170,14 +173,14 @@ public abstract class UIFrameBasicFragment extends Fragment implements
 
 
     @Override
-    public void setContainerBackgroundColor(int res) {
+    public void setContainerBackgroundColor(@ColorRes int res) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setContainerBackgroundColor(res);
         }
     }
 
     @Override
-    public void setContainerBackgroundResource(int res) {
+    public void setContainerBackgroundResource(@DrawableRes  int res) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setContainerBackgroundResource(res);
         }
@@ -316,40 +319,48 @@ public abstract class UIFrameBasicFragment extends Fragment implements
 
     @Override
     public TextView setHeaderLeftText(String content) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderLeftText(content);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderLeftText(content);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderCenterText(String content) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderCenterText(content);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderCenterText(content);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderRightText(String content) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderRightText(content);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderRightText(content);
         }
         return null;
     }
+
     @Override
     public TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderLeftImage(resource,scaleFactor);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderLeftImage(resource, scaleFactor);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderRightImage(resource,scaleFactor);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderRightImage(resource, scaleFactor);
         }
         return null;
+    }
+
+    @Override
+    public void setHeaderLineColor(@ColorRes int color) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.setHeaderLineColor(color);
+        }
     }
 }

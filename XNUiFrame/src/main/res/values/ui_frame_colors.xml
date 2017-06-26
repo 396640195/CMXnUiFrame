@@ -24,7 +24,7 @@
 
 <resources>
     <color name="ui_frame_ripple_color">#FFFFFF</color>
-    <drawable name="ui_frame_dialog_translucency">#50FFFFFF</drawable>
+    <drawable name="ui_frame_dialog_translucency">#7f000000</drawable>
     <color name="ui_frame_light_blue">#323232</color>
     <color name="ui_frame_white">#ffffff</color>
 </resources>

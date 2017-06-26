@@ -2,8 +2,10 @@ package com.xn.uiframe;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -23,11 +25,11 @@ import com.xn.uiframe.layout.TopLayoutManager;
 import com.xn.uiframe.refreshlayout.OnRefreshListener;
 
 /**
- *  UIFrame视图容器类，封装了UI基本操作，
+ * UIFrame视图容器类，封装了UI基本操作，
  * Created by 陈真 on 2017/6/13.
  */
 
-public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManager {
+public class BaseViewContainer implements IBaseViewContainer, ICompanionViewManager {
     private PowerfulContainerLayout mContainer;
     private IBasicViewAdapter mBasicViewAdapter;
     private Activity mContext;
@@ -108,21 +110,21 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public void setContainerBackgroundColor(int res) {
+    public void setContainerBackgroundColor(@ColorRes int res) {
         if (mContainer != null) {
             mContainer.setBackgroundColor(res);
         }
     }
 
     @Override
-    public void setContainerBackgroundResource(int res) {
+    public void setContainerBackgroundResource(@DrawableRes int res) {
         if (mContainer != null) {
             mContainer.setBackgroundResource(res);
         }
     }
 
     @Override
-    public TextView setHeaderLeftText(int resource) {
+    public TextView setHeaderLeftText(@StringRes int resource) {
         if (mHeaderLayoutManager != null) {
             return this.mHeaderLayoutManager.setHeaderLeftText(resource);
         }
@@ -130,7 +132,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public TextView setHeaderLeftImage(int resource) {
+    public TextView setHeaderLeftImage(@DrawableRes int resource) {
         if (mHeaderLayoutManager != null) {
             return mHeaderLayoutManager.setHeaderLeftImage(resource);
         }
@@ -138,7 +140,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public TextView setHeaderCenterText(int resource) {
+    public TextView setHeaderCenterText(@StringRes int resource) {
         if (mHeaderLayoutManager != null) {
             return mHeaderLayoutManager.setHeaderCenterText(resource);
         }
@@ -146,7 +148,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public TextView setHeaderRightText(int resource) {
+    public TextView setHeaderRightText(@StringRes int resource) {
         if (mHeaderLayoutManager != null) {
             return mHeaderLayoutManager.setHeaderRightText(resource);
         }
@@ -154,7 +156,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     }
 
     @Override
-    public TextView setHeaderRightImage(int resource) {
+    public TextView setHeaderRightImage(@DrawableRes int resource) {
         if (mHeaderLayoutManager != null) {
             return mHeaderLayoutManager.setHeaderRightImage(resource);
         }
@@ -163,7 +165,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
 
     @Override
     public void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister) {
-        if(mHeaderLayoutManager != null) {
+        if (mHeaderLayoutManager != null) {
             this.mHeaderLayoutManager.setOnHeaderClickLister(lister);
         }
     }
@@ -176,7 +178,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
         this.mBottomLayoutManager = mBasicViewAdapter.addBottomView(mContainer);
 
         this.mCenterLayoutManager = mBasicViewAdapter.addCenterView(mContainer);
-        if(mCenterLayoutManager.getCenterBuildType() == CenterLayoutManager.CENTER_TYPE_PULL_LIST_VIEW) {
+        if (mCenterLayoutManager.getCenterBuildType() == CenterLayoutManager.CENTER_TYPE_PULL_LIST_VIEW) {
             this.mBasicViewAdapter.addCompanionScrollableHeader(this.mCenterLayoutManager);
             this.mBasicViewAdapter.addCompanionScrollableFooter(this.mCenterLayoutManager);
             this.mBasicViewAdapter.onCompanionViewAddFinished(this.mCenterLayoutManager);
@@ -198,19 +200,19 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
 
     private ILayoutManager elementCategoryTypeToLayoutManager(ElementView category) {
 
-        if (category  == ElementView.HeaderView ) {
+        if (category == ElementView.HeaderView) {
             return mHeaderLayoutManager;
-        } else if (category  == ElementView.TopView ) {
+        } else if (category == ElementView.TopView) {
             return mTopLayoutManager;
-        } else if (category  == ElementView.CenterView ){
+        } else if (category == ElementView.CenterView) {
             return mCenterLayoutManager;
-        } else if(category == ElementView.CenterMaskView){
+        } else if (category == ElementView.CenterMaskView) {
             return mCenterMaskLayoutManager;
-        }else if (category == ElementView.BottomView ) {
+        } else if (category == ElementView.BottomView) {
             return mBottomLayoutManager;
-        } else if (category == ElementView.DialogView ) {
+        } else if (category == ElementView.DialogView) {
             return mDialogLayoutManager;
-        } else if (category == ElementView.FullScreenView ) {
+        } else if (category == ElementView.FullScreenView) {
             return mFullScreenLayoutManager;
         }
         return null;
@@ -270,7 +272,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     @Override
     public TextView setHeaderLeftText(String content) {
         if (mHeaderLayoutManager != null) {
-           return mHeaderLayoutManager.setHeaderLeftText(content);
+            return mHeaderLayoutManager.setHeaderLeftText(content);
         }
         return null;
     }
@@ -294,7 +296,7 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     @Override
     public TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor) {
         if (mHeaderLayoutManager != null) {
-            return mHeaderLayoutManager.setHeaderLeftImage(resource,scaleFactor);
+            return mHeaderLayoutManager.setHeaderLeftImage(resource, scaleFactor);
         }
         return null;
     }
@@ -302,8 +304,15 @@ public class BaseViewContainer implements IBaseViewContainer,ICompanionViewManag
     @Override
     public TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor) {
         if (mHeaderLayoutManager != null) {
-            return mHeaderLayoutManager.setHeaderRightImage(resource,scaleFactor);
+            return mHeaderLayoutManager.setHeaderRightImage(resource, scaleFactor);
         }
         return null;
+    }
+
+    @Override
+    public void setHeaderLineColor(@ColorRes int color) {
+        if (mHeaderLayoutManager != null) {
+            mHeaderLayoutManager.setHeaderLineColor(color);
+        }
     }
 }

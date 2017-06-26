@@ -1,4 +1,4 @@
-package com.xn.uiframe.demo;
+package com.xiaoniu.uiframe.demo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.xiaoniu.uiframe.R;
+import com.xn.uiframe.ElementView;
 import com.xn.uiframe.activity.UIFrameBasicFragment;
+import com.xn.uiframe.animation.Easing;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.layout.CenterLayoutManager;
 import com.xn.uiframe.utils.EventBusProxy;
@@ -22,21 +25,14 @@ import java.util.List;
  * Created by xn068074 on 2017/6/19.
  */
 
-public class ListFragment extends UIFrameBasicFragment {
-    //伴随视图必需在有PullRefresh功能下才有效;
-    @Override
-    public void addCompanionScrollableHeader(CenterLayoutManager container) {
-        container.addCompanionScrollableHeader(R.layout.layout_companion_header);
-    }
-
-    @Override
-    public void addCompanionScrollableFooter(CenterLayoutManager container) {
-        container.addCompanionScrollableFooter(R.layout.layout_companion_footer);
-    }
+public class SimpleFragment extends UIFrameBasicFragment {
 
     @Override
     public CenterLayoutManager addCenterView(IContainerManager container) {
-        CenterLayoutManager clm = CenterLayoutManager.buildPullRefreshLayoutWithListView(container);
+        CenterLayoutManager clm = CenterLayoutManager.buildGeneralLayoutManager(container,R.layout.layout_web_view);
+        WebView webView =(WebView)clm.getContentView().findViewById(R.id.webview);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("file:///android_asset/axn_project_detail.html");
         return clm;
     }
 
@@ -51,18 +47,6 @@ public class ListFragment extends UIFrameBasicFragment {
             textView.setText(args);
         }
         return view;
-    }
-
-    @Override
-    public void onCompanionViewAddFinished(CenterLayoutManager container) {
-        ListView listview = container.getListView();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            list.add("测试的" + i);
-        }
-        listview.setAdapter(new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_list_item_1, list));
-
-
     }
 
     @Override

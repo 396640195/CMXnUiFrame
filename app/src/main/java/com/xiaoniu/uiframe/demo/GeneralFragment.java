@@ -1,4 +1,4 @@
-package com.xn.uiframe.demo;
+package com.xiaoniu.uiframe.demo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.xiaoniu.uiframe.R;
 import com.xn.uiframe.activity.UIFrameBasicFragment;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.layout.CenterLayoutManager;

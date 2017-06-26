@@ -112,10 +112,8 @@ public class BasicSimpleActivity extends UIFrameBasicActivity {
         //使用默认ui_frame_common_header_layout的布局
         HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
         
-        //设置图标的大小间距
-        Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
-        drawable.setBounds(0, 0, (int) (drawable.getMinimumWidth() * 0.8), (int) (drawable.getMinimumHeight() * 0.8));
-        hlm.setHeaderLeftDrawable(drawable);
+        //设置图标的大小间距,0.8f为图标缩放比例.
+        hlm.setHeaderLeftImage(R.mipmap.arrow_left_normal,0.8f);
         
         //所有布局管理都可以拿到View视图对象
         //View view = hlm.getContentView();
@@ -126,6 +124,8 @@ public class BasicSimpleActivity extends UIFrameBasicActivity {
         //这里只是举例说明,只有在DialogLayoutManager,FullScreenLayoutManager才可以这样添加多个布局;
         // View view = hlm.addLayout(R.layout.layout_header)
         
+        //设置头部分隔线颜色
+        hlm.setHeaderLineColor(R.color.colorAccent);
         return hlm;
     }
 ```
@@ -365,7 +365,7 @@ public interface IHeaderViewBehavior {
 
 #### **3.6 添加一个中间视图**
 
-> **使用场景: 每人界面离不开内容展示,所以这个区域几乎是少不了. CenterLayoutManager提供了两个静态方法来构造中间视图**
+> **使用场景: 每个界面离不开内容展示,所以这个区域几乎是少不了. CenterLayoutManager提供了两个静态方法来构造中间视图**
 - buildGeneralLayoutManager(container,layout) 这个是指定一个布局,你可以自由撑控
 - buildPullRefreshLayoutWithListView(container) 这个是框架定义好了一个带有pullrefresh和listView功能的中间视图
 

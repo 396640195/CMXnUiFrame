@@ -1,7 +1,11 @@
 package com.xn.uiframe.layout;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,6 +14,7 @@ import com.xn.uiframe.R;
 import com.xn.uiframe.exception.UIFrameLayoutAlreadyExistException;
 import com.xn.uiframe.interfaces.IContainerManager;
 import com.xn.uiframe.interfaces.IHeaderViewBehavior;
+import com.xn.uiframe.widget.HeaderRelativeLayout;
 
 /**
  * <p>
@@ -26,19 +31,19 @@ import com.xn.uiframe.interfaces.IHeaderViewBehavior;
  * <p>使用方法:</p>
  * <code>
  *
-  @Override public HeaderLayoutManager addHeaderView(IContainerManager container)
-  {
-       //指定一个布局文件构造一个头部视图
-       //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container, R.layout.layout_header);
-       //构造一个默认的头部视图
-       HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
-       //设置头部视图的图标,其它类似;
-       Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
-       drawable.setBounds(0, 0, (int) (drawable.getMinimumWidth() * 0.8), (int) (drawable.getMinimumHeight() * 0.8));
-       hlm.setHeaderLeftDrawable(drawable);
-
-       return hlm;
-  }
+ * @Override public HeaderLayoutManager addHeaderView(IContainerManager container)
+ * {
+ * //指定一个布局文件构造一个头部视图
+ * //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container, R.layout.layout_header);
+ * //构造一个默认的头部视图
+ * HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
+ * //设置头部视图的图标,其它类似;
+ * Drawable drawable = getResources().getDrawable(R.mipmap.arrow_left_normal);
+ * drawable.setBounds(0, 0, (int) (drawable.getMinimumWidth() * 0.8), (int) (drawable.getMinimumHeight() * 0.8));
+ * hlm.setHeaderLeftDrawable(drawable);
+ * <p>
+ * return hlm;
+ * }
  * </code>
  * Created by 陈真 on 2017/6/12.
  * Copyright © 2015 深圳市小牛在线互联网信息咨询有限公司 股东公司：深圳市小牛互联网金融服务有限公司 版权所有 备案号：粤ICP备14079927号  ICP证粤B2-20160194
@@ -105,7 +110,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
 
 
     @Override
-    public TextView setHeaderLeftText(int resource) {
+    public TextView setHeaderLeftText(@StringRes int resource) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_left);
         textView.setText(resource);
@@ -113,12 +118,12 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     }
 
     @Override
-    public TextView setHeaderLeftImage(int resource) {
-        return this.setHeaderLeftImage(resource,1f);
+    public TextView setHeaderLeftImage(@DrawableRes int resource) {
+        return this.setHeaderLeftImage(resource, 1f);
     }
 
     @Override
-    public TextView setHeaderCenterText(int resource) {
+    public TextView setHeaderCenterText(@StringRes int resource) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_center);
         textView.setText(resource);
@@ -126,7 +131,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     }
 
     @Override
-    public TextView setHeaderRightText(int resource) {
+    public TextView setHeaderRightText(@StringRes int resource) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_right);
         textView.setText(resource);
@@ -134,8 +139,8 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     }
 
     @Override
-    public TextView setHeaderRightImage(int resource) {
-        return this.setHeaderRightImage(resource,1f);
+    public TextView setHeaderRightImage(@DrawableRes int resource) {
+        return this.setHeaderRightImage(resource, 1f);
     }
 
     @Override
@@ -198,23 +203,28 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     }
 
     @Override
-    public TextView setHeaderLeftImage(int resource,float scaleFactor) {
+    public TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_left);
         Drawable drawable = textView.getContext().getResources().getDrawable(resource);
-        drawable.setBounds(0,0,(int)(drawable.getIntrinsicWidth()*scaleFactor),(int)(drawable.getIntrinsicHeight()*scaleFactor));
+        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * scaleFactor), (int) (drawable.getIntrinsicHeight() * scaleFactor));
         textView.setCompoundDrawables(drawable, null, null, null);
         return textView;
     }
 
     @Override
-    public TextView setHeaderRightImage(int resource,float scaleFactor) {
+    public TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_right);
         Drawable drawable = textView.getContext().getResources().getDrawable(resource);
-        drawable.setBounds(0,0,(int)(drawable.getIntrinsicWidth()*scaleFactor),(int)(drawable.getIntrinsicHeight()*scaleFactor));
+        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * scaleFactor), (int) (drawable.getIntrinsicHeight() * scaleFactor));
         textView.setCompoundDrawables(null, null, drawable, null);
         return textView;
     }
 
+    @Override
+    public void setHeaderLineColor(@ColorRes int color) {
+        HeaderRelativeLayout layout = (HeaderRelativeLayout) getContentView();
+        layout.setColor(color);
+    }
 }

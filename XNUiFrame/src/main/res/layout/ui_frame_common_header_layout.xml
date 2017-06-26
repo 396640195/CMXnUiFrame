@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.xn.uiframe.widget.HeaderRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:xiaoniu="http://schemas.android.com/apk/res-auto"
     style="@style/ui_frame_header_container_style"
+    xiaoniu:split_line_height="0.5dp"
+    xiaoniu:split_line_color="#000000"
     >
     <TextView
         android:id="@+id/ui_frame_header_left"
         style="@style/ui_frame_header_left_text_style"
-        android:text="返回"
         android:layout_alignParentLeft="true"
         android:gravity="center" />
 
@@ -20,6 +22,5 @@
         android:id="@+id/ui_frame_header_right"
         style="@style/ui_frame_header_right_text_style"
         android:layout_alignParentRight="true"
-        android:text="More"
         android:gravity="center" />
-</RelativeLayout>
+</com.xn.uiframe.widget.HeaderRelativeLayout>

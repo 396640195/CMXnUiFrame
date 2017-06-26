@@ -1,12 +1,11 @@
-package com.xn.uiframe.demo;
+package com.xiaoniu.uiframe.demo;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.xiaoniu.uiframe.R;
 import com.xn.uiframe.ElementView;
 import com.xn.uiframe.activity.UIFrameBasicActivity;
 import com.xn.uiframe.animation.Easing;
@@ -36,6 +35,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity implements View.On
         //HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container, R.layout.layout_header);
         HeaderLayoutManager hlm = HeaderLayoutManager.buildLayoutManager(container);
         hlm.setHeaderLeftImage(R.mipmap.arrow_left_normal,0.8f);
+        hlm.setHeaderRightText("更多");
         return hlm;
     }
 

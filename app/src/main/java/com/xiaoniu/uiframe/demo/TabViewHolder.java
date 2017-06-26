@@ -1,10 +1,12 @@
-package com.xn.uiframe.demo;
+package com.xiaoniu.uiframe.demo;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.xiaoniu.uiframe.R;
 
 import java.util.ArrayList;
 import java.util.List;

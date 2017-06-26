@@ -3,6 +3,7 @@ package com.xn.uiframe.activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -43,7 +44,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
         IBasicViewAdapter,
         IViewCommonBehavior,
         OnRefreshListener,
-        HeaderLayoutManager.OnHeaderViewClickListener{
+        HeaderLayoutManager.OnHeaderViewClickListener {
 
     public FragmentManager mFragmentManager;
     protected IBaseViewContainer mBaseViewContainer;
@@ -157,7 +158,6 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
 
-
     @Override
     final public TextView setHeaderLeftText(@StringRes int resource) {
         TextView textView = null;
@@ -168,7 +168,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     }
 
     @Override
-    final public TextView setHeaderLeftImage(int resource) {
+    final public TextView setHeaderLeftImage(@DrawableRes  int resource) {
         TextView textView = null;
         if (mBaseViewContainer != null) {
             textView = mBaseViewContainer.setHeaderLeftImage(resource);
@@ -205,7 +205,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
 
     @Override
-    public void setContainerBackgroundColor(@ColorInt int res) {
+    public void setContainerBackgroundColor(@ColorRes int res) {
         if (mBaseViewContainer != null) {
             mBaseViewContainer.setContainerBackgroundColor(res);
         }
@@ -337,7 +337,7 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
     @Override
     public void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister) {
-        if(mBaseViewContainer != null){
+        if (mBaseViewContainer != null) {
             mBaseViewContainer.setOnHeaderClickLister(lister);
         }
     }
@@ -345,21 +345,23 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
     /**
      * 切换Fragment
      */
-    public  void changeUIFragment(UIFrameBasicFragment f){
+    public void changeUIFragment(UIFrameBasicFragment f) {
         changeFragment(f, false);
     }
 
     /**
      * 初始化Fragment
+     *
      * @param f
      */
-    public  void addUIFrameFragment(UIFrameBasicFragment f){
+    public void addUIFrameFragment(UIFrameBasicFragment f) {
         changeFragment(f, true);
     }
-    private  void changeFragment(UIFrameBasicFragment f, boolean init){
+
+    private void changeFragment(UIFrameBasicFragment f, boolean init) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.replace(R.id.fragment_container, f);
-        if(!init)
+        if (!init)
             ft.addToBackStack(null);
         ft.commit();
     }
@@ -376,41 +378,48 @@ public abstract class UIFrameBasicActivity extends FragmentActivity implements
 
     @Override
     public TextView setHeaderLeftText(String content) {
-        if(mBaseViewContainer != null){
-          return  mBaseViewContainer.setHeaderLeftText(content);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderLeftText(content);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderCenterText(String content) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderCenterText(content);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderCenterText(content);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderRightText(String content) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderRightText(content);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderRightText(content);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderLeftImage(resource,scaleFactor);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderLeftImage(resource, scaleFactor);
         }
         return null;
     }
 
     @Override
     public TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor) {
-        if(mBaseViewContainer != null){
-            return  mBaseViewContainer.setHeaderRightImage(resource,scaleFactor);
+        if (mBaseViewContainer != null) {
+            return mBaseViewContainer.setHeaderRightImage(resource, scaleFactor);
         }
         return null;
+    }
+
+    @Override
+    public void setHeaderLineColor(@ColorRes int color) {
+        if (mBaseViewContainer != null) {
+            mBaseViewContainer.setHeaderLineColor(color);
+        }
     }
 }

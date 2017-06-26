@@ -2,6 +2,7 @@ package com.xn.uiframe.interfaces;
 
 
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 
 import com.xn.uiframe.ElementView;
@@ -41,7 +42,7 @@ public interface IViewCommonBehavior extends
      *
      * @param res 颜色资源ID
      **/
-    void setContainerBackgroundColor(@ColorInt int res);
+    void setContainerBackgroundColor(@ColorRes int res);
 
     /**
      * 设置容器背景图片

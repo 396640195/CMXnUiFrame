@@ -7,7 +7,7 @@
         android:id="@+id/ui_frame_center_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff000"
+        android:background="#ffffff"
         android:focusable="true" />
 
 </com.xn.uiframe.widget.UIFrameRefreshViewLayout>

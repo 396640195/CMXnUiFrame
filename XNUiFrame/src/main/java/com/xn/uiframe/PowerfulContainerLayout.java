@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
+import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -38,8 +39,8 @@ import java.util.List;
 public class PowerfulContainerLayout extends ViewGroup implements IContainerManager<ILayoutManager<ILayoutManager>> {
 
     private List<ILayoutManager<ILayoutManager>> mLayoutManagers;
-    private int mBackgroundColor = 0;
-    private int mBackgroundResource = 0;
+    private @ColorRes  int mBackgroundColor = 0;
+    private @DrawableRes int mBackgroundResource = 0;
 
     public PowerfulContainerLayout(Context context) {
         super(context);
@@ -159,14 +160,14 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
     }
 
     @Override
-    public void setBackgroundColor(@ColorInt int color) {
+    public void setBackgroundColor(@ColorRes int color) {
         this.mBackgroundColor = color;
         this.invalidate();
     }
 
     @Override
-    public void setBackgroundResource(@DrawableRes int resid) {
-        this.mBackgroundResource = resid;
+    public void setBackgroundResource(@DrawableRes int resource) {
+        this.mBackgroundResource = resource;
         this.invalidate();
     }
 
@@ -174,7 +175,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
     protected void onDraw(Canvas canvas) {
         if (mBackgroundColor != 0) {
             Paint p = new Paint();
-            p.setColor(mBackgroundColor);
+            p.setColor(getResources().getColor(mBackgroundColor));
             canvas.drawRect(0f, 0f, this.getMeasuredWidth() * 1f, this.getMeasuredHeight() * 1f, p);
         } else if (mBackgroundResource != 0) {
             Drawable drawable = getResources().getDrawable(mBackgroundResource);
