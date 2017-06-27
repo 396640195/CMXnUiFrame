@@ -89,7 +89,7 @@ public class BasicSimpleActivity extends UIFrameBasicActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-         this.setContainerBackgroundColor(getResources().getColor(R.color.ui_frame_ripple_color));
+         this.setContainerBackgroundColor(R.color.ui_frame_ripple_color);
          //也可以调用这个接口
          //this.setContainerBackgroundResource(R.drawable.icon_background);
          
