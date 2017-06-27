@@ -743,7 +743,49 @@ public interface IAnimateBehavior {
 
 ```
 
-### 五. EventBusProxy工具类定义
+### 五. 自定义下拉刷新和加载更多
+
+> 框架中的下拉刷新有可能与你项目的风格不一样,需要自定义修改那么按下面的步骤.
+
+- 1.自定义容器类,如: UIFrameRefreshViewLayoutEx.java
+- 2.自定义HeaderView,FooterView,请参照uiframe中的 UIFrameRefreshHeader,和FooterView.
+- 3. 修改 ui_frame_center_listview_layout.xml中的容器类为你自定义的容器类 UIFrameRefreshViewLayoutEx.java;  
+     如果不替换该xml，则CenterLayoutManager.buildPullRefreshLayoutWithListView(...)接口不能使用
+
+```java
+
+//按照下面的写法,重新实现一个下拉刷新类
+public class UIFrameRefreshViewLayout extends RefreshLayout {
+
+    public UIFrameRefreshViewLayout(Context context) {
+        super(context);
+    }
+
+    public UIFrameRefreshViewLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        init();
+    }
+
+    public void init() {
+        //HeaderView,FooterView用你自已实现的即可;
+        UIFrameRefreshHeader header = new UIFrameRefreshHeader(getContext());
+        FooterView footer = new FooterView(getContext());
+
+        addHeader(header);
+        addFooter(footer);
+        setOnHeaderListener(header);
+        setOnFooterListener(footer);
+    }
+}
+
+```
+
+### 六. EventBusProxy工具类定义
 
 ```java
 
