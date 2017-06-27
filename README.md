@@ -747,9 +747,11 @@ public interface IAnimateBehavior {
 
 > 框架中的下拉刷新有可能与你项目的风格不一样,需要自定义修改那么按下面的步骤.
 
+**在你的工程目录进行如下步骤,不需要去修改框架的源代码和文件:**
+
 - 1.自定义容器类,如: UIFrameRefreshViewLayoutEx.java
 - 2.自定义HeaderView,FooterView,请参照uiframe中的 UIFrameRefreshHeader,和FooterView.
-- 3. 修改 ui_frame_center_listview_layout.xml中的容器类为你自定义的容器类 UIFrameRefreshViewLayoutEx.java;  
+- 3.修改 ui_frame_center_listview_layout.xml中的容器类为你自定义的容器类 UIFrameRefreshViewLayoutEx.java;  
      如果不替换该xml，则CenterLayoutManager.buildPullRefreshLayoutWithListView(...)接口不能使用
 
 ```java
