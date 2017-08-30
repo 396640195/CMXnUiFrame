@@ -18,13 +18,13 @@ public interface IPullRefreshBehavior {
 
     /**
      * 是否开启下拉刷新功能
-     * @param enable
+     * @param enable true:开启  false:关闭
      */
     void enableRefresh(boolean enable);
 
     /**
      * 是否开启上拉加载更多功能;
-     * @param enable
+     * @param enable true:开启  false:关闭
      */
     void enableLoadMore(boolean enable);
 }

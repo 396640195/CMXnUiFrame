@@ -52,44 +52,51 @@ public interface ILayoutManager<T> extends Comparable<T>, Serializable {
     /**
      * 获取当前布局测量的高度.
      *
-     * @return
+     * @return 整型
      */
     int getMeasuredHeight();
 
     /**
      * 获取当前布局测量的宽度.
      *
-     * @return
+     * @return 整型
      */
     int getMeasuredWidth();
 
     /**
      * 获得当前布局的参数信息
      *
-     * @return
+     * @return  ViewGroup.MarginLayoutParams
      */
     ViewGroup.MarginLayoutParams getMarginLayoutParams();
 
     /**
      * 设置当前层级是否可以点击
-     * @param clickable
+     * @param clickable true or false
      */
     void setClickable(boolean clickable);
     /**
      * 返回当前布局所在的层级
      *
-     * @return
+     * @return {@link com.xn.uiframe.layout.AbstractLayoutManager.Layer }
      */
     int getLayer();
 
     /**
      * 设置当前布局是否可见.
      *
-     * @param visible
-     * @see {@link android.view.View#VISIBLE },{@link android.view.View#GONE },{@link android.view.View#INVISIBLE }
+     * @param visible true or false
+     * @see android.view.View#VISIBLE
+     * @see android.view.View#GONE
      */
     void setVisibility(int visible);
 
+    /**
+     * 获得当前层级是否可见状态
+     * @return GONE or VISIBLE
+     * @see android.view.View#VISIBLE
+     * @see android.view.View#GONE
+     */
     int getVisibility();
 
     /**
@@ -128,7 +135,7 @@ public interface ILayoutManager<T> extends Comparable<T>, Serializable {
      * 针对该视图进行Y轴动画
      *
      * @param easing   动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param duration
+     * @param duration 时间 ms
      */
     void animateY(Easing.EasingAnimation easing, long duration);
 
@@ -136,7 +143,7 @@ public interface ILayoutManager<T> extends Comparable<T>, Serializable {
      * 针对该视图进行X轴动画
      *
      * @param easing   动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param duration
+     * @param duration 时间 ms
      */
     void animateX(Easing.EasingAnimation easing, long duration);
 

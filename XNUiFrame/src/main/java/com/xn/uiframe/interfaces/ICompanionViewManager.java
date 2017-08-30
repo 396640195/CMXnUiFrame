@@ -12,14 +12,14 @@ import android.view.View;
 public interface ICompanionViewManager {
     /**
      * 添加一个头部伴随视图布局，该视图可以跟随ListView一起上下滑动.
-     * @param layout
-     * @return
+     * @param layout 视图布局资源id
+     * @return  layout的视图对象
      */
     View addCompanionScrollableHeader(@LayoutRes int layout);
     /**
      * 添加一个底部伴随视图布局，该视图可以跟随ListView一起上下滑动.
-     * @param layout
-     * @return
+     * @param layout 视图布局资源id
+     * @return layout的视图对象
      */
     View addCompanionScrollableFooter(@LayoutRes int layout);
 }

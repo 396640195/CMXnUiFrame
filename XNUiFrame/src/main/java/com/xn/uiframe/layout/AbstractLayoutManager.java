@@ -63,30 +63,30 @@ public abstract class AbstractLayoutManager implements ILayoutManager<ILayoutMan
         /**
          * 定义Header布局层级，优先绘制Header
          **/
-        public static final int LAYER_BASIC_HEADER_PART = 0x10001;
+        public static final int LAYER_PART_OF_BASIC_HEADER = 0x10001;
 
         /**
          * 定义Top布局层级，绘制顺序在Header之后;
          **/
-        public static final int LAYER_BASIC_TOP_PART = 0x10002;
+        public static final int LAYER_PART_OF_BASIC_TOP = 0x10002;
         /**
          * 定义Bottom布局层级，绘制顺序在Center之后
          **/
-        public static final int LAYER_BASIC_BOTTOM_PART = 0x10003;
+        public static final int LAYER_PART_OF_BASIC_BOTTOM = 0x10003;
 
         /**
          * Center 布局的绘制依懒于Header,Top,Bottom的宽高占比数据，
          * 所以Center的层级定义要比 Header,Top,Bottom高;
          */
-        public static final int LAYER_BASIC_CENTER_PART = 0x10004;
+        public static final int LAYER_PART_OF_BASIC_CENTER = 0x10004;
         /**
          * 覆盖在CenterLayout之上的层，用来显示无数据，加载中或异常信息的一个局部视图层级;  与全屏{@link Layer#LAYER_FULL_SCREEN_EXTRA}对应
          */
-        public static final int LAYER_BASIC_CENTER_MASK_PART = 0x10005;
+        public static final int LAYER_PART_OF_BASIC_CENTER_MASK = 0x10005;
 
         /**
          * 该层级用来备用特殊情况，如果前两层不足以满足需求，可以根据需求使用这一层级;
-         * 它处于{@link AbstractLayoutManager.Layer#LAYER_BASIC_CENTER_PART}层级之上.
+         * 它处于{@link AbstractLayoutManager.Layer#LAYER_PART_OF_BASIC_CENTER}层级之上.
          **/
         public static final int LAYER_FULL_SCREEN_EXTRA = 0x10010;
 

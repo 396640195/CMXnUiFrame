@@ -1,7 +1,7 @@
 package com.xn.uiframe;
 
 /**
- * Created by xn068074 on 2017/6/15.
+ * Created by 陈真 on 2017/6/15.
  */
 
 public enum ElementView {

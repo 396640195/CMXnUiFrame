@@ -43,7 +43,7 @@ import java.util.List;
 public class TopLayoutManager extends AbstractLayoutManager {
     public TopLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
-        this.mLayer = Layer.LAYER_BASIC_TOP_PART;
+        this.mLayer = Layer.LAYER_PART_OF_BASIC_TOP;
     }
 
     @Override
@@ -70,6 +70,7 @@ public class TopLayoutManager extends AbstractLayoutManager {
                 ViewGroup.MarginLayoutParams hLayoutParams = headerLayoutManager.getMarginLayoutParams();
                 headerHeight = hLayoutParams.topMargin + hLayoutParams.bottomMargin + headerLayoutManager.getMeasuredHeight();
             }
+
             /**获得当前布局的Margin参数**/
             ViewGroup.MarginLayoutParams marginLayoutParams = getMarginLayoutParams();
             int leftMargin = marginLayoutParams.leftMargin;

@@ -88,7 +88,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
 
     public CenterLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
-        this.mLayer = Layer.LAYER_BASIC_CENTER_PART;
+        this.mLayer = Layer.LAYER_PART_OF_BASIC_CENTER;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class CenterLayoutManager extends AbstractLayoutManager implements
             int upTopMargin = 0;
             List<ILayoutManager<ILayoutManager>> managers = mContainerManager.layoutManagers();
             for (ILayoutManager layoutManager : managers) {
-                if (layoutManager.getLayer() <= Layer.LAYER_BASIC_TOP_PART && layoutManager.getVisibility() != View.GONE) {
+                if (layoutManager.getLayer() <= Layer.LAYER_PART_OF_BASIC_TOP && layoutManager.getVisibility() != View.GONE) {
                     ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
                     upTopMargin += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin + layoutManager.getMeasuredHeight());
                 }

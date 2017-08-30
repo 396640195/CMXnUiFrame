@@ -55,7 +55,7 @@ public class CenterMaskLayoutManager extends AbstractLayoutManager{
 
     public CenterMaskLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
-        this.mLayer = Layer.LAYER_BASIC_CENTER_MASK_PART;
+        this.mLayer = Layer.LAYER_PART_OF_BASIC_CENTER_MASK;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class CenterMaskLayoutManager extends AbstractLayoutManager{
             int upTopMargin = 0;
             List<ILayoutManager<ILayoutManager>> managers = mContainerManager.layoutManagers();
             for (ILayoutManager layoutManager : managers) {
-                if (layoutManager.getLayer() <= Layer.LAYER_BASIC_TOP_PART && layoutManager.getVisibility() != View.GONE) {
+                if (layoutManager.getLayer() <= Layer.LAYER_PART_OF_BASIC_TOP && layoutManager.getVisibility() != View.GONE) {
                     ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
                     upTopMargin += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin + layoutManager.getMeasuredHeight());
                 }
@@ -99,7 +99,7 @@ public class CenterMaskLayoutManager extends AbstractLayoutManager{
             int basicLayoutHeights = 0;
             List<ILayoutManager<ILayoutManager>> layoutManagers = mContainerManager.layoutManagers();
             for (ILayoutManager<ILayoutManager> layoutManager : layoutManagers) {
-                if (layoutManager.getLayer() < Layer.LAYER_BASIC_CENTER_PART && layoutManager.getVisibility() != View.GONE) {
+                if (layoutManager.getLayer() < Layer.LAYER_PART_OF_BASIC_CENTER && layoutManager.getVisibility() != View.GONE) {
                     basicLayoutHeights += layoutManager.getMeasuredHeight();
                     ViewGroup.MarginLayoutParams marginLayoutParams = layoutManager.getMarginLayoutParams();
                     basicLayoutHeights += (marginLayoutParams.topMargin + marginLayoutParams.bottomMargin);

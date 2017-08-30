@@ -1,6 +1,5 @@
 package com.xn.uiframe.interfaces;
 
-import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
@@ -100,13 +99,13 @@ public interface IHeaderViewBehavior {
     /**
      * 设置头部视图的点击事件
      *
-     * @param lister
+     * @param lister 头部视图点击侦听回调接口
      */
     void setOnHeaderClickLister(HeaderLayoutManager.OnHeaderViewClickListener lister);
 
     /**
      * 设置头部分隔线的颜色
-     * @param color
+     * @param color 头部分隔线的颜色
      */
     void setHeaderLineColor(@ColorRes int color);
 }

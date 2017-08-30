@@ -13,7 +13,7 @@ public interface IAnimateBehavior {
      * 针对该视图进行Y轴动画
      *
      * @param elementCategory 界面视图元素类型
-     * @param duration
+     * @param duration 动画时间 ms
      */
     void animateY(ElementView elementCategory, long duration);
 
@@ -21,7 +21,7 @@ public interface IAnimateBehavior {
      * 针对该视图进行X轴动画
      *
      * @param elementCategory 界面视图元素类型
-     * @param duration
+     * @param duration 动画时间 ms
      */
     void animateX(ElementView elementCategory, long duration);
 
@@ -39,7 +39,7 @@ public interface IAnimateBehavior {
      *
      * @param elementCategory 界面视图元素类型
      * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param duration
+     * @param duration 动画时间 ms
      */
     void animateY(ElementView elementCategory, Easing.EasingAnimation easing, long duration);
 
@@ -48,7 +48,7 @@ public interface IAnimateBehavior {
      *
      * @param elementCategory 界面视图元素类型
      * @param easing          动画效果类型 参见{@link com.xn.uiframe.animation.Easing.EasingAnimation}
-     * @param duration
+     * @param duration 动画时间 ms
      */
     void animateX(ElementView elementCategory, Easing.EasingAnimation easing, long duration);
 

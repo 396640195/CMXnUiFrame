@@ -56,7 +56,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
 
     public HeaderLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
-        this.mLayer = Layer.LAYER_BASIC_HEADER_PART;
+        this.mLayer = Layer.LAYER_PART_OF_BASIC_HEADER;
     }
 
     @Override

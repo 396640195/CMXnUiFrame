@@ -40,7 +40,7 @@ import com.xn.uiframe.interfaces.IContainerManager;
 public class BottomLayoutManager extends AbstractLayoutManager {
     public BottomLayoutManager(IContainerManager mContainerManager) {
         super(mContainerManager);
-        this.mLayer = Layer.LAYER_BASIC_BOTTOM_PART;
+        this.mLayer = Layer.LAYER_PART_OF_BASIC_BOTTOM;
     }
 
     @Override

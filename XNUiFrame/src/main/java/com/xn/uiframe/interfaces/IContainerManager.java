@@ -1,6 +1,5 @@
 package com.xn.uiframe.interfaces;
 
-import android.content.Context;
 import android.view.View;
 
 import java.util.List;

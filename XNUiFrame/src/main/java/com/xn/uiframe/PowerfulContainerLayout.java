@@ -5,10 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +144,7 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
         ILayoutManager topVisibleLayout = getTopVisibleLayout();
         if (topVisibleLayout == null) return;
 
-        if (topVisibleLayout.getLayer() <= AbstractLayoutManager.Layer.LAYER_BASIC_CENTER_PART) {
+        if (topVisibleLayout.getLayer() <= AbstractLayoutManager.Layer.LAYER_PART_OF_BASIC_CENTER) {
             for (int i = mLayoutManagers.size() - 1; i > 0; i--) {
                 ILayoutManager layoutManager = mLayoutManagers.get(i);
                 layoutManager.setClickable(true);
@@ -175,10 +177,10 @@ public class PowerfulContainerLayout extends ViewGroup implements IContainerMana
     protected void onDraw(Canvas canvas) {
         if (mBackgroundColor != 0) {
             Paint p = new Paint();
-            p.setColor(getResources().getColor(mBackgroundColor));
+            p.setColor(ContextCompat.getColor(getContext(),mBackgroundColor));
             canvas.drawRect(0f, 0f, this.getMeasuredWidth() * 1f, this.getMeasuredHeight() * 1f, p);
         } else if (mBackgroundResource != 0) {
-            Drawable drawable = getResources().getDrawable(mBackgroundResource);
+            Drawable drawable = ContextCompat.getDrawable(getContext(),mBackgroundResource);
             drawable.setBounds(0, 0, this.getMeasuredWidth(), this.getMeasuredHeight());
             drawable.draw(canvas);
         }
