@@ -6,6 +6,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -206,7 +207,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     public TextView setHeaderLeftImage(@DrawableRes int resource, float scaleFactor) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_left);
-        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
+        Drawable drawable = ContextCompat.getDrawable(textView.getContext(),resource);
         drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * scaleFactor), (int) (drawable.getIntrinsicHeight() * scaleFactor));
         textView.setCompoundDrawables(drawable, null, null, null);
         return textView;
@@ -216,7 +217,7 @@ public class HeaderLayoutManager extends AbstractLayoutManager implements IHeade
     public TextView setHeaderRightImage(@DrawableRes int resource, float scaleFactor) {
         View view = getContentView();
         TextView textView = (TextView) view.findViewById(R.id.ui_frame_header_right);
-        Drawable drawable = textView.getContext().getResources().getDrawable(resource);
+        Drawable drawable = ContextCompat.getDrawable(textView.getContext(),resource);
         drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * scaleFactor), (int) (drawable.getIntrinsicHeight() * scaleFactor));
         textView.setCompoundDrawables(null, null, drawable, null);
         return textView;
